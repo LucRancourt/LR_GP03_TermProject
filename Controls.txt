@@ -1,0 +1,3 @@
+WASD to Move
+RightClick + Mouse to LookAround
+Scroll Wheel to Zoom/Go Up/Down based on Direction Facing
