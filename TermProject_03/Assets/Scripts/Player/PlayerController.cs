@@ -78,6 +78,8 @@ public class PlayerController : MonoBehaviour
                     _inputController.LookEvent += HandleLookInput;
                     _inputController.RotateCamEvent += HandleRotateCamInput;
                     _inputController.ZoomEvent += HandleZoomInput;
+
+                    _inputController.PauseGameEvent += HandlePauseGameInput;
                 }
             }
 
@@ -90,6 +92,8 @@ public class PlayerController : MonoBehaviour
                     _inputController.LookEvent -= HandleLookInput;
                     _inputController.RotateCamEvent -= HandleRotateCamInput;
                     _inputController.ZoomEvent -= HandleZoomInput;
+
+                    _inputController.PauseGameEvent -= HandlePauseGameInput;
                 }
             }
         #endregion
@@ -118,6 +122,12 @@ public class PlayerController : MonoBehaviour
             private void HandleZoomInput(Vector2 zoom)
             {
                 _zoomInput = zoom.normalized;
+            }
+
+            private void HandlePauseGameInput()
+            {
+
+                PauseMenu.Instance.PauseGame();
             }
         #endregion
 

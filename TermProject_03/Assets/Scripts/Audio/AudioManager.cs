@@ -5,10 +5,6 @@ using UnityEngine.Audio;
 public class AudioManager : Singleton<AudioManager>
 {
     // Variables
-    private const string MasterVolumeKey = "MasterVolume";
-    private const string MusicVolumeKey = "MusicVolume";
-    private const string SFXVolumeKey = "SFXVolume";
-
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private AudioMixerGroup musicMixer;
     [SerializeField] private AudioMixerGroup sfxMixer;
@@ -27,44 +23,44 @@ public class AudioManager : Singleton<AudioManager>
     }
 
     #region Volume
-    private void LoadVolume()
-    {
-        SetMixerVolume(MasterVolumeKey, PlayerPrefs.GetInt(MasterVolumeKey));
-        SetMixerVolume(MusicVolumeKey, PlayerPrefs.GetInt(MusicVolumeKey));
-        SetMixerVolume(SFXVolumeKey, PlayerPrefs.GetInt(SFXVolumeKey));
-    }
+        private void LoadVolume()
+        {
+            SetMixerVolume(AudioMixerKeys.MasterVolumeKey, PlayerPrefs.GetFloat(AudioMixerKeys.MasterVolumeKey));
+            SetMixerVolume(AudioMixerKeys.MusicVolumeKey, PlayerPrefs.GetFloat(AudioMixerKeys.MusicVolumeKey));
+            SetMixerVolume(AudioMixerKeys.SFXVolumeKey, PlayerPrefs.GetFloat(AudioMixerKeys.SFXVolumeKey));
+        }
 
-    public void SetMixerVolume(string key, float volume)
-    {
-        audioMixer.SetFloat(key, Mathf.Log10(volume) * 20);
-    }
+        public void SetMixerVolume(string key, float volume)
+        {
+            audioMixer.SetFloat(key, Mathf.Log10(volume) * 20);
+        }
     #endregion
 
     #region Plays
-    private void PlayMusic(SFX music)
-    {
-        _musicSource = gameObject.AddComponent<AudioSource>();
-        _musicSource.outputAudioMixerGroup = musicMixer;
+        private void PlayMusic(SFX music)
+        {
+            _musicSource = gameObject.AddComponent<AudioSource>();
+            _musicSource.outputAudioMixerGroup = musicMixer;
 
-        SetupSource(ref _musicSource, music);
+            SetupSource(ref _musicSource, music);
 
-        _musicSource.loop = true;
-        _musicSource.Play();
-    }
+            _musicSource.loop = true;
+            _musicSource.Play();
+        }
 
-    public void PlaySound(SFX sound)
-    {
-        AudioSource soundSource = GetAvailableSFXSource();
+        public void PlaySound(SFX sound)
+        {
+            AudioSource soundSource = GetAvailableSFXSource();
 
-        SetupSource(ref soundSource, sound);
+            SetupSource(ref soundSource, sound);
 
-        soundSource.Play();
-    }
+            soundSource.Play();
+        }
 
-    public void PlayRandomSound(List<SFX> listOfSFX)
-    {
-        PlaySound(listOfSFX[Random.Range(0, listOfSFX.Count - 1)]);
-    }
+        public void PlayRandomSound(List<SFX> listOfSFX)
+        {
+            PlaySound(listOfSFX[Random.Range(0, listOfSFX.Count - 1)]);
+        }
     #endregion
 
     private void SetupSource(ref AudioSource source, SFX sfx)

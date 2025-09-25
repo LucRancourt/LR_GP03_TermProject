@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PauseGame",
+                    "type": "Button",
+                    "id": "f0d691b6-b863-40fa-b80b-395e1810ba8a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -320,6 +329,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a66b1d76-fb9e-4805-8819-27b570a1f4f4",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "PauseGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

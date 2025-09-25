@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BGM_MainMenu
   m_EditorClassIdentifier: 
   <Clip>k__BackingField: {fileID: 8300000, guid: f6f071b358aea83428cc009ca13dfe4c, type: 3}
-  <Volume>k__BackingField: 1
-  <Pitch>k__BackingField: 1
+  <Volume>k__BackingField: 0.11
+  <Pitch>k__BackingField: 1.7

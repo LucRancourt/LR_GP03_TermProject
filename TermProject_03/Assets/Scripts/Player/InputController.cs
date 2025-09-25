@@ -14,6 +14,8 @@ public class InputController : MonoBehaviour
             public event Action<Vector2> LookEvent;
             public event Action<bool> RotateCamEvent;
             public event Action<Vector2> ZoomEvent;
+
+            public event Action PauseGameEvent;
         #endregion
 
 
@@ -34,6 +36,8 @@ public class InputController : MonoBehaviour
             _inputControls.Player.Look.performed += OnLookPerformed;
             _inputControls.Player.RotateCam.performed += OnRotateCamPerformed;
             _inputControls.Player.Zoom.performed += OnZoomPerformed;
+
+            _inputControls.Player.PauseGame.performed += OnPauseGamePerformed;
         }
 
         #region Handlers
@@ -61,6 +65,11 @@ public class InputController : MonoBehaviour
             {
                 ZoomEvent?.Invoke(context.ReadValue<Vector2>());
             }
+
+            private void OnPauseGamePerformed(InputAction.CallbackContext context)
+            {
+                PauseGameEvent?.Invoke();
+            }
         #endregion
 
         private void OnDisable()
@@ -72,6 +81,8 @@ public class InputController : MonoBehaviour
             _inputControls.Player.Look.performed -= OnLookPerformed;
             _inputControls.Player.RotateCam.performed -= OnRotateCamPerformed;
             _inputControls.Player.Zoom.performed -= OnZoomPerformed;
+
+            _inputControls.Player.PauseGame.performed -= OnPauseGamePerformed;
 
             _inputControls.Player.Disable();
         }
