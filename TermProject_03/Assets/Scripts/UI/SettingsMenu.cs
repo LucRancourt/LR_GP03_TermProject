@@ -42,28 +42,28 @@ public class SettingsMenu : Menu<SettingsMenu>
     }
 
     #region Save/Load
-    public void SaveSettings()
-    {
-        PlayerPrefs.SetFloat(AudioMixerKeys.MasterVolumeKey, _currentMasterVolume);
-        PlayerPrefs.SetFloat(AudioMixerKeys.MusicVolumeKey, _currentMusicVolume);
-        PlayerPrefs.SetFloat(AudioMixerKeys.SFXVolumeKey, _currentSFXVolume);
-        PlayerPrefs.Save();
-    }
+        public void SaveSettings()
+        {
+            PlayerPrefs.SetFloat(AudioMixerKeys.MasterVolumeKey, _currentMasterVolume);
+            PlayerPrefs.SetFloat(AudioMixerKeys.MusicVolumeKey, _currentMusicVolume);
+            PlayerPrefs.SetFloat(AudioMixerKeys.SFXVolumeKey, _currentSFXVolume);
+            PlayerPrefs.Save();
+        }
 
-    private void LoadSettings()
-    {
-        _currentMasterVolume = PlayerPrefs.GetFloat(AudioMixerKeys.MasterVolumeKey);
-        _currentMusicVolume = PlayerPrefs.GetFloat(AudioMixerKeys.MusicVolumeKey);
-        _currentSFXVolume = PlayerPrefs.GetFloat(AudioMixerKeys.SFXVolumeKey);
+        private void LoadSettings()
+        {
+            _currentMasterVolume = PlayerPrefs.GetFloat(AudioMixerKeys.MasterVolumeKey);
+            _currentMusicVolume = PlayerPrefs.GetFloat(AudioMixerKeys.MusicVolumeKey);
+            _currentSFXVolume = PlayerPrefs.GetFloat(AudioMixerKeys.SFXVolumeKey);
 
-        masterVolumeSlider.value = _currentMasterVolume;
-        musicVolumeSlider.value = _currentMusicVolume;
-        sfxVolumeSlider.value = _currentSFXVolume;
+            masterVolumeSlider.value = _currentMasterVolume;
+            musicVolumeSlider.value = _currentMusicVolume;
+            sfxVolumeSlider.value = _currentSFXVolume;
 
-        UpdateVolume(_currentMasterVolume, AudioMixerKeys.MasterVolumeKey, ref _currentMasterVolume, ref masterVolumeText);
-        UpdateVolume(_currentMusicVolume, AudioMixerKeys.MusicVolumeKey, ref _currentMusicVolume, ref musicVolumeText);
-        UpdateVolume(_currentSFXVolume, AudioMixerKeys.SFXVolumeKey, ref _currentSFXVolume, ref sfxVolumeText);
-    }
+            UpdateVolume(_currentMasterVolume, AudioMixerKeys.MasterVolumeKey, ref _currentMasterVolume, ref masterVolumeText);
+            UpdateVolume(_currentMusicVolume, AudioMixerKeys.MusicVolumeKey, ref _currentMusicVolume, ref musicVolumeText);
+            UpdateVolume(_currentSFXVolume, AudioMixerKeys.SFXVolumeKey, ref _currentSFXVolume, ref sfxVolumeText);
+        }
     #endregion
 
     public void OpenMenu()
