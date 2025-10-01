@@ -10,7 +10,7 @@ public class Pool
 
 
     // Constructor
-    public Pool(int initialPoolSize, GameObject poolObjectPrefab)
+    public Pool(GameObject poolObjectPrefab, int initialPoolSize = 30)
     {
         if (!poolObjectPrefab)
         {   
