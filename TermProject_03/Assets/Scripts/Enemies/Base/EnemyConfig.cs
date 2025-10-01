@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyConfig", menuName = "Scriptable Objects/EnemyConfig")]
+[CreateAssetMenu(fileName = "EnemyConfig", menuName = "Scriptable Objects/Enemy")]
 public class EnemyConfig : ScriptableObject
 {
     [field: SerializeField] public string Name;
