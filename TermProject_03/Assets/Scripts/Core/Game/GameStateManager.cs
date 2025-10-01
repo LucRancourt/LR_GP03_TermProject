@@ -6,7 +6,6 @@ public class GameStateManager : MonoBehaviour
     private StateFactory<GameState, GameStateKeys> _stateFactory = new StateFactory<GameState, GameStateKeys>();
     private GameState _currentState;
 
-
     // Functions
     private void Awake()
     {

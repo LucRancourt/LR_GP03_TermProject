@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthSystem : MonoBehaviour, IDamageable
 {
@@ -7,10 +8,17 @@ public class HealthSystem : MonoBehaviour, IDamageable
     private float _maxHealth;
     public float CurrentHealth { get; private set; }
 
+    private Image _healthBar;
+
     public event Action OnDiedEvent;
 
 
     // Functions
+    private void Awake()
+    {
+        //_healthBar = FindFirstObjectByType<Canvas>().gameObject.AddComponent<Image>();
+    }
+
     public void SetMaxHealth(float maxHealth)
     {
         _maxHealth = maxHealth;
@@ -35,14 +43,15 @@ public class HealthSystem : MonoBehaviour, IDamageable
     {
         CurrentHealth = MyUtils.Clamp(CurrentHealth, 0.0f, _maxHealth);
 
-        UpdateSlider();
+        UpdateHealthBar();
 
         if (CurrentHealth == 0.0f)
             OnDiedEvent?.Invoke();
     }
 
-    private void UpdateSlider()
+    private void UpdateHealthBar()
     {
-
+        Debug.Log(gameObject.name + " has " + CurrentHealth + " health!");
+        //_healthBar.fillAmount = (CurrentHealth / _maxHealth);
     }
 }

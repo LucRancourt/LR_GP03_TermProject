@@ -1,0 +1,30 @@
+using UnityEngine;
+
+public class GameWinState : GameState
+{
+    // Constructor
+    public GameWinState(GameStateManager gameStateManager) : base(gameStateManager) { }
+
+
+    // Variables
+    // GameWin UI
+    // Stats Display
+    // Replay or Return Options
+
+
+    // Functions
+    public override void Enter()
+    {
+        Debug.Log("GameWinState - Enter");
+    }
+
+    public override void Execute()
+    {
+        Debug.Log("GameWinState - Execute");
+    }
+
+    public override void Exit()
+    {
+        LevelManager.Instance.LoadLevel("MainMenu");
+    }
+}

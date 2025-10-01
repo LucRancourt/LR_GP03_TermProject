@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
         _gameStateManager = GetComponent<GameStateManager>();
         _gameStateManager.TransitionToState(GameStateKeys.PreparationState);
 
-        Base.Instance.Initialize(10.0f);
+        Base.Instance.Initialize(100.0f);
     }
 
     public void SetGameOver()
