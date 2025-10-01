@@ -1,7 +1,8 @@
 using UnityEngine;
 
+[RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(EnemyMovement))]
-[RequireComponent(typeof(EnemyHealth))]
+[RequireComponent(typeof(HealthSystem))]
 
 public class Enemy : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyConfig enemyConfig;
 
     private EnemyMovement _enemyMovement;
-    private EnemyHealth _enemyHealth;
+    private HealthSystem _healthSystem;
 
 
     // Functions
@@ -19,8 +20,10 @@ public class Enemy : MonoBehaviour
         if (enemyConfig == null)
             Debug.LogError("Missing EnemyConfig!");
 
+        Instantiate(enemyConfig.Prefab, transform);
+
         _enemyMovement = GetComponent<EnemyMovement>();
-        _enemyHealth = GetComponent<EnemyHealth>();
+        _healthSystem = GetComponent<HealthSystem>();
     }
 
     public void Initialize(EnemyManager enemyManager, NavPath path)
@@ -34,10 +37,21 @@ public class Enemy : MonoBehaviour
     {
         _enemyManager = enemyManager;
 
+        SetupCollider();
+
         _enemyMovement.SetupPath(path, enemyConfig.Speed);
 
-        _enemyHealth.SetHealth(enemyConfig.Health);
-        _enemyHealth.OnDiedEvent += OnEnemyDied;
+        _healthSystem.SetMaxHealth(enemyConfig.Health);
+        _healthSystem.OnDiedEvent += OnDied;
+    }
+
+    private void SetupCollider()
+    {
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        collider.isTrigger = true;
+        collider.includeLayers = LayerMask.NameToLayer("BaseLayer");
+        if (collider.includeLayers == -1)
+            Debug.LogError("BaseLayer can not be found!");
     }
 
     private void OnEnable()
@@ -49,8 +63,16 @@ public class Enemy : MonoBehaviour
     {
         _enemyMovement.StopPath();
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<Base>())
+        {
+            other.GetComponent<HealthSystem>().OnDamaged(_healthSystem.CurrentHealth);
+            OnDied();
+        }
+    }
 
-    private void OnEnemyDied()
+    private void OnDied()
     {
         _enemyManager.DespawnEnemy(this);
     }

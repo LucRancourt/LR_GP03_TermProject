@@ -1,7 +1,5 @@
 using UnityEngine;
 
-
-
 public class GameStateManager : MonoBehaviour
 {
     // Variables
@@ -22,8 +20,6 @@ public class GameStateManager : MonoBehaviour
         _stateFactory.RegisterState(GameStateKeys.BreakState, new BreakState(this));
         _stateFactory.RegisterState(GameStateKeys.GameWinState, new GameWinState(this));
         _stateFactory.RegisterState(GameStateKeys.GameOverState, new GameOverState(this));
-
-        TransitionToState(GameStateKeys.PreparationState);
     }
 
     public void TransitionToState(GameStateKeys newGameState)
@@ -32,9 +28,6 @@ public class GameStateManager : MonoBehaviour
         _currentState = _stateFactory.GetState(newGameState);
         _currentState?.Enter();
     }
-
-
-
 
     private void Update()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 public class StateFactory<TState, TKey> where TState : IState where TKey : System.Enum
 {
     // Variables
-    private readonly Dictionary<TKey, TState> _states;
+    private readonly Dictionary<TKey, TState> _states = new Dictionary<TKey, TState>();
 
 
     // Functions

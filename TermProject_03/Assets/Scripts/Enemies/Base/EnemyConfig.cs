@@ -8,3 +8,4 @@ public class EnemyConfig : ScriptableObject
     [field: SerializeField] public float Health;
     [field: SerializeField] public float Speed;
 }
+

@@ -37,20 +37,18 @@ public class PreparationState : GameState
     
     // Variables
     
-    // Change Tower Inventory // Do Later
+            // Change Tower Inventory // Do Later
 
     public override void Enter()
     {
         Debug.Log("Prep - Enter");
 
         // Select Difficulty UI -> send to GameManager?
-        throw new System.NotImplementedException();
     }
 
     public override void Execute()
     {
         Debug.Log("Prep - Exec");
-        throw new System.NotImplementedException();
     }
 
     public override void Exit()
