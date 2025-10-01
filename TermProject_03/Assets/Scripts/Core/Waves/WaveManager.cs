@@ -16,7 +16,7 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Q))
             _enemyManager.SpawnEnemy(path);
     }
 }

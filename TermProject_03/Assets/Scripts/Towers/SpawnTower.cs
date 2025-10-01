@@ -7,6 +7,7 @@ public class SpawnTower : Tower
     private float _cooldown;
     private Pool _spawnUnitPool;
 
+    /*
 
     // Functions
     protected override void Awake()
@@ -16,8 +17,8 @@ public class SpawnTower : Tower
         base.Awake();
 
 
-        if (_towerConfig.SpawnedUnitModel.GetComponent<PathNavigator>() && _towerConfig.SpawnedUnitModel.GetComponent<HealthSystem>())
-            _spawnUnitPool = new Pool(_towerConfig.SpawnedUnitModel);
+        if (_towerConfig.SpawnedUnit.GetComponent<PathNavigator>() && _towerConfig.SpawnedUnit.GetComponent<HealthSystem>())
+            _spawnUnitPool = new Pool(_towerConfig.SpawnedUnit.Model);
         else
             Debug.LogError("No PathNavigator/HealthSystem on SpawnedUnitModel! - Temp");  //
 
@@ -36,4 +37,6 @@ public class SpawnTower : Tower
             _cooldown = _towerConfig.Rate;
         }
     }
+
+    */
 }

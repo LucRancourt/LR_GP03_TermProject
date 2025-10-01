@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Tower[] towers;
 
 
-    // Sits on per Player? Same with BuilderManager? BuilderManager maybe Singleton and all access the same? Kinda makes sense
+    // Sits on per Player? 
     // Also holds the UI?
 
 

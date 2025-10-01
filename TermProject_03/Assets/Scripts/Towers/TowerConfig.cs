@@ -57,9 +57,7 @@ public class TowerConfigCustomEditor : Editor
                 break;
 
             case TowerType.Spawn:
-                towerConfig.SpawnedUnitModel = (GameObject)EditorGUILayout.ObjectField("Spawned Unit Model", towerConfig.SpawnedUnitModel, typeof(GameObject), false);
-                towerConfig.SpawnedUnitHealth = EditorGUILayout.FloatField("Spawned Unit Health", towerConfig.SpawnedUnitHealth);
-                towerConfig.SpawnedUnitSpeed = EditorGUILayout.FloatField("Spawned Unit Speed", towerConfig.SpawnedUnitSpeed);
+                towerConfig.SpawnedUnit = (SpawnedUnit)EditorGUILayout.ObjectField("Spawned Unit", towerConfig.SpawnedUnit, typeof(SpawnedUnit), false);
                 break;
 
            // case TowerType.Support:
@@ -102,9 +100,7 @@ public class TowerConfig : ScriptableObject
     public float Damage;
 
     // Spawn
-    public GameObject SpawnedUnitModel;
-    public float SpawnedUnitHealth;
-    public float SpawnedUnitSpeed;
+    public SpawnedUnit SpawnedUnit;
 
     // Support
     //increased stat

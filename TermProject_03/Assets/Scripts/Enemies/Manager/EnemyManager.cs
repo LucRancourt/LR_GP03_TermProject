@@ -3,9 +3,9 @@ using UnityEngine;
 public class EnemyManager
 {
     // Constructor
-    public EnemyManager(GameObject enemyPrefab, int initialAmount = 30)
+    public EnemyManager(GameObject enemyPrefab)
     {
-        FillPool(enemyPrefab, initialAmount);
+        FillPool(enemyPrefab);
     }
 
 
@@ -14,10 +14,10 @@ public class EnemyManager
 
 
     // Functions
-    private void FillPool(GameObject enemyPrefab, int initialAmount = 30)
+    private void FillPool(GameObject enemyPrefab)
     {
         if (enemyPrefab.GetComponent<Enemy>())
-            _enemyPool = new Pool(initialAmount, enemyPrefab);
+            _enemyPool = new Pool(enemyPrefab);
         else
             Debug.LogError("Invalid EnemyPrefab to Pool!");
     }

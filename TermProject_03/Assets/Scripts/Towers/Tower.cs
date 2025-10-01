@@ -18,6 +18,5 @@ public abstract class Tower : MonoBehaviour
         Debug.Log(_towerConfig.UnitLimit);
         Debug.Log(_towerConfig.PlacementCost);
         Debug.Log(_towerConfig.Rate);
-        Debug.Log(_towerConfig.SpawnedUnitSpeed);
     }
 }
