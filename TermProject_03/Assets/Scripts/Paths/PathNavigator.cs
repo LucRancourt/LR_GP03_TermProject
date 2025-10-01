@@ -6,16 +6,30 @@ public class PathNavigator : MonoBehaviour
 {
     // Variables
     private Sequence _pathingSequence;
-
+    private bool _autoPlayOnEnable = true;
 
     // Functions
-    public void SetupPath(NavPath navPath, float moveSpeed, bool isReversed)
+    private void OnEnable()
+    {
+        if (!_autoPlayOnEnable) return;
+
+        PlayPath();
+    }
+
+    private void OnDisable()
+    {
+        StopPath();
+    }
+
+    private void Awake()
     {
         DOTween.Init();
-        DOTween.SetTweensCapacity(500, 50);
+        DOTween.SetTweensCapacity(2000, 200);
+    }
 
+    public void SetupPath(NavPath navPath, float moveSpeed, bool isReversed)
+    {
         _pathingSequence = DOTween.Sequence();
-
 
         Vector3[] path = navPath.GetWaypoints();
 
@@ -40,19 +54,19 @@ public class PathNavigator : MonoBehaviour
             lastPos = pointPos;
         }
 
-        _pathingSequence.AppendCallback(OnReachedPathEnd);
-    }
-
-    public void PlayPath()
-    {
-        if (_pathingSequence.IsActive() && !_pathingSequence.IsPlaying())
-            _pathingSequence.Play();
+        _pathingSequence.OnComplete(OnReachedPathEnd);
     }
 
     public void OnReachedPathEnd()
     {
         Debug.Log("Reached Path End!");
         StopPath();
+    }
+
+    public void PlayPath()
+    {
+        if (_pathingSequence.IsActive() && !_pathingSequence.IsPlaying())
+            _pathingSequence.Play();
     }
 
     public void StopPath()

@@ -54,15 +54,6 @@ public class Enemy : MonoBehaviour
             Debug.LogError("BaseLayer can not be found!");
     }
 
-    private void OnEnable()
-    {
-        _pathNavigator.PlayPath();
-    }
-
-    private void OnDisable()
-    {
-        _pathNavigator.StopPath();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Base>())
