@@ -1,14 +1,19 @@
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public abstract class Tower : MonoBehaviour
 {
     // Variables
-    [SerializeField] private TowerConfig _towerConfig;
+    [SerializeField] protected TowerConfig _towerConfig;
+    private GameObject _towerModel;
 
 
     // Functions
-    private void Start()
+    protected virtual void Awake()
     {
+        _towerModel = Instantiate(_towerConfig.Model);
+        _towerModel.transform.SetParent(transform);
+        _towerModel.transform.localPosition = Vector3.zero;
+
         Debug.Log(_towerConfig.Name);
         Debug.Log(_towerConfig.UnitLimit);
         Debug.Log(_towerConfig.PlacementCost);
