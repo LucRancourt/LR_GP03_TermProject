@@ -39,7 +39,6 @@ public class Pool
 
     private bool AnyAvailable()
     {
-        // Check for any Inactive from Pool
         return _pool.Any(poolObject => !poolObject.activeInHierarchy);
     }
 
@@ -50,16 +49,18 @@ public class Pool
         _pool.Add(poolObject);
     }
 
-    public void ReturnToPool(GameObject poolObject)
-    {
-        poolObject.SetActive(false);
-    }
-
-    public void ReturnAllToPool()
-    {
-        foreach (GameObject poolObject in _pool)
+    #region Returns
+        public void ReturnToPool(GameObject poolObject)
         {
             poolObject.SetActive(false);
         }
-    }
+
+        public void ReturnAllToPool()
+        {
+            foreach (GameObject poolObject in _pool)
+            {
+                poolObject.SetActive(false);
+            }
+        }
+    #endregion
 }

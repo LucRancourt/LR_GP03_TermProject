@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BaseEnemyConfig", menuName = "Scriptable Objects/BaseEnemyConfig")]
-public class BaseEnemyConfig : ScriptableObject
+[CreateAssetMenu(fileName = "EnemyConfig", menuName = "Scriptable Objects/EnemyConfig")]
+public class EnemyConfig : ScriptableObject
 {
     [field: SerializeField] public string Name;
     [field: SerializeField] public GameObject Prefab;

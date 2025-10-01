@@ -182,4 +182,8 @@ public static class MyUtils
             return Random.Range(minInclusive, maxInclusive);
         }
     #endregion
+
+    #region Null Values
+        public static Vector3 _nullVector3Value { get; private set; } = new Vector3(-666.66f, -666.66f, -666.66f);
+    #endregion
 }
