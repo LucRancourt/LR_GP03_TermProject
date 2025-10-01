@@ -64,9 +64,9 @@ public class TowerConfigCustomEditor : Editor
            //     towerConfig.
         }
 
-        /*
+        
         if (GUI.changed)
-            EditorUtility.SetDirty(towerConfig);*/
+            EditorUtility.SetDirty(towerConfig);
 
         serializedObject.ApplyModifiedProperties();
     }

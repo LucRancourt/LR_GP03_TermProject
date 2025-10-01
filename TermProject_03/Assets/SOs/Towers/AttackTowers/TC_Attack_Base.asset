@@ -15,15 +15,13 @@ MonoBehaviour:
   Name: TEST
   UnitLimit: 1
   UpgradeTier: 2
-  Model: {fileID: 2890043255886529711, guid: 3e4fa0d2cdb552949a9ac0ee64d88b9f, type: 3}
+  Model: {fileID: 1616196746140498784, guid: f0c5b894671758941b3c8e14f8a6cae5, type: 3}
   Icon: {fileID: 0}
   PlacementCost: 500
   UpgradeCost: 1200
   SellValue: 250
-  Type: 1
-  Rate: 4
-  Range: 3
-  Damage: 1
-  SpawnedUnitModel: {fileID: 2890043255886529711, guid: 3e4fa0d2cdb552949a9ac0ee64d88b9f, type: 3}
-  SpawnedUnitHealth: 1
-  SpawnedUnitSpeed: 1
+  Type: 0
+  Rate: 20
+  Range: 8
+  Damage: 10
+  SpawnedUnit: {fileID: 0}
