@@ -48,7 +48,7 @@ public class TowerConfigCustomEditor : Editor
             towerConfig.Rate = EditorGUILayout.FloatField("Rate", towerConfig.Rate);
 
         if (towerConfig.Type == TowerType.Attack || towerConfig.Type == TowerType.Support)
-            towerConfig.Rate = EditorGUILayout.FloatField("Range", towerConfig.Range);
+            towerConfig.Range = EditorGUILayout.FloatField("Range", towerConfig.Range);
 
         switch (towerConfig.Type)
         {
@@ -66,8 +66,11 @@ public class TowerConfigCustomEditor : Editor
            //     towerConfig.
         }
 
+        /*
         if (GUI.changed)
-            EditorUtility.SetDirty(towerConfig);
+            EditorUtility.SetDirty(towerConfig);*/
+
+        serializedObject.ApplyModifiedProperties();
     }
 }
 

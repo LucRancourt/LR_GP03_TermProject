@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7231572695281023989}
   - component: {fileID: 2182520933988942857}
-  - component: {fileID: 6956357119938232838}
   - component: {fileID: 7551747390687531169}
   - component: {fileID: 6193620580075898845}
   - component: {fileID: 4005603979425965422}
@@ -48,33 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b45d24b3e2f16149b9cf6a96012857b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &6956357119938232838
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772295256258160060}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!136 &7551747390687531169
 CapsuleCollider:
   m_ObjectHideFlags: 0

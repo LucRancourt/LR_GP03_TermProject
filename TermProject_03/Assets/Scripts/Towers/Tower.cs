@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    // Variables
+    [SerializeField] private TowerConfig _towerConfig;
 
-    // Update is called once per frame
-    void Update()
+
+    // Functions
+    private void Start()
     {
-        
+        Debug.Log(_towerConfig.Name);
+        Debug.Log(_towerConfig.UnitLimit);
+        Debug.Log(_towerConfig.PlacementCost);
+        Debug.Log(_towerConfig.Rate);
+        Debug.Log(_towerConfig.SpawnedUnitSpeed);
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(PathNavigator))]
 [RequireComponent(typeof(HealthSystem))]
 
 public class Enemy : MonoBehaviour
@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private EnemyManager _enemyManager;
     [SerializeField] private EnemyConfig enemyConfig;
 
-    private EnemyMovement _enemyMovement;
+    private PathNavigator _pathNavigator;
     private HealthSystem _healthSystem;
 
 
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
         Instantiate(enemyConfig.Prefab, transform);
 
-        _enemyMovement = GetComponent<EnemyMovement>();
+        _pathNavigator = GetComponent<PathNavigator>();
         _healthSystem = GetComponent<HealthSystem>();
     }
 
@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour
 
         SetupCollider();
 
-        _enemyMovement.SetupPath(path, enemyConfig.Speed);
+        _pathNavigator.SetupPath(path, enemyConfig.Speed, false);
 
         _healthSystem.SetMaxHealth(enemyConfig.Health);
         _healthSystem.OnDiedEvent += OnDied;
@@ -56,12 +56,12 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        _enemyMovement.PlayPath();
+        _pathNavigator.PlayPath();
     }
 
     private void OnDisable()
     {
-        _enemyMovement.StopPath();
+        _pathNavigator.StopPath();
     }
     private void OnTriggerEnter(Collider other)
     {
