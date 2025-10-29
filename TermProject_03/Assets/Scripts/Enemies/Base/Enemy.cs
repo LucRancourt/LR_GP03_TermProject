@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
@@ -7,11 +8,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // Variables
-    private EnemyManager _enemyManager;
     [SerializeField] private EnemyConfig enemyConfig;
 
     private PathNavigator _pathNavigator;
     private HealthSystem _healthSystem;
+
+    public event Action<Enemy> OnDiedEvent;
 
 
     // Functions
@@ -26,23 +28,15 @@ public class Enemy : MonoBehaviour
         _healthSystem = GetComponent<HealthSystem>();
     }
 
-    public void Initialize(EnemyManager enemyManager, NavPath path)
+    public void Initialize(NavPath path)
     {
-        Setup(enemyManager, path);
-
-        gameObject.SetActive(true);
-    }
-
-    private void Setup(EnemyManager enemyManager, NavPath path)
-    {
-        _enemyManager = enemyManager;
-
         SetupCollider();
-
-        _pathNavigator.SetupPath(path, enemyConfig.Speed, false);
 
         _healthSystem.SetMaxHealth(enemyConfig.Health);
         _healthSystem.OnDiedEvent += OnDied;
+
+        _pathNavigator.SetupPath(path, enemyConfig.Speed, false);
+        _pathNavigator.PlayPath();
     }
 
     private void SetupCollider()
@@ -65,6 +59,8 @@ public class Enemy : MonoBehaviour
 
     private void OnDied()
     {
-        _enemyManager.DespawnEnemy(this);
+        _pathNavigator.StopPath();
+
+        OnDiedEvent?.Invoke(this);
     }
 }

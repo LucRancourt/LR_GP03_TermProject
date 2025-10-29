@@ -10,7 +10,6 @@ public class BreakState : GameState
     // Variables
     [SerializeField] private float timeUntilAutoExit = 10.0f;
         // Give money based on Difficulty / Wave Number
-        // Time until automatically exits
 
 
     // Functions

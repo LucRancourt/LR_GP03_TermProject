@@ -3,7 +3,7 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     // Variables
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private Enemy enemyPrefab;
     [SerializeField] private NavPath path;
 
     private EnemyManager _enemyManager;

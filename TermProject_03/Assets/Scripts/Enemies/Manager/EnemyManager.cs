@@ -1,35 +1,32 @@
 using UnityEngine;
 
+using _Project.Code.Core.Factory;
+
+
 public class EnemyManager
 {
-    // Constructor
-    public EnemyManager(GameObject enemyPrefab)
-    {
-        FillPool(enemyPrefab);
-    }
+    private PooledFactory<Enemy> _enemyPoolFactory;
 
 
-    // Variables
-    private Pool _enemyPool;
-
-
-    // Functions
-    private void FillPool(GameObject enemyPrefab)
+    public EnemyManager(Enemy enemyPrefab)
     {
         if (enemyPrefab.GetComponent<Enemy>())
-            _enemyPool = new Pool(enemyPrefab);
+            _enemyPoolFactory = new PooledFactory<Enemy>(enemyPrefab);
         else
             Debug.LogError("Invalid EnemyPrefab to Pool!");
     }
 
+
     public void SpawnEnemy(NavPath path)
     {
-        if (_enemyPool.PullFromPool().TryGetComponent(out Enemy enemySpawned))
-            enemySpawned.Initialize(this, path);
+        Enemy enemy = _enemyPoolFactory.Create();
+        enemy.Initialize(path);
+        enemy.OnDiedEvent += DespawnEnemy;
     }
 
     public void DespawnEnemy(Enemy enemyToDespawn)
     {
-        _enemyPool.ReturnToPool(enemyToDespawn.gameObject);
+        enemyToDespawn.OnDiedEvent -= DespawnEnemy;
+        _enemyPoolFactory.Return(enemyToDespawn);
     }
 }

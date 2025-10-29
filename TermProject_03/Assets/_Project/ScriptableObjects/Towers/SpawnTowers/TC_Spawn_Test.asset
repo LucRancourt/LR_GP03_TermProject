@@ -20,10 +20,8 @@ MonoBehaviour:
   PlacementCost: 0
   UpgradeCost: 0
   SellValue: 0
-  Type: 0
+  Type: 1
   Rate: 0
   Range: 0
   Damage: 0
-  SpawnedUnitModel: {fileID: 0}
-  SpawnedUnitHealth: 0
-  SpawnedUnitSpeed: 0
+  SpawnedUnit: {fileID: 0}
