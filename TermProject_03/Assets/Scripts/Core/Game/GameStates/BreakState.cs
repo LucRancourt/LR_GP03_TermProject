@@ -1,18 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+[GameState(GameStateKeys.BreakState)]
 public class BreakState : GameState
 {
-    // Constructor
+    private float timeUntilAutoExit = 10.0f;
+    // Give money based on Difficulty / Wave Number
+
     public BreakState(GameStateManager gameStateManager) : base(gameStateManager) { }
 
 
-    // Variables
-    [SerializeField] private float timeUntilAutoExit = 10.0f;
-        // Give money based on Difficulty / Wave Number
-
-
-    // Functions
     public override void Enter()
     {
         Debug.Log("Break - Enter");

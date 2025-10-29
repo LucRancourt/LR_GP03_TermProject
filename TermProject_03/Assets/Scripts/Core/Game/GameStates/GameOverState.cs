@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[GameState(GameStateKeys.GameOverState)]
 public class GameOverState : GameState
 {
     // Constructor

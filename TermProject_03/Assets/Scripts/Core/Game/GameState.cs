@@ -1,20 +1,25 @@
+using System;
+
 public abstract class GameState : IState
 {
-    // Constructor
+    protected GameStateManager _gameStateManager;
+
     protected GameState(GameStateManager gameStateManager)
     {
         _gameStateManager = gameStateManager;
     }
 
 
-    // Variables
-    protected GameStateManager _gameStateManager;
-
-
-    // Functions
     public abstract void Enter();
     public abstract void Execute();
     public abstract void Exit();
+}
+
+[AttributeUsage(AttributeTargets.Class)]
+public class GameStateAttribute : Attribute
+{
+    public GameStateKeys Key { get; }
+    public GameStateAttribute(GameStateKeys key) => Key = key;
 }
 
 public enum GameStateKeys

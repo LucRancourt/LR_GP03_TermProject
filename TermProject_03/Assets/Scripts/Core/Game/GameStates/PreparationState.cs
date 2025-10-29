@@ -1,18 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
+[GameState(GameStateKeys.PreparationState)]
 public class PreparationState : GameState
 {
-    // Constructor
+    private float timeUntilAutoExit = 10.0f;
+    // Change Tower Inventory // Do Later
+
     public PreparationState(GameStateManager gameStateManager) : base(gameStateManager) { }
 
 
-    // Variables
-    [SerializeField] private float timeUntilAutoExit = 10.0f;
-        // Change Tower Inventory // Do Later
-
-
-    // Functions
     public override void Enter()
     {
         Debug.Log("Prep - Enter");

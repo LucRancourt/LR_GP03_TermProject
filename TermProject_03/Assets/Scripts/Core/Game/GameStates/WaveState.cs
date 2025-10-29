@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[GameState(GameStateKeys.WaveState)]
 public class WaveState : GameState
 {
     // Constructor

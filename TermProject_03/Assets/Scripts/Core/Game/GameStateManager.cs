@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -9,16 +13,25 @@ public class GameStateManager : MonoBehaviour
     // Functions
     private void Awake()
     {
-        //foreach (GameStateKeys key in System.Enum.GetValues(typeof(GameStateKeys)))
+        var gameStateTypes = Assembly.GetExecutingAssembly().GetTypes()
+                                .Where(t => t.GetCustomAttribute<GameStateAttribute>() != null);
+        
+
+        foreach (var type in gameStateTypes)
         {
-            //_stateFactory.RegisterState(key, );
+            var attribute = type.GetCustomAttribute<GameStateAttribute>();
+            var instance = (GameState)Activator.CreateInstance(type, (object)this);
+            _stateFactory.RegisterState(attribute.Key, instance);
         }
 
+
+        /*
         _stateFactory.RegisterState(GameStateKeys.PreparationState, new PreparationState(this));
         _stateFactory.RegisterState(GameStateKeys.WaveState, new WaveState(this));
         _stateFactory.RegisterState(GameStateKeys.BreakState, new BreakState(this));
         _stateFactory.RegisterState(GameStateKeys.GameWinState, new GameWinState(this));
         _stateFactory.RegisterState(GameStateKeys.GameOverState, new GameOverState(this));
+        */
     }
 
     public void TransitionToState(GameStateKeys newGameState)
