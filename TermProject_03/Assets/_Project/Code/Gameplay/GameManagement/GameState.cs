@@ -1,6 +1,9 @@
 using System;
 
-public abstract class GameState : IState
+using _Project.Code.Core.StateMachine;
+
+
+public abstract class GameState : BaseState
 {
     protected GameStateManager _gameStateManager;
 
@@ -8,11 +11,6 @@ public abstract class GameState : IState
     {
         _gameStateManager = gameStateManager;
     }
-
-
-    public abstract void Enter();
-    public abstract void Execute();
-    public abstract void Exit();
 }
 
 [AttributeUsage(AttributeTargets.Class)]

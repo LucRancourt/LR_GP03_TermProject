@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 
+using _Project.Code.Core.Pool;
+
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(PathNavigator))]
 [RequireComponent(typeof(HealthSystem))]
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPoolable
 {
-    // Variables
     [SerializeField] private EnemyConfig enemyConfig;
 
     private PathNavigator _pathNavigator;
@@ -16,25 +17,26 @@ public class Enemy : MonoBehaviour
     public event Action<Enemy> OnDiedEvent;
 
 
-    // Functions
-    private void Awake()
+
+    public void OnCreateForPool()
     {
         if (enemyConfig == null)
             Debug.LogError("Missing EnemyConfig!");
 
-        Instantiate(enemyConfig.Prefab, transform);
-
         _pathNavigator = GetComponent<PathNavigator>();
         _healthSystem = GetComponent<HealthSystem>();
+
+        SetupCollider();
+    }
+
+    public void OnSpawnFromPool()
+    {
+        _healthSystem.SetMaxHealth(enemyConfig.Health);
+        _healthSystem.OnDiedEvent += OnDied;
     }
 
     public void Initialize(NavPath path)
     {
-        SetupCollider();
-
-        _healthSystem.SetMaxHealth(enemyConfig.Health);
-        _healthSystem.OnDiedEvent += OnDied;
-
         _pathNavigator.SetupPath(path, enemyConfig.Speed, false);
         _pathNavigator.PlayPath();
     }
@@ -59,8 +61,12 @@ public class Enemy : MonoBehaviour
 
     private void OnDied()
     {
-        _pathNavigator.StopPath();
-
         OnDiedEvent?.Invoke(this);
+    }
+
+    public void OnReturnToPool()
+    {
+        _healthSystem.OnDiedEvent -= OnDied;
+        _pathNavigator.StopPath();
     }
 }

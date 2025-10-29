@@ -19,7 +19,7 @@ public class GameWinState : GameState
         Debug.Log("GameWinState - Enter");
     }
 
-    public override void Execute()
+    public override void Update()
     {
         Debug.Log("GameWinState - Execute");
     }

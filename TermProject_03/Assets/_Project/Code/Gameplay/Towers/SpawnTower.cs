@@ -1,11 +1,14 @@
 using UnityEngine;
 
+using _Project.Code.Core.Factory;
+
+
 public class SpawnTower : Tower
 {
     // Variables
     [SerializeField] private NavPath path;
     private float _cooldown;
-    private Pool _spawnUnitPool;
+    private PooledFactory<Tower> _spawnUnitPool;
 
     /*
 

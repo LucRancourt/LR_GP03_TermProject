@@ -17,7 +17,7 @@ public class BreakState : GameState
         CoroutineExecutor.Instance.StartCoroutine(AutoExit());
     }
 
-    public override void Execute()
+    public override void Update()
     {
         Debug.Log("Break - Execute");
     }
@@ -34,6 +34,6 @@ public class BreakState : GameState
     {
         yield return new WaitForSeconds(timeUntilAutoExit);
 
-        _gameStateManager.TransitionToState(GameStateKeys.WaveState);
+        _gameStateManager.TransitionToState<WaveState>();
     }
 }

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 
-public class StateFactory<TState, TKey> where TState : IState where TKey : System.Enum
+using _Project.Code.Core.Factory;
+using _Project.Code.Core.StateMachine;
+
+public class StateFactory<TState, TKey> where TState : IState where TKey : System.Enum, IFactory<TState>
 {
-    // Variables
     private readonly Dictionary<TKey, TState> _states = new Dictionary<TKey, TState>();
 
 
-    // Functions
     public void RegisterState(TKey key, TState state)
     {
         _states[key] = state;

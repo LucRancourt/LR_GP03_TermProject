@@ -19,7 +19,7 @@ public class PreparationState : GameState
         // Select Difficulty UI -> send to GameManager?
     }
 
-    public override void Execute()
+    public override void Update()
     {
         Debug.Log("Prep - Exec");
     }
@@ -36,6 +36,6 @@ public class PreparationState : GameState
     {
         yield return new WaitForSeconds(timeUntilAutoExit);
 
-        _gameStateManager.TransitionToState(GameStateKeys.WaveState);
+        _gameStateManager.TransitionToState<WaveState>();
     }
 }

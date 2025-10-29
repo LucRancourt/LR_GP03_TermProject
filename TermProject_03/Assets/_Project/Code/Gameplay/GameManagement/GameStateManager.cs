@@ -1,27 +1,36 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
+using _Project.Code.Core.StateMachine;
+using _Project.Code.Core.Factory;
+
 public class GameStateManager : MonoBehaviour
 {
     // Variables
-    private StateFactory<GameState, GameStateKeys> _stateFactory = new StateFactory<GameState, GameStateKeys>();
+    //private StateFactory<GameState, GameStateKeys> _stateFactory = new StateFactory<GameState, GameStateKeys>();
+    private FiniteStateMachine<GameState> _fsmGameStates;
     private GameState _currentState;
 
     // Functions
     private void Awake()
     {
+
         var gameStateTypes = Assembly.GetExecutingAssembly().GetTypes()
                                 .Where(t => t.GetCustomAttribute<GameStateAttribute>() != null);
-        
 
         foreach (var type in gameStateTypes)
         {
-            var attribute = type.GetCustomAttribute<GameStateAttribute>();
+            if (_fsmGameStates == null)
+            {
+                _fsmGameStates = new FiniteStateMachine<GameState>((GameState)Activator.CreateInstance(type, (object)this));
+                continue;
+            }
+
+            //var attribute = type.GetCustomAttribute<GameStateAttribute>();
             var instance = (GameState)Activator.CreateInstance(type, (object)this);
-            _stateFactory.RegisterState(attribute.Key, instance);
+            _fsmGameStates.AddState(instance);
         }
 
 
@@ -34,15 +43,13 @@ public class GameStateManager : MonoBehaviour
         */
     }
 
-    public void TransitionToState(GameStateKeys newGameState)
+    public void TransitionToState<TState>() where TState : GameState
     {
-        _currentState?.Exit();
-        _currentState = _stateFactory.GetState(newGameState);
-        _currentState?.Enter();
+        _fsmGameStates.TransitionTo<TState>();
     }
 
     private void Update()
     {
-        _currentState?.Execute();
+        _fsmGameStates.Update();
     }
 }

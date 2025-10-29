@@ -156,6 +156,11 @@ namespace _Project.Code.Core.Pool
                 throw new InvalidOperationException("Create function returned null!");
             }
 
+            if (obj is IPoolable poolable)
+            {
+                poolable.OnCreateForPool();
+            }
+
             obj.transform.SetParent(_container);
             return obj;
         }

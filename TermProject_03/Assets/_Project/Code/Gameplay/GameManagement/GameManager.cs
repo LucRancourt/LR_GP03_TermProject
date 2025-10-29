@@ -16,13 +16,13 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         _gameStateManager = GetComponent<GameStateManager>();
-        _gameStateManager.TransitionToState(GameStateKeys.PreparationState);
+        //_gameStateManager.TransitionToState(GameStateKeys.PreparationState);
 
         Base.Instance.Initialize(100.0f);
     }
 
     public void SetGameOver()
     {
-        _gameStateManager.TransitionToState(GameStateKeys.GameOverState);
+        _gameStateManager.TransitionToState<GameOverState>();
     }
 }
