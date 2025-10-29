@@ -1,5 +1,8 @@
 using UnityEngine;
 
+using _Project.Code.Core.General;
+
+
 [RequireComponent(typeof(GameStateManager))]
 
 public class GameManager : Singleton<GameManager>

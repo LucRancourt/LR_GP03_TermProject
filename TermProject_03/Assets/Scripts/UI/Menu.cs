@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using _Project.Code.Core.Audio;
+using _Project.Code.Core.General;
+
+
 public class Menu<T> : Singleton<T> where T : MonoBehaviour
 {
     // Variables 
-    [SerializeField] private SFX clickSFX;
+    [SerializeField] private AudioCue clickSFX;
 
     private Button[] _menuButtons;
 

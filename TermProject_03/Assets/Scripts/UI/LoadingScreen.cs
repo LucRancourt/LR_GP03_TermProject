@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+using _Project.Code.Core.General;
+
+
 public class LoadingScreen : Singleton<LoadingScreen>
 {
     // Variables

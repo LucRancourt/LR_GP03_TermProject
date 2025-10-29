@@ -2,6 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+using _Project.Code.Core.Audio;
+using _Project.Code.Core.General;
+
+
 public class AudioManager : Singleton<AudioManager>
 {
     // Variables
@@ -9,7 +13,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] private AudioMixerGroup musicMixer;
     [SerializeField] private AudioMixerGroup sfxMixer;
 
-    [SerializeField] private SFX defaultMusic;
+    [SerializeField] private AudioCue defaultMusic;
     private AudioSource _musicSource;
 
     private List<AudioSource> _soundEffectSources = new List<AudioSource>();
@@ -37,7 +41,7 @@ public class AudioManager : Singleton<AudioManager>
     #endregion
 
     #region Plays
-        private void PlayMusic(SFX music)
+        private void PlayMusic(AudioCue music)
         {
             _musicSource = gameObject.AddComponent<AudioSource>();
             _musicSource.outputAudioMixerGroup = musicMixer;
@@ -48,7 +52,7 @@ public class AudioManager : Singleton<AudioManager>
             _musicSource.Play();
         }
 
-        public void PlaySound(SFX sound)
+        public void PlaySound(AudioCue sound)
         {
             AudioSource soundSource = GetAvailableSFXSource();
 
@@ -57,13 +61,13 @@ public class AudioManager : Singleton<AudioManager>
             soundSource.Play();
         }
 
-        public void PlayRandomSound(List<SFX> listOfSFX)
+        public void PlayRandomSound(List<AudioCue> listOfSFX)
         {
             PlaySound(listOfSFX[Random.Range(0, listOfSFX.Count - 1)]);
         }
     #endregion
 
-    private void SetupSource(ref AudioSource source, SFX sfx)
+    private void SetupSource(ref AudioSource source, AudioCue sfx)
     {
         source.clip = sfx.Clip;
         source.volume = sfx.Volume;

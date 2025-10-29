@@ -1,8 +1,12 @@
 using UnityEngine;
 
+using _Project.Code.Core.General;
+
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(HealthSystem))]
+
 
 public class Base : Singleton<Base>
 {

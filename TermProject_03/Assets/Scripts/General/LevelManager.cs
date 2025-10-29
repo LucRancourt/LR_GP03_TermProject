@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using _Project.Code.Core.General;
+
+
 public class LevelManager : Singleton<LevelManager>
 {
     // Variables
