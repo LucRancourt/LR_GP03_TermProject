@@ -125,17 +125,9 @@ namespace _Project.Code.Core.Events
             _isPublishing = false;
         }
 
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-            Clear();
-        }
-        /*
         private void OnDestroy()
         {
             Clear();
         }
-        */
     }
 }
