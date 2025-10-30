@@ -1,89 +1,124 @@
 using UnityEngine;
-using System;
 using UnityEngine.InputSystem;
+using _Project.Code.Core.ServiceLocator;
+using _Project.Code.Core.Events;
 
-public class InputController : MonoBehaviour
+namespace _Project.Code.Gameplay.Input
 {
-    // Variables
-        private InputControls _inputControls;
+    public class InputService : MonoBehaviourService
+    {
+        private PlayerInputActions _inputActions;
 
-        #region Actions
-            public event Action<Vector2> MoveEvent;
+        // [SerializeField] private InputProfile _profile;
 
-            // Camera Movement Events
-            public event Action<Vector2> LookEvent;
-            public event Action<bool> RotateCamEvent;
-            public event Action<Vector2> ZoomEvent;
+        // public InputProfile Profile => _profile;
 
-            public event Action PauseGameEvent;
-        #endregion
-
-
-    // Functions
-        private void Awake()
+        public override void Initialize()
         {
-            _inputControls = new InputControls();
-        }
+            _inputActions = new PlayerInputActions();
 
-        private void OnEnable()
-        {
-            _inputControls.Player.Enable();
+            _inputActions.Gameplay.Move.performed += HandleMovePerformed;
+            _inputActions.Gameplay.Move.canceled += HandleMoveCanceled;
 
-            _inputControls.Player.Move.performed += OnMovePerformed;
-            _inputControls.Player.Move.canceled += OnMoveCanceled;
-        
-            // Camera Movement Events
-            _inputControls.Player.Look.performed += OnLookPerformed;
-            _inputControls.Player.RotateCam.performed += OnRotateCamPerformed;
-            _inputControls.Player.Zoom.performed += OnZoomPerformed;
+            _inputActions.Gameplay.Look.performed += HandleLookPerformed;
 
-            _inputControls.Player.PauseGame.performed += OnPauseGamePerformed;
+            _inputActions.Gameplay.Interact.performed += HandleInteractPerformed;
+
+            _inputActions.Gameplay.RotateCam.performed += HandleCameraRotatePerformed;
+            _inputActions.Gameplay.Zoom.performed += HandleZoomPerformed;
+
+            _inputActions.Gameplay.PauseGame.performed += HandlePausePerformed;
+
+            _inputActions.Gameplay.Enable();
+
         }
 
         #region Handlers
-            private void OnMovePerformed(InputAction.CallbackContext context)
-            {
-                MoveEvent?.Invoke(context.ReadValue<Vector2>());
-            }
+        private void HandleMovePerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new MoveInputEvent { Input = context.ReadValue<Vector2>() });
+        }
 
-            private void OnMoveCanceled(InputAction.CallbackContext context)
-            {
-                MoveEvent?.Invoke(Vector2.zero);
-            }
+        private void HandleMoveCanceled(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new MoveInputEvent { Input = Vector2.zero });
+        }
 
-            private void OnLookPerformed(InputAction.CallbackContext context)
-            {
-                LookEvent?.Invoke(context.ReadValue<Vector2>());
-            }
+        private void HandleLookPerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new LookInputEvent { Input = context.ReadValue<Vector2>() });
+        }
 
-            private void OnRotateCamPerformed(InputAction.CallbackContext context)
-            {
-                RotateCamEvent?.Invoke(context.ReadValueAsButton());
-            }
+        private void HandleLookCanceled(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new LookInputEvent { Input = Vector2.zero });
+        }
 
-            private void OnZoomPerformed(InputAction.CallbackContext context)
-            {
-                ZoomEvent?.Invoke(context.ReadValue<Vector2>());
-            }
+        private void HandleInteractPerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new InteractInputEvent());
+        }
 
-            private void OnPauseGamePerformed(InputAction.CallbackContext context)
-            {
-                PauseGameEvent?.Invoke();
-            }
+        private void HandleCameraRotatePerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new CameraRotateInputEvent { IsRotating = context.ReadValueAsButton() });
+        }
+
+        private void HandleZoomPerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new ZoomInputEvent { Input = context.ReadValue<Vector2>().y });
+        }
+
+        private void HandlePausePerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Instance.Publish(new PauseInputEvent());
+        }
         #endregion
 
-        private void OnDisable()
+        #region Action Enablers/Disablers 
+        public void EnableGameplayActions()
         {
-            _inputControls.Player.Move.performed -= OnMovePerformed;
-            _inputControls.Player.Move.canceled -= OnMoveCanceled;
-        
-            // Camera Movement Events
-            _inputControls.Player.Look.performed -= OnLookPerformed;
-            _inputControls.Player.RotateCam.performed -= OnRotateCamPerformed;
-            _inputControls.Player.Zoom.performed -= OnZoomPerformed;
-
-            _inputControls.Player.PauseGame.performed -= OnPauseGamePerformed;
-
-            _inputControls.Player.Disable();
+            _inputActions.Gameplay.Enable();
+            _inputActions.UI.Disable();
         }
+
+        public void EnableUIActions()
+        {
+            _inputActions.Gameplay.Disable();
+            _inputActions.UI.Enable();
+        }
+
+        public void DisableAllActions()
+        {
+            _inputActions.Gameplay.Disable();
+            _inputActions.UI.Disable();
+        }
+        #endregion
+
+        public override void Dispose()
+        {
+            if (_inputActions != null)
+            {
+                _inputActions.Gameplay.Move.performed -= HandleMovePerformed;
+                _inputActions.Gameplay.Move.canceled -= HandleMoveCanceled;
+
+                _inputActions.Gameplay.Look.performed -= HandleLookPerformed;
+                
+                _inputActions.Gameplay.Interact.performed -= HandleInteractPerformed;
+
+                _inputActions.Gameplay.RotateCam.performed -= HandleCameraRotatePerformed;
+                _inputActions.Gameplay.Zoom.performed -= HandleZoomPerformed;
+
+                _inputActions.Gameplay.PauseGame.performed -= HandlePausePerformed;
+
+                _inputActions.Gameplay.Disable();
+                _inputActions.Dispose();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+    }
 }

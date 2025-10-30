@@ -10,3 +10,7 @@ Link: https://pixabay.com/sound-effects/keyboard-click-327728/
 Towers
 by Kenney
 Link: https://kenney.nl/assets/tower-defense-kit
+
+
+Certain Coding Patterns
+by Sean
