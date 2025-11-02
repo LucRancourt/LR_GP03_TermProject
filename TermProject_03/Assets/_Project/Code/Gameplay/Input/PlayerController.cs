@@ -1,13 +1,12 @@
 using UnityEngine;
 
-[RequireComponent(typeof(InputController))]
+using _Project.Code.Core.ServiceLocator;
+//[RequireComponent(typeof(InputController))]
 [RequireComponent(typeof(PlayerMovement))]
 
 public class PlayerController : MonoBehaviour
 {
     // Variables
-    private InputController _inputController;
-
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
     public bool IsRotatingCam { get; private set; }
@@ -20,33 +19,31 @@ public class PlayerController : MonoBehaviour
     // Functions
     private void Awake()
     {
-        _inputController = GetComponent<InputController>();
-
         Cursor.visible = true;
     }
 
     #region InputController - OnEnable/OnDisable
     private void OnEnable()
     {
-        if (_inputController != null)
+        if (ServiceLocator.TryGet(out InputController inputController))
         {
-            _inputController.MoveEvent += HandleMoveInput;
+            inputController.MoveEvent += HandleMoveInput;
 
-            _inputController.LookEvent += HandleLookInput;
-            _inputController.CameraRotateEvent += HandleRotateCamInput;
-            _inputController.ZoomEvent += HandleZoomInput;
+            inputController.LookEvent += HandleLookInput;
+            inputController.CameraRotateEvent += HandleRotateCamInput;
+            inputController.ZoomEvent += HandleZoomInput;
         }
     }
 
     private void OnDisable()
     {
-        if (_inputController != null)
+        if (ServiceLocator.TryGet(out InputController inputController))
         {
-            _inputController.MoveEvent -= HandleMoveInput;
+            inputController.MoveEvent -= HandleMoveInput;
 
-            _inputController.LookEvent -= HandleLookInput;
-            _inputController.CameraRotateEvent -= HandleRotateCamInput;
-            _inputController.ZoomEvent -= HandleZoomInput;
+            inputController.LookEvent -= HandleLookInput;
+            inputController.CameraRotateEvent -= HandleRotateCamInput;
+            inputController.ZoomEvent -= HandleZoomInput;
         }
     }
     #endregion

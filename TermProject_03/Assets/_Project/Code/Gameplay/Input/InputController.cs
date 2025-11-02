@@ -3,9 +3,10 @@ using UnityEngine.InputSystem;
 using System;
 
 using _Project.Code.Core.Events;
+using _Project.Code.Core.ServiceLocator;
 
 
-public class InputController : MonoBehaviour
+public class InputController : MonoBehaviourService
 {
     private PlayerInputActions _inputActions;
 
@@ -41,6 +42,8 @@ public class InputController : MonoBehaviour
         _inputActions.Gameplay.PauseGame.performed += HandlePausePerformed;
 
         _inputActions.Gameplay.Enable();
+
+        _inputActions.UI.UnPause.performed += HandlePausePerformed;
 
     }
 
@@ -81,18 +84,21 @@ public class InputController : MonoBehaviour
     {
         _inputActions.Gameplay.Enable();
         _inputActions.UI.Disable();
+        Debug.Log("Gameplay");
     }
 
     public void EnableUIActions()
     {
         _inputActions.Gameplay.Disable();
         _inputActions.UI.Enable();
+        Debug.Log("UI");
     }
 
     public void DisableAllActions()
     {
         _inputActions.Gameplay.Disable();
         _inputActions.UI.Disable();
+        Debug.Log("NONE");
     }
     #endregion
 
@@ -111,6 +117,9 @@ public class InputController : MonoBehaviour
             _inputActions.Gameplay.Zoom.performed -= HandleZoomPerformed;
 
             _inputActions.Gameplay.PauseGame.performed -= HandlePausePerformed;
+
+
+            _inputActions.UI.UnPause.performed -= HandlePausePerformed;
         }
     }
 }

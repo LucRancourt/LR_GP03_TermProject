@@ -1,26 +1,25 @@
-/*using _Project.Code.Core.ServiceLocator;
+using _Project.Code.Core.ServiceLocator;
 using _Project.Code.Core.StateMachine;
 using _Project.Code.Core.Events;
-using _Project.Code.Gameplay.Input;
 
 
 namespace _Project.Code.Core.GameManagement
 {
-    public class GameManagementService : MonoBehaviourService
+    public class GameManagementService : MonoBehaviourService, IEventSubscriber
     {
-        private FiniteStateMachine<IState> _stateMachine;
+        private StateMachine<IState> _stateMachine;
 
         public IState CurrentState => _stateMachine?.CurrentState;
-
+        
         public override void Initialize()
         {
             var gameplayState = new MenuState(this);
-            _stateMachine = new FiniteStateMachine<IState>(gameplayState);
+            _stateMachine = new StateMachine<IState>(gameplayState);
 
             _stateMachine.AddState(new PausedState(this));
             _stateMachine.AddState(new GameplayState(this));
 
-            EventBus.Instance.Subscribe<PauseInputEvent>(this, HandlePauseInput);
+            this.Subscribe<PauseInputEvent>(HandlePauseInput);
         }
 
         private void HandlePauseInput(PauseInputEvent evt)
@@ -46,7 +45,12 @@ namespace _Project.Code.Core.GameManagement
 
         public override void Dispose()
         {
-            EventBus.Instance?.Unsubscribe<PauseInputEvent>(this);
+            ClearEventSubscriberOnDisables();
+        }
+
+        public void ClearEventSubscriberOnDisables()
+        {
+            this.OnDestroyEventSubscriber();
         }
     }
-}*/
+}

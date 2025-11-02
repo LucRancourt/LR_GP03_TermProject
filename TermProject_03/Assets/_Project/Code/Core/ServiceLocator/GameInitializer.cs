@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace _Project.Code.Core.ServiceLocator
 {
+    [DefaultExecutionOrder(-1)]
     public class GameInitializer : MonoBehaviour
     {
         [Header("Persistent Services")]
