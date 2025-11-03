@@ -1,32 +1,56 @@
-using UnityEngine;
+using System.Collections.Generic;
 
 using _Project.Code.Core.Factory;
-
+using UnityEngine;
 
 public class EnemyManager
 {
-    private PooledFactory<Enemy> _enemyPoolFactory;
+    private Dictionary<string, PooledFactory<Enemy>> _enemyPoolFactory = new();
+    public int ActiveEnemyCount { get; private set; } = 0;
 
-
-    public EnemyManager(Enemy enemyPrefab)
+    public EnemyManager(WaveSet waveSet)
     {
-        if (enemyPrefab.GetComponent<Enemy>())
-            _enemyPoolFactory = new PooledFactory<Enemy>(enemyPrefab);
-        else
-            Debug.LogError("Invalid EnemyPrefab to Pool!");
+        Dictionary<EnemyData, int> enemyCounts = new();
+
+        foreach (WaveData wave in waveSet.waves)
+        {
+            foreach (EnemyGroup enemy in wave.enemiesToSpawn)
+            {
+                if (enemyCounts.TryGetValue(enemy.Enemy, out int count))
+                {
+                    if (enemy.Count > count)
+                        enemyCounts[enemy.Enemy] = enemy.Count;
+                }
+                else
+                {
+                    enemyCounts[enemy.Enemy] = enemy.Count;
+                }
+            }
+        }
+
+        foreach (EnemyData enemyToPool in enemyCounts.Keys)
+        {
+            Debug.Log(enemyToPool.Name);
+            _enemyPoolFactory[enemyToPool.Name] = new PooledFactory<Enemy>(enemyToPool.Prefab, enemyCounts[enemyToPool]);
+        }
     }
 
-
-    public void SpawnEnemy(NavPath path)
+    public void SpawnEnemy(EnemyData enemyData, NavPath path)
     {
-        Enemy enemy = _enemyPoolFactory.Create();
-        enemy.Initialize(path);
+        Debug.Log("Spawning " + enemyData.Prefab);
+        Enemy enemy = _enemyPoolFactory[enemyData.Name].Create();
+        enemy.Initialize(enemyData, path);
         enemy.OnDiedEvent += DespawnEnemy;
+
+        ActiveEnemyCount++;
     }
 
     public void DespawnEnemy(Enemy enemyToDespawn)
     {
+        Debug.Log("Killing " + enemyToDespawn.name);
         enemyToDespawn.OnDiedEvent -= DespawnEnemy;
-        _enemyPoolFactory.Return(enemyToDespawn);
+        _enemyPoolFactory[enemyToDespawn.Name].Return(enemyToDespawn);
+
+        ActiveEnemyCount--;
     }
 }

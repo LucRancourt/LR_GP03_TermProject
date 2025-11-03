@@ -1,10 +1,12 @@
 using UnityEngine;
 
 
-public static class MyUtils
+namespace _Project.Code.Core.General
 {
-    #region Direction
-    public static Vector2 GetDirection(Vector2 target, Vector2 self)
+    public static class MyUtils
+    {
+        #region Direction
+        public static Vector2 GetDirection(Vector2 target, Vector2 self)
         {
             return (target - self).normalized;
         }
@@ -13,107 +15,107 @@ public static class MyUtils
         {
             return (target - self).normalized;
         }
-    #endregion
+        #endregion
 
-    #region Clamp
+        #region Clamp
         #region Ints
-            public static int Clamp(int valueToClamp, int min, int max)
-            {
-                if (valueToClamp > max)
-                    return max;
-                else if (valueToClamp < min)
-                    return min;
-                else
-                    return valueToClamp;
-            }
+        public static int Clamp(int valueToClamp, int min, int max)
+        {
+            if (valueToClamp > max)
+                return max;
+            else if (valueToClamp < min)
+                return min;
+            else
+                return valueToClamp;
+        }
 
-            public static void ClampRef(ref int valueToClamp, int min, int max)
-            {
-                if (valueToClamp > max)
-                    valueToClamp = max;
-                else if (valueToClamp < min)
-                    valueToClamp = min;
-            }
+        public static void ClampRef(ref int valueToClamp, int min, int max)
+        {
+            if (valueToClamp > max)
+                valueToClamp = max;
+            else if (valueToClamp < min)
+                valueToClamp = min;
+        }
         #endregion
 
         #region Floats
-            public static float Clamp(float valueToClamp, float min, float max)
-            {
-                if (valueToClamp > max)
-                    return max;
-                else if (valueToClamp < min)
-                    return min;
-                else
-                    return valueToClamp;
-            }
+        public static float Clamp(float valueToClamp, float min, float max)
+        {
+            if (valueToClamp > max)
+                return max;
+            else if (valueToClamp < min)
+                return min;
+            else
+                return valueToClamp;
+        }
 
-            public static void ClampRef(ref float valueToClamp, float min, float max)
-            {
-                if (valueToClamp > max)
-                    valueToClamp = max;
-                else if (valueToClamp < min)
-                    valueToClamp = min;
-            }
+        public static void ClampRef(ref float valueToClamp, float min, float max)
+        {
+            if (valueToClamp > max)
+                valueToClamp = max;
+            else if (valueToClamp < min)
+                valueToClamp = min;
+        }
         #endregion
-    #endregion
+        #endregion
 
-    #region Absolute
+        #region Absolute
         #region Returns
-            public static int Abs(int a)
-            {
-                return a > 0 ? a : -a;
-            }
+        public static int Abs(int a)
+        {
+            return a > 0 ? a : -a;
+        }
 
-            public static float Abs(float a)
-            {
-                return a > 0.0f ? a : -a;
-            }
+        public static float Abs(float a)
+        {
+            return a > 0.0f ? a : -a;
+        }
 
-            public static Vector2 Abs(Vector2 a)
-            {
-                a.x = Abs(a.x);
-                a.y = Abs(a.y);
+        public static Vector2 Abs(Vector2 a)
+        {
+            a.x = Abs(a.x);
+            a.y = Abs(a.y);
 
-                return a;
-            }
+            return a;
+        }
 
-            public static Vector3 Abs(Vector3 a)
-            {
-                a.x = Abs(a.x);
-                a.y = Abs(a.y);
-                a.z = Abs(a.z);
+        public static Vector3 Abs(Vector3 a)
+        {
+            a.x = Abs(a.x);
+            a.y = Abs(a.y);
+            a.z = Abs(a.z);
 
-                return a;
-            }
+            return a;
+        }
         #endregion
 
         #region References
-            public static void Abs(ref int a)
-            {
-                a = a > 0 ? a : -a;
-            }
+        public static void Abs(ref int a)
+        {
+            a = a > 0 ? a : -a;
+        }
 
-            public static void Abs(ref float a)
-            {
-                a = a > 0.0f ? a : -a;
-            }
+        public static void Abs(ref float a)
+        {
+            a = a > 0.0f ? a : -a;
+        }
 
-            public static void Abs(ref Vector2 a)
-            {
-                a.x = Abs(a.x);
-                a.y = Abs(a.y);
-            }
+        public static void Abs(ref Vector2 a)
+        {
+            a.x = Abs(a.x);
+            a.y = Abs(a.y);
+        }
 
-            public static void Abs(ref Vector3 a)
-            {
-                a.x = Abs(a.x);
-                a.y = Abs(a.y);
-                a.z = Abs(a.z);
-            }
+        public static void Abs(ref Vector3 a)
+        {
+            a.x = Abs(a.x);
+            a.y = Abs(a.y);
+            a.z = Abs(a.z);
+        }
         #endregion
-    #endregion
+        #endregion
 
-    #region Min
+        #region Min
         public static int Min(int a, int b)
         {
             return a < b ? a : b;
@@ -123,9 +125,9 @@ public static class MyUtils
         {
             return a < b ? a : b;
         }
-    #endregion
+        #endregion
 
-    #region Max
+        #region Max
         public static int Max(int a, int b)
         {
             return a > b ? a : b;
@@ -135,9 +137,9 @@ public static class MyUtils
         {
             return a > b ? a : b;
         }
-    #endregion
+        #endregion
 
-    #region Approximately
+        #region Approximately
         public static bool Approximately(float a, float b)
         {
             return Abs(b - a) < Max(1E-06f * Max(Abs(a), Abs(b)), Mathf.Epsilon * 8.0f);
@@ -161,9 +163,9 @@ public static class MyUtils
 
             return false;
         }
-    #endregion
+        #endregion
 
-    #region Random
+        #region Random
         public static int RandomOne()
         {
             return Random.Range(0, 2) * 2 - 1;
@@ -181,9 +183,10 @@ public static class MyUtils
         {
             return Random.Range(minInclusive, maxInclusive);
         }
-    #endregion
+        #endregion
 
-    #region Null Values
+        #region Null Values
         public static Vector3 _nullVector3Value { get; private set; } = new Vector3(-666.66f, -666.66f, -666.66f);
-    #endregion
+        #endregion
+    }
 }

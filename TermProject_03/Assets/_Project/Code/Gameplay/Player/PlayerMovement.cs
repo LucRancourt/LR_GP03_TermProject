@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using _Project.Code.Core.General;
+
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerController))]
 

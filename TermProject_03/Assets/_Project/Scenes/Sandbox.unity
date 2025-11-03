@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 96221701}
   - component: {fileID: 96221700}
+  - component: {fileID: 96221702}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -164,6 +165,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96221702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96221699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68fabce6b173e8438a462139b79b6db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudItems: []
 --- !u!1 &210042740
 GameObject:
   m_ObjectHideFlags: 0
@@ -1808,7 +1822,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18847b30ca8cd8349a6d7a1d790eb218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6193620580075898845, guid: ed3e112d8c25327439f5e25ca893a7dc, type: 3}
+  waveSet: {fileID: 11400000, guid: 6afae4bc663e1484ba04032e5ed01e8a, type: 2}
   path: {fileID: 1998197570}
 --- !u!114 &1508472362
 MonoBehaviour:
@@ -1834,6 +1848,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e96cd37dc27d48e4dbea5b565967329a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveManager: {fileID: 1508472361}
+  hudManager: {fileID: 96221702}
 --- !u!4 &1508472364
 Transform:
   m_ObjectHideFlags: 0

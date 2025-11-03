@@ -9,7 +9,7 @@ using _Project.Code.Core.Pool;
 
 public class Enemy : MonoBehaviour, IPoolable
 {
-    [SerializeField] private EnemyConfig enemyConfig;
+    public string Name { get; private set; }
 
     private PathNavigator _pathNavigator;
     private HealthSystem _healthSystem;
@@ -20,9 +20,6 @@ public class Enemy : MonoBehaviour, IPoolable
 
     public void OnCreateForPool()
     {
-        if (enemyConfig == null)
-            Debug.LogError("Missing EnemyConfig!");
-
         _pathNavigator = GetComponent<PathNavigator>();
         _healthSystem = GetComponent<HealthSystem>();
 
@@ -31,13 +28,16 @@ public class Enemy : MonoBehaviour, IPoolable
 
     public void OnSpawnFromPool()
     {
-        _healthSystem.SetMaxHealth(enemyConfig.Health);
-        _healthSystem.OnDiedEvent += OnDied;
     }
 
-    public void Initialize(NavPath path)
+    public void Initialize(EnemyData data, NavPath path)
     {
-        _pathNavigator.SetupPath(path, enemyConfig.Speed, false);
+        Name = data.Name;
+
+        _healthSystem.SetMaxHealth(data.Health);
+        _healthSystem.OnDiedEvent += OnDied;
+
+        _pathNavigator.SetupPath(path, data.Speed, false);
         _pathNavigator.PlayPath();
     }
 

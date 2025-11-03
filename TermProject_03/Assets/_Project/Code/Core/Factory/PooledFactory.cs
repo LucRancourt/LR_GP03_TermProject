@@ -37,5 +37,10 @@ namespace _Project.Code.Core.Factory
         {
             _pool.Clear();
         }
+
+        public bool AnyActive()
+        {
+            return _pool.CountActive > 0;
+        }
     }
 }

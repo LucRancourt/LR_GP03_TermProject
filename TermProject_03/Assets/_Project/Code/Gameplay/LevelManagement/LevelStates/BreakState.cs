@@ -14,7 +14,7 @@ public class BreakState : LevelState
     {
         Debug.Log("Break - Enter");
 
-        CoroutineExecutor.Instance.StartCoroutine(AutoExit());
+        _levelStateManager.StartCoroutine(AutoExit());
     }
 
     public override void Update()
@@ -26,7 +26,7 @@ public class BreakState : LevelState
     {
         Debug.Log("Break - Exit");
 
-        CoroutineExecutor.Instance.StopAllCoroutines();
+        _levelStateManager.StopAllCoroutines();
     }
 
 
