@@ -116,21 +116,18 @@ public class InputController : MonoBehaviourService
     {
         _inputActions.Gameplay.Enable();
         _inputActions.UI.Disable();
-        Debug.Log("Gameplay");
     }
 
     public void EnableUIActions()
     {
         _inputActions.Gameplay.Disable();
         _inputActions.UI.Enable();
-        Debug.Log("UI");
     }
 
     public void DisableAllActions()
     {
         _inputActions.Gameplay.Disable();
         _inputActions.UI.Disable();
-        Debug.Log("NONE");
     }
     #endregion
 

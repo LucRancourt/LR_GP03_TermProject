@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 
 using _Project.Code.Core.Factory;
-using UnityEngine;
 
 public class TowerManager
 {
@@ -35,8 +34,6 @@ public class TowerManager
 
     public Tower SpawnTower(TowerData towerData)
     {
-        Debug.Log("MAX " + _towerPoolFactory[towerData.Name].MaxUnitLimit);
-        Debug.Log("CUL " + _towerPoolFactory[towerData.Name].CurrentUnitLimit);
         if (_towerPoolFactory[towerData.Name].CurrentUnitLimit < _towerPoolFactory[towerData.Name].MaxUnitLimit)
         {
             Tower tower = _towerPoolFactory[towerData.Name].Pool.Create();

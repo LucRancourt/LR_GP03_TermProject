@@ -12,20 +12,15 @@ public class BreakState : LevelState
 
     public override void Enter()
     {
-        Debug.Log("Break - Enter");
-
         _levelStateManager.StartCoroutine(AutoExit());
     }
 
     public override void Update()
     {
-        Debug.Log("Break - Execute");
     }
 
     public override void Exit()
     {
-        Debug.Log("Break - Exit");
-
         _levelStateManager.StopAllCoroutines();
     }
 

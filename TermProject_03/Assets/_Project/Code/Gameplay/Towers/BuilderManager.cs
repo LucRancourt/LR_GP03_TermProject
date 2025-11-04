@@ -17,12 +17,18 @@ public class BuilderManager
 
     public void SetNewTower(Tower newTower)
     {
+        ClearTower();
+
+        _tower = newTower;
+    }
+
+    public void ClearTower()
+    {
         if (_tower)
         {
             _tower.DespawnTower();
+            _tower = null;
         }
-
-        _tower = newTower;
     }
 
     public void BuildTower()

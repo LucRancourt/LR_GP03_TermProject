@@ -20,7 +20,6 @@ public class WaveState : LevelState
     public override void Enter()
     {
         _allWavesCleared = false;
-        Debug.Log("WaveState - Enter");
 
         _waveManager.WaveCompleted += WaveCompleted;
         _waveManager.AllWavesCompleted += AllWavesCleared;
@@ -38,8 +37,6 @@ public class WaveState : LevelState
         _waveManager.AllWavesCompleted -= AllWavesCleared;
 
         _waveManager.CancelEndWaveCheck();
-
-        Debug.Log("WaveState - Exit");
     }
 
     private void WaveCompleted()

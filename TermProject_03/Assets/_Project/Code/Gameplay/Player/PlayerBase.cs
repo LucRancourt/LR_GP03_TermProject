@@ -1,5 +1,7 @@
 using _Project.Code.Core.ServiceLocator;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(PlayerMovement))]
@@ -14,6 +16,8 @@ public class PlayerBase : MonoBehaviour
     private TowerManager _towerManager;
     private BuilderManager _builderManager;
 
+    private TowerData _newTowerData;
+
 
     private void Awake()
     {
@@ -27,28 +31,45 @@ public class PlayerBase : MonoBehaviour
     private void Start()
     {
         ServiceLocator.Get<InputController>().HotbarItemSelectedEvent += SpawnTower;
-        ServiceLocator.Get<InputController>().ClickEvent += PlaceTower;
+        ServiceLocator.Get<InputController>().ClickEvent += PlaceTowerCallback;
     }
 
     private void SpawnTower(TowerData towerData)
     {
         if (towerData == null) return;
+        
+        if (_newTowerData == towerData)
+        {
+            _builderManager.ClearTower();
+            _newTowerData = null;
+            return;
+        }
 
-        _builderManager.SetNewTower(_towerManager.SpawnTower(towerData));
+        _newTowerData = towerData;
+
+        _builderManager.SetNewTower(_towerManager.SpawnTower(_newTowerData));
     }
 
     private void SpawnTower(int index)
     {
         TowerData towerData = _playerInventory.GetTowerData(index);
 
-        if (towerData == null) return;
-
-        _builderManager.SetNewTower(_towerManager.SpawnTower(towerData));
+        SpawnTower(towerData);
     }
 
-    private void PlaceTower()
+    private void PlaceTowerCallback() { StartCoroutine(PlaceTower()); }
+
+    private IEnumerator PlaceTower()
     {
-        _builderManager.BuildTower();
+        yield return null;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+            _builderManager.ClearTower();
+        else
+        {
+            _builderManager.BuildTower();
+            _newTowerData = null;
+        }
     }
 
     private void Update()

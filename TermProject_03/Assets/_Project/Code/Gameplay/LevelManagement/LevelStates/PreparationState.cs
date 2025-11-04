@@ -19,7 +19,7 @@ public class PreparationState : LevelState
     public override void Enter()
     {
         _preparationUI.SetActive(true);
-        Debug.Log("Prep - Enter");
+
         _levelStateManager.StartCoroutine(AutoExit());
 
 
@@ -28,12 +28,10 @@ public class PreparationState : LevelState
 
     public override void Update()
     {
-        Debug.Log("Prep - Exec");
     }
 
     public override void Exit()
     {
-        Debug.Log("Prep - Exit");
         _preparationUI.SetActive(false);
 
         _levelStateManager.StopAllCoroutines();

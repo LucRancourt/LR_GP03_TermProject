@@ -5,19 +5,18 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private TowerData[] towers;
+    [SerializeField] private GameObject towerInventoryHUD;
 
     public event Action<TowerData> OnTowerSelected;
 
     private void Awake()
     {
-        Button[] buttons = GetComponentsInChildren<Button>(true);
+        Button[] buttons = towerInventoryHUD.GetComponentsInChildren<Button>(true);
 
-        int index = 0;
-
-        foreach (Button button in buttons)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            button.onClick.AddListener(() => OnPressWithParameters(index));
-            index++;
+            int index = i;
+            buttons[i].onClick.AddListener(() => OnPressWithParameters(index));
         }
     }
 
