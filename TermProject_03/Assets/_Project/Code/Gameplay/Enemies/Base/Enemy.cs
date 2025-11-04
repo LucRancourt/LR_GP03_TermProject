@@ -5,24 +5,21 @@ using _Project.Code.Core.Pool;
 
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(PathNavigator))]
-[RequireComponent(typeof(HealthSystem))]
 
-public class Enemy : MonoBehaviour, IPoolable
+public class Enemy : BaseDamageable, IPoolable
 {
     public string Name { get; private set; }
 
     private PathNavigator _pathNavigator;
-    private HealthSystem _healthSystem;
 
-    public event Action<Enemy> OnDiedEvent;
-
+    public event Action<Enemy> OnEnemyDiedEvent;
 
 
     public void OnCreateForPool()
     {
         _pathNavigator = GetComponent<PathNavigator>();
-        _healthSystem = GetComponent<HealthSystem>();
 
+        SetupHealthSystem();
         SetupCollider();
     }
 
@@ -34,8 +31,8 @@ public class Enemy : MonoBehaviour, IPoolable
     {
         Name = data.Name;
 
-        _healthSystem.SetMaxHealth(data.Health);
-        _healthSystem.OnDiedEvent += OnDied;
+        SetHealthDefaults(data.Health);
+        OnDied += OnEnemyDied;
 
         _pathNavigator.SetupPath(path, data.Speed, false);
         _pathNavigator.PlayPath();
@@ -54,19 +51,25 @@ public class Enemy : MonoBehaviour, IPoolable
     {
         if (other.GetComponent<Base>())
         {
-            other.GetComponent<HealthSystem>().OnDamaged(_healthSystem.CurrentHealth);
-            OnDied();
+            if (other.TryGetComponent(out IDamageable damageable))
+            {
+                Debug.Log("WTFFFFFFFFFFFFFFFF " + GetCurrentHealth());
+                damageable.OnDamaged(GetCurrentHealth());
+                OnEnemyDied();
+            }
         }
     }
 
-    private void OnDied()
+    private void OnEnemyDied()
     {
-        OnDiedEvent?.Invoke(this);
+        OnEnemyDiedEvent?.Invoke(this);
     }
 
     public void OnReturnToPool()
     {
-        _healthSystem.OnDiedEvent -= OnDied;
+        ResetHealthDefaults();
+        OnDied -= OnEnemyDied;
+
         _pathNavigator.StopPath();
     }
 }

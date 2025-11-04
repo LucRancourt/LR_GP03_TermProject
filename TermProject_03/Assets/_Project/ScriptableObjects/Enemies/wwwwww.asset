@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e392738ea83c85c4abd5b85a95804db1, type: 3}
   m_Name: wwwwww
   m_EditorClassIdentifier: 
-  Name: Orc
+  Name: NotOrc
   Prefab: {fileID: 6193620580075898845, guid: 40570c8283667d549a3da186eee55a12, type: 3}
   Health: 2
   Speed: 10

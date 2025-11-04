@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesToSpawn:
   - Enemy: {fileID: 11400000, guid: 8fd73d0d13c55fb4695976418671e1af, type: 2}
-    Count: 2
+    Count: 7
     StartDelay:
-      Min: 1
+      Min: 5
       Max: 5
     DelayBetweenEnemies:
       Min: 1
-      Max: 3
+      Max: 1
     Initialized: 1
   - Enemy: {fileID: 11400000, guid: 50c7f9e8056d10c4d9fc1740d99a9a36, type: 2}
     Count: 3

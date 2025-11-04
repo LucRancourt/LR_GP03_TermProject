@@ -9,6 +9,8 @@ public class LevelManager : Singleton<LevelManager>
 {
     LevelStateManager _levelStateManager;
 
+    [SerializeField] private Base playerBase;
+
     // Difficulty set somewhere per level -> not sure where to get from, maybe WaveManager? Idk
 
     
@@ -16,12 +18,12 @@ public class LevelManager : Singleton<LevelManager>
     private void Start()
     {
         _levelStateManager = GetComponent<LevelStateManager>();
-
-        Base.Instance.Initialize(100.0f);
+        playerBase.OnDied += SetGameOver;
     }
 
     public void SetGameOver()
     {
+        playerBase.OnDied -= SetGameOver;
         _levelStateManager.TransitionToState<LevelOverState>();
     }
 }

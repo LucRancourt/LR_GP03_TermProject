@@ -945,6 +945,7 @@ GameObject:
   - component: {fileID: 790014494}
   - component: {fileID: 790014499}
   - component: {fileID: 790014500}
+  - component: {fileID: 790014501}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -964,6 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671d28704cb8793478d4c6e656608293, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!65 &790014495
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1092,6 +1094,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4143012b4142351488f55c25d2784a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &790014501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790014493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17eb46808b253684d8dc68a224b59366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startVisible: 1
 --- !u!1 &918210157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,6 +1851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4369fb387eb8f8f488b9e29252920c8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBase: {fileID: 790014494}
 --- !u!114 &1508472363
 MonoBehaviour:
   m_ObjectHideFlags: 0

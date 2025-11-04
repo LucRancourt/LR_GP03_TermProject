@@ -40,7 +40,7 @@ public class EnemyManager
         Debug.Log("Spawning " + enemyData.Prefab);
         Enemy enemy = _enemyPoolFactory[enemyData.Name].Create();
         enemy.Initialize(enemyData, path);
-        enemy.OnDiedEvent += DespawnEnemy;
+        enemy.OnEnemyDiedEvent += DespawnEnemy;
 
         ActiveEnemyCount++;
     }
@@ -48,7 +48,7 @@ public class EnemyManager
     public void DespawnEnemy(Enemy enemyToDespawn)
     {
         Debug.Log("Killing " + enemyToDespawn.name);
-        enemyToDespawn.OnDiedEvent -= DespawnEnemy;
+        enemyToDespawn.OnEnemyDiedEvent -= DespawnEnemy;
         _enemyPoolFactory[enemyToDespawn.Name].Return(enemyToDespawn);
 
         ActiveEnemyCount--;

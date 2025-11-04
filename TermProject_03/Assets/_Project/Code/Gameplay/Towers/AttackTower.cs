@@ -24,7 +24,8 @@ public class AttackTower : RangedTower
 
             if (_enemiesInRange.Count != 0)
             {
-                _enemiesInRange[0].GetComponent<HealthSystem>().OnDamaged(_towerConfig.Damage);
+                if (_enemiesInRange[0].TryGetComponent(out IDamageable damageable))
+                    damageable.OnDamaged(_towerConfig.Damage);
 
                 Debug.DrawLine(transform.position, _enemiesInRange[0].transform.position, Color.red, 2.0f);
 
