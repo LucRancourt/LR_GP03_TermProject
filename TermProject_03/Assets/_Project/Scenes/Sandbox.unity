@@ -410,6 +410,9 @@ GameObject:
   - component: {fileID: 400168914}
   - component: {fileID: 400168913}
   - component: {fileID: 400168917}
+  - component: {fileID: 400168920}
+  - component: {fileID: 400168919}
+  - component: {fileID: 400168918}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -492,6 +495,48 @@ MonoBehaviour:
   zoomSpeed: 0.5
   zoomSmoothTime: 0.05
   zoomStrength: 100
+--- !u!114 &400168918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400168912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b80b5a98a6ecb4e93a5ce0b5e9781c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+--- !u!114 &400168919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400168912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51903178138be424fb31014c4613768b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &400168920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400168912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 210958bab44dc644281e51728b47029c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towers:
+  - {fileID: 11400000, guid: 750c5bfd468356a41997437422f0ed98, type: 2}
+  - {fileID: 11400000, guid: e38ac79d93e91a840aa057f0a0958ba3, type: 2}
 --- !u!1 &581076694
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +670,6 @@ GameObject:
   - component: {fileID: 690669128}
   - component: {fileID: 690669127}
   - component: {fileID: 690669126}
-  - component: {fileID: 690669130}
   m_Layer: 5
   m_Name: Canvas_HUD
   m_TagString: Untagged
@@ -716,22 +760,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &690669130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 690669125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca69aa264dbe18547952e9f032719ce2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onlyCurrentTower_TempVar: {fileID: 7566952754346439963, guid: 9a6ae8db9395cc64c8ee48a632517ddd, type: 3}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!1 &696491965
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +972,6 @@ GameObject:
   - component: {fileID: 790014495}
   - component: {fileID: 790014494}
   - component: {fileID: 790014499}
-  - component: {fileID: 790014500}
   - component: {fileID: 790014501}
   m_Layer: 0
   m_Name: Base
@@ -1082,18 +1109,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &790014500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790014493}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4143012b4142351488f55c25d2784a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &790014501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1756,7 +1771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 690669130}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BuilderManager, Assembly-CSharp
         m_MethodName: OnUIClicked
         m_Mode: 1
@@ -2146,6 +2161,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7566952754346439963, guid: 9a6ae8db9395cc64c8ee48a632517ddd, type: 3}
+      propertyPath: towerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 750c5bfd468356a41997437422f0ed98, type: 2}
     - target: {fileID: 8488417230457912463, guid: 9a6ae8db9395cc64c8ee48a632517ddd, type: 3}
       propertyPath: m_Name
       value: Tower

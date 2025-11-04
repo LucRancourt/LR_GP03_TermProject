@@ -30,14 +30,12 @@ public class EnemyManager
 
         foreach (EnemyData enemyToPool in enemyCounts.Keys)
         {
-            Debug.Log(enemyToPool.Name);
             _enemyPoolFactory[enemyToPool.Name] = new PooledFactory<Enemy>(enemyToPool.Prefab, enemyCounts[enemyToPool]);
         }
     }
 
     public void SpawnEnemy(EnemyData enemyData, NavPath path)
     {
-        Debug.Log("Spawning " + enemyData.Prefab);
         Enemy enemy = _enemyPoolFactory[enemyData.Name].Create();
         enemy.Initialize(enemyData, path);
         enemy.OnEnemyDiedEvent += DespawnEnemy;
@@ -47,7 +45,6 @@ public class EnemyManager
 
     public void DespawnEnemy(Enemy enemyToDespawn)
     {
-        Debug.Log("Killing " + enemyToDespawn.name);
         enemyToDespawn.OnEnemyDiedEvent -= DespawnEnemy;
         _enemyPoolFactory[enemyToDespawn.Name].Return(enemyToDespawn);
 

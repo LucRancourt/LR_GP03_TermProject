@@ -1,39 +1,38 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 using _Project.Code.Core.General;
 
 
-public class BuilderManager : MonoBehaviour
+public class BuilderManager
 {
     // Variables
-    [SerializeField] private Tower onlyCurrentTower_TempVar;
-    [SerializeField] private LayerMask groundLayer;
-    private GameObject _towerObject;
+    private LayerMask _groundLayer;
 
+    private Tower _tower;
 
-    // Sits on per Player? Thought maybe Singleton but then how to detect if currently holding something already?
-
-    // One for Building
-    // One for Upgrades
-    // Main one for Tower in general?
-
-    // Use Pool somewhere instead of below
-
-
-
-    // Functions
-    public void OnUIClicked()
+    public BuilderManager(LayerMask groundLayer)
     {
-        if (_towerObject)
-            Destroy(_towerObject);
-        else
-            _towerObject = Instantiate(onlyCurrentTower_TempVar).gameObject;
+        _groundLayer = groundLayer;
     }
 
-    private void Update()
+    public void SetNewTower(Tower newTower)
     {
-        if (_towerObject)
+        if (_tower)
+        {
+            _tower.DespawnTower();
+        }
+
+        _tower = newTower;
+    }
+
+    public void BuildTower()
+    {
+        _tower = null;
+    }
+
+    public void Update()
+    {
+        if (_tower)
         {
             Vector3 pos = Input.mousePosition;
             pos.z += 5.0f;
@@ -42,19 +41,10 @@ public class BuilderManager : MonoBehaviour
             Vector3 dir = MyUtils.GetDirection(pos, Camera.main.transform.position);
 
             Debug.DrawLine(Camera.main.transform.position, dir * 200.0f);
-            if (Physics.Raycast(Camera.main.transform.position, dir, out RaycastHit hit, 2000.0f, groundLayer))
+            if (Physics.Raycast(Camera.main.transform.position, dir, out RaycastHit hit, 2000.0f, _groundLayer))
             {
-                _towerObject.transform.position = hit.point;
+                _tower.transform.position = hit.point;
             }
-        }
-            
-
-        if (Input.GetMouseButtonDown(0) && _towerObject)
-        {
-            if (EventSystem.current.IsPointerOverGameObject()) return;
-
-            Instantiate(_towerObject).transform.position = _towerObject.transform.position;
-            Destroy(_towerObject);
         }
     }
 }

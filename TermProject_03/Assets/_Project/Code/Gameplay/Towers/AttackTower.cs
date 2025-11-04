@@ -7,11 +7,11 @@ public class AttackTower : RangedTower
 
 
     // Functions
-    protected override void Awake()
+    protected override void Initialize()
     {
-        if (_towerConfig.Type != TowerType.Attack) Debug.LogError("Unsupported TowerType!");
+        base.Initialize();
 
-        base.Awake();
+        if (towerData.Type != TowerType.Attack) Debug.LogError("Unsupported TowerType!");
     }
 
     private void Update()
@@ -25,11 +25,11 @@ public class AttackTower : RangedTower
             if (_enemiesInRange.Count != 0)
             {
                 if (_enemiesInRange[0].TryGetComponent(out IDamageable damageable))
-                    damageable.OnDamaged(_towerConfig.Damage);
+                    damageable.OnDamaged(towerData.Damage);
 
                 Debug.DrawLine(transform.position, _enemiesInRange[0].transform.position, Color.red, 2.0f);
 
-                _cooldown = _towerConfig.Rate;
+                _cooldown = towerData.Rate;
             }
         }
     }

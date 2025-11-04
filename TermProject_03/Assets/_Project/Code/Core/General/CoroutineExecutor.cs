@@ -26,8 +26,6 @@ namespace _Project.Code.Core.General
 
         private IEnumerator OnConditionMet(Func<bool> condition, Action callback)
         {
-            Debug.Log("Calling...");
-
             if (condition == null)
                 throw new ArgumentNullException("Null Condition " + nameof(condition));
 
@@ -35,7 +33,6 @@ namespace _Project.Code.Core.General
                 yield return null;
 
             callback?.Invoke();
-            Debug.Log("Callback called!");
         }
 
         public void CancelCoroutine(Coroutine coroutine)

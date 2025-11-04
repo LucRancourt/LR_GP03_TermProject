@@ -6,7 +6,7 @@ using _Project.Code.Core.Pool;
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(PathNavigator))]
 
-public class Enemy : BaseDamageable, IPoolable
+public class Enemy : BaseDamageable, IPoolable, IClickable
 {
     public string Name { get; private set; }
 
@@ -53,7 +53,6 @@ public class Enemy : BaseDamageable, IPoolable
         {
             if (other.TryGetComponent(out IDamageable damageable))
             {
-                Debug.Log("WTFFFFFFFFFFFFFFFF " + GetCurrentHealth());
                 damageable.OnDamaged(GetCurrentHealth());
                 OnEnemyDied();
             }
@@ -71,5 +70,15 @@ public class Enemy : BaseDamageable, IPoolable
         OnDied -= OnEnemyDied;
 
         _pathNavigator.StopPath();
+    }
+
+    public void ShowVisuals()
+    {
+        SetUIDisplay(true);
+    }
+
+    public void HideVisuals()
+    {
+        SetUIDisplay(false);
     }
 }

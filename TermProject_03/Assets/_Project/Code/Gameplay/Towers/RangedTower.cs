@@ -3,7 +3,6 @@ using UnityEngine;
 
 public abstract class RangedTower : Tower
 {
-    // Variables
     [SerializeField] private Material rangeMaterial;
     [SerializeField] private LayerMask detectionLayer;
 
@@ -14,16 +13,12 @@ public abstract class RangedTower : Tower
     protected List<Enemy> _enemiesInRange = new List<Enemy>();
 
 
-    // Functions
-    protected override void Awake()
+    protected override void Initialize()
     {
-        base.Awake();
-
-
         _rangeSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         _rangeSphere.transform.SetParent(transform);
         _rangeSphere.transform.localPosition = Vector3.zero;
-        _rangeSphere.transform.localScale = new Vector3(_towerConfig.Range, _towerConfig.Range, _towerConfig.Range);
+        _rangeSphere.transform.localScale = new Vector3(towerData.Range, towerData.Range, towerData.Range);
 
         _rangeMesh = _rangeSphere.GetComponent<MeshRenderer>();
         _rangeMesh.material = rangeMaterial;
@@ -31,13 +26,13 @@ public abstract class RangedTower : Tower
         _triggerDetector = _rangeSphere.AddComponent<TriggerDetector>();
     }
 
-    private void OnEnable()
+    protected override void OnEnabled()
     {
         _triggerDetector.OnTriggerEnterDetected += TriggerEnterDetected;
         _triggerDetector.OnTriggerExitDetected += TriggerExitDetected;
     }
 
-    private void OnDisable()
+    protected override void OnDisabled()
     {
         _triggerDetector.OnTriggerEnterDetected -= TriggerEnterDetected;
         _triggerDetector.OnTriggerExitDetected -= TriggerExitDetected;

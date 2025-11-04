@@ -11,6 +11,8 @@ public class HealthController : BaseController<HealthModel, HealthView>, IDamage
     private float _maxHealth = 0.0f;
     public float CurrentHealth { get; private set; }
 
+    private bool _displayUI = false;
+
     public event Action OnDiedEvent;
 
 
@@ -29,6 +31,25 @@ public class HealthController : BaseController<HealthModel, HealthView>, IDamage
         Model?.Initialize();
         View?.Initialize();
     }
+
+    public void SetUIDisplay(bool state)
+    {
+        _displayUI = state;
+
+        if (_displayUI)
+            View?.Show();
+        else
+            View?.Hide();
+    }
+
+    public override void Enable()
+    {
+        if (_isEnabled) return;
+
+        _isEnabled = true;
+        OnEnabled();
+    }
+
     protected override void OnModelDataChanged()
     {
         if (_isEnabled)

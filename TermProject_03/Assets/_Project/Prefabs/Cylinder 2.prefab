@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 217826358902806745}
   - component: {fileID: 1364516805103444731}
   m_Layer: 0
-  m_Name: Cylinder 1
+  m_Name: Cylinder 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: -5867597611797030105, guid: def4f29a31ac0544c8956e9c535e9dd8, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -123,7 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb029871efb25e4287ab17db25f2a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerData: {fileID: 0}
   rangeMaterial: {fileID: 2100000, guid: 0a1e7da76cde82541be34407110c5c9a, type: 2}
   detectionLayer:
     serializedVersion: 2

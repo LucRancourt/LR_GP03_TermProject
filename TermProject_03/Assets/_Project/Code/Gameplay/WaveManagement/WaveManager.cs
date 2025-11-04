@@ -49,7 +49,6 @@ public class WaveManager : MonoBehaviour
     private IEnumerator SpawnWave(EnemyGroup enemyGroup)
     {
         yield return new WaitForSeconds(enemyGroup.StartDelay.RandomValue());
-        Debug.Log("Spawning Wave " + _currentWaveIndex);
 
         for (int i = 0; i < enemyGroup.Count; i++)
         {
@@ -68,7 +67,6 @@ public class WaveManager : MonoBehaviour
 
         if (_wavesCompleted != _wavesToSpawn) return;
 
-        Debug.Log("Spawning Complete!");
         StartEndWaveCheck();
     }
 

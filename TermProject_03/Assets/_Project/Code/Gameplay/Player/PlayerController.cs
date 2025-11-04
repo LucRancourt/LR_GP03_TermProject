@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using _Project.Code.Core.ServiceLocator;
+using System;
 //[RequireComponent(typeof(InputController))]
 [RequireComponent(typeof(PlayerMovement))]
 
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 LookInput { get; private set; }
     public bool IsRotatingCam { get; private set; }
     public float ZoomInput { get; private set; }
+
 
     [Header("Interactable")]
     [SerializeField] private LayerMask interactLayer;

@@ -10,6 +10,10 @@ public class SpawnTower : Tower
     private float _cooldown;
     private PooledFactory<Tower> _spawnUnitPool;
 
+    protected override void Initialize()
+    {
+    }
+
     /*
 
     // Functions

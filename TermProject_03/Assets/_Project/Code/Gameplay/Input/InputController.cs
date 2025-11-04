@@ -17,10 +17,14 @@ public class InputController : MonoBehaviourService
     #region Actions
     public event Action<Vector2> MoveEvent;
 
-    // Camera Movement Events
+        // Camera Movement Events
     public event Action<Vector2> LookEvent;
     public event Action<bool> CameraRotateEvent;
     public event Action<float> ZoomEvent;
+
+        // Tower Selecting/Placing Events
+    public event Action<int> HotbarItemSelectedEvent;
+    public event Action ClickEvent;
     #endregion
 
 
@@ -40,6 +44,9 @@ public class InputController : MonoBehaviourService
         _inputActions.Gameplay.Zoom.performed += HandleZoomPerformed;
 
         _inputActions.Gameplay.PauseGame.performed += HandlePausePerformed;
+
+        _inputActions.Gameplay.SelectHotbarItem.performed += HandleSelectHorbarItemPerformed;
+        _inputActions.Gameplay.Click.performed += HandleClickPerformed;
 
         _inputActions.Gameplay.Enable();
 
@@ -71,6 +78,31 @@ public class InputController : MonoBehaviourService
     private void HandleZoomPerformed(InputAction.CallbackContext context)
     {
         ZoomEvent?.Invoke((context.ReadValue<Vector2>().normalized).y);
+    }
+
+    private void HandleSelectHorbarItemPerformed(InputAction.CallbackContext context)
+    {
+        int bindingIndex = context.action.GetBindingIndexForControl(context.control);
+        InputBinding binding = context.action.bindings[bindingIndex];
+
+        int hotbarSlot = -1;
+
+        switch (binding.path)
+        {
+            case "<Keyboard>/1": hotbarSlot = 1; break;
+            case "<Keyboard>/2": hotbarSlot = 2; break;
+            case "<Keyboard>/3": hotbarSlot = 3; break;
+            case "<Keyboard>/4": hotbarSlot = 4; break;
+            case "<Keyboard>/5": hotbarSlot = 5; break;
+        }
+
+        if (hotbarSlot != -1)
+            HotbarItemSelectedEvent?.Invoke(hotbarSlot);
+    }
+
+    private void HandleClickPerformed(InputAction.CallbackContext context)
+    {
+        ClickEvent?.Invoke();
     }
 
     private void HandlePausePerformed(InputAction.CallbackContext context)
@@ -118,6 +150,8 @@ public class InputController : MonoBehaviourService
 
             _inputActions.Gameplay.PauseGame.performed -= HandlePausePerformed;
 
+            _inputActions.Gameplay.SelectHotbarItem.performed -= HandleSelectHorbarItemPerformed;
+            _inputActions.Gameplay.Click.performed -= HandleClickPerformed;
 
             _inputActions.UI.UnPause.performed -= HandlePausePerformed;
         }
