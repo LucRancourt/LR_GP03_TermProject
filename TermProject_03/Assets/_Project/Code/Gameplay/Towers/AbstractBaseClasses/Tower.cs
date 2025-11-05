@@ -4,7 +4,7 @@ using UnityEngine;
 using _Project.Code.Core.Pool;
 
 
-public abstract class Tower : MonoBehaviour, IPoolable, IClickable
+public abstract class Tower : MonoBehaviour, IPoolable, ITower
 {
     public TowerData TowerData { get; private set; }
     private bool _hasBeenInitialized = false;

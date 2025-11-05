@@ -26,9 +26,12 @@ public class AttackStrategy : ScriptableStrategy<AttackInput>
     private void OnHitTarget()
     {
         pathNav.TEMP_HitTarget -= OnHitTarget;
+
+        OnDamageTarget?.Invoke();
+
+        if (projectile == null) return;
         projectile.SetActive(false);
         Destroy(projectile);
-        OnDamageTarget?.Invoke();
     }
 }
 

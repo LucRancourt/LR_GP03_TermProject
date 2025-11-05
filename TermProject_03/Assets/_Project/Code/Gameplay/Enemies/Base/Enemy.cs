@@ -6,7 +6,7 @@ using _Project.Code.Core.Pool;
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(PathNavigator))]
 
-public class Enemy : BaseDamageable, IPoolable, IClickable
+public class Enemy : BaseDamageable, IPoolable
 {
     public string Name { get; private set; }
 

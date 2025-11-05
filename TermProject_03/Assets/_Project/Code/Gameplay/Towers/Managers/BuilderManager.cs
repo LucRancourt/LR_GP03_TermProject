@@ -1,14 +1,11 @@
 using UnityEngine;
-using System.Collections.Generic;
-
 
 public class BuilderManager
 {
-    // Variables
     private int _groundLayer;
 
     private Tower _tower;
-    private List<Tower> _builtTowers = new();
+    private TowerGroup _builtTowers = new();
 
     public BuilderManager(int groundLayer)
     {
@@ -36,13 +33,10 @@ public class BuilderManager
 
     private void ShowSpaceOnBuilds(bool isVisible)
     {
-        foreach (Tower tower in _builtTowers)
-        {
-            if (isVisible)
-                tower.ShowSpaceTaken();
-            else
-                tower.HideVisuals();
-        }
+        if (isVisible)
+            _builtTowers.ShowVisuals();
+        else
+            _builtTowers.HideVisuals();
     }
 
     public void ClearTower()
