@@ -10,7 +10,6 @@ public class WaveSet : ScriptableObject
     //public IModifier[] modifiers;    <- For later
 
 
-
     private void OnValidate()
     {
         // Something in here to make sure no duplicate modifiers are chosen

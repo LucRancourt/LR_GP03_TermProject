@@ -83,5 +83,3 @@ public class WaveManager : MonoBehaviour
             CoroutineExecutor.Instance.CancelCoroutine(_waveCompletedCoroutine);
     }
 }
-
-
