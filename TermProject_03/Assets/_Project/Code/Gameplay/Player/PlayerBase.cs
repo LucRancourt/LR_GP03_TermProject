@@ -80,6 +80,8 @@ public class PlayerBase : MonoBehaviour
             if (CameraToMouseRaycast.TryRaycastWithComponent(towerModelLayer, out _selectedTower))
             {
                 _selectedTower.ShowVisuals();
+                TowerUIWindow.Instance.UpdateDisplay(_selectedTower.TowerData);
+                TowerUIWindow.Instance.Show();
             }
         }
     }
@@ -88,6 +90,7 @@ public class PlayerBase : MonoBehaviour
     {
         if (_selectedTower != null)
         {
+            TowerUIWindow.Instance.Hide();
             _selectedTower.HideVisuals();
             _selectedTower = null;
         }

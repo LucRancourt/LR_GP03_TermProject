@@ -22,7 +22,7 @@ public abstract class RangedTower : Tower
         _rangeSphere.transform.SetParent(transform);
         _rangeSphere.name = "RangedTower - RangeIndicator";
         _rangeSphere.transform.localPosition = Vector3.zero;
-        _rangeSphere.transform.localScale = new Vector3(towerData.Range, towerData.Range, towerData.Range);
+        _rangeSphere.transform.localScale = new Vector3(TowerData.Range, TowerData.Range, TowerData.Range);
 
         _rangeMesh = _rangeSphere.GetComponent<MeshRenderer>();
         _rangeMesh.material = rangeMaterial;

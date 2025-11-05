@@ -6,7 +6,7 @@ using _Project.Code.Core.Pool;
 
 public abstract class Tower : MonoBehaviour, IPoolable, IClickable
 {
-    protected TowerData towerData;
+    public TowerData TowerData { get; private set; }
     private bool _hasBeenInitialized = false;
     [SerializeField] private int towerSpaceLayer;
     [SerializeField] private int towerModelLayer;
@@ -31,7 +31,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
 
     public virtual void ShowVisuals()
     {
-        OnClicked?.Invoke(this, towerData);
+        OnClicked?.Invoke(this, TowerData);
         ShowSpaceTaken();
     }
 
@@ -47,7 +47,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
 
     public void Initialize(TowerData data)
     {
-        towerData = data;
+        TowerData = data;
 
         if (_hasBeenInitialized) return;
 
@@ -57,7 +57,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
         _spaceTakenObject.transform.SetParent(transform);
         _spaceTakenObject.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
         _spaceTakenObject.transform.localRotation = Quaternion.Euler(90, _spaceTakenYRotation, 0);
-        _spaceTakenObject.transform.localScale = new Vector3(towerData.SpaceTaken, towerData.SpaceTaken, towerData.SpaceTaken);
+        _spaceTakenObject.transform.localScale = new Vector3(TowerData.SpaceTaken, TowerData.SpaceTaken, TowerData.SpaceTaken);
 
         _spaceTakenCircle = _spaceTakenObject.AddComponent<SpriteRenderer>();
         _spaceTakenCircle.drawMode = SpriteDrawMode.Sliced;
@@ -77,7 +77,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
     public void DespawnTower()
     {
         SetLayer(false);
-        OnDespawned?.Invoke(this, towerData);
+        OnDespawned?.Invoke(this, TowerData);
     }
 
     protected virtual void OnEnabled() { }
@@ -114,7 +114,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
     {
         if (gameObject.layer == towerModelLayer) return;
 
-        if (Physics.CheckSphere(transform.position, towerData.SpaceTaken * 1.2f, spaceLayer))
+        if (Physics.CheckSphere(transform.position, TowerData.SpaceTaken * 1.2f, spaceLayer))
         {
             _isOverlapping = true;
             _spaceTakenCircle.material = spaceOverlapMat;

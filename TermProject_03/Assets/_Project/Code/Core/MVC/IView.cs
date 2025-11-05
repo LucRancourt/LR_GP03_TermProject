@@ -8,7 +8,7 @@ namespace _Project.Code.Core.MVC
         void UpdateDisplay();
         void Dispose();
     }
-    
+
     public interface IView<T> : IView
     {
         void UpdateDisplay(T data);
