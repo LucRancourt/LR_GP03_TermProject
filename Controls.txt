@@ -1,9 +1,11 @@
+P to Pause
+
 WASD to Move
 RightClick + Mouse to LookAround
 Scroll Wheel to Zoom/Go Up/Down based on Direction Facing
 
-Q to spawn an Enemy
-LeftClick on SpawnTower to 
-	SpawnNewTower on Cursor
-	Destroy current Tower on Cursor
+1-5 to SpawnTower instead of LeftClicking directly on UI
+
 LeftClick on 'Ground' Scene with NewTower to place
+
+LeftClick on Placed Tower to Select
