@@ -81,4 +81,6 @@ public class Enemy : BaseDamageable, IPoolable, IClickable
     {
         SetUIDisplay(false);
     }
+
+    public void OnClick() { }
 }

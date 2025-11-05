@@ -75,7 +75,7 @@ public class BuilderManager
         return false;
     }
 
-    public void SellTower(Tower towerToSell)
+    public void RemoveTower(Tower towerToSell)
     {
         _builtTowers.Remove(towerToSell);
     }

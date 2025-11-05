@@ -33,6 +33,18 @@ public class PlayerTowerMediator : MonoBehaviour
     {
         ServiceLocator.Get<InputController>().HotbarItemSelectedEvent += SpawnTower;
         ServiceLocator.Get<InputController>().ClickEvent += ClickCallback;
+
+        TowerUIWindow.Instance.OnUpgrade += SellSelectedTower;
+        TowerUIWindow.Instance.OnSell += SellSelectedTower;
+    }
+
+    private void SellSelectedTower()
+    {
+        _builderManager.RemoveTower(_selectedTower);
+        _towerManager.DespawnTower(_selectedTower);
+        Debug.Log("Sold for " + _selectedTower.TowerData.SellValue);
+
+        ClearSelectedTower();
     }
 
     private void SpawnTower(TowerData towerData)
@@ -87,18 +99,6 @@ public class PlayerTowerMediator : MonoBehaviour
     private void ClearSelectedTower()
     {
         if (_selectedTower != null)
-        {
-            TowerUIWindow.Instance.Hide();
-            _selectedTower.HideVisuals();
-            _selectedTower = null;
-        }
-    }
-
-    private IEnumerator HideElements()
-    {
-        yield return null;
-
-        if (!EventSystem.current.IsPointerOverGameObject() && _selectedTower != null)
         {
             TowerUIWindow.Instance.Hide();
             _selectedTower.HideVisuals();

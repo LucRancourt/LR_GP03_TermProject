@@ -24,14 +24,13 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
 
     [SerializeField] private LayerMask spaceLayer;
 
-    public event Action<Tower, TowerData> OnDespawned;
-    public event Action<Tower, TowerData> OnClicked;
+    public event Action<Tower> OnDespawned;
 
 
+    public void OnClick() { }
 
     public virtual void ShowVisuals()
     {
-        OnClicked?.Invoke(this, TowerData);
         ShowSpaceTaken();
     }
 
@@ -77,7 +76,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
     public void DespawnTower()
     {
         SetLayer(false);
-        OnDespawned?.Invoke(this, TowerData);
+        OnDespawned?.Invoke(this);
     }
 
     protected virtual void OnEnabled() { }
@@ -87,13 +86,19 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
     public void OnSpawnFromPool()
     {
         if (_hasBeenInitialized)
+        {
+            ShowVisuals();
             OnEnabled();
+        }
     }
 
     public void OnReturnToPool()
     {
         if (_hasBeenInitialized)
+        {
+            HideVisuals();
             OnDisabled();
+        }
     }
 
     protected virtual void Update()

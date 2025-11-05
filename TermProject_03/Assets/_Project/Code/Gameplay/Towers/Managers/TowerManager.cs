@@ -67,11 +67,11 @@ public class TowerManager
         return false;
     }
 
-    public void DespawnTower(Tower towerToDespawn, TowerData towerData)
+    public void DespawnTower(Tower towerToDespawn)
     {
         towerToDespawn.OnDespawned -= DespawnTower;
 
-        _towerPoolFactory[towerData.Name].Pool.Return(towerToDespawn);
-        _towerPoolFactory[towerData.Name].SubtractFromCurrentLimit();
+        _towerPoolFactory[towerToDespawn.TowerData.Name].Pool.Return(towerToDespawn);
+        _towerPoolFactory[towerToDespawn.TowerData.Name].SubtractFromCurrentLimit();
     }
 }
