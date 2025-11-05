@@ -32,17 +32,17 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
     public virtual void ShowVisuals()
     {
         OnClicked?.Invoke(this, towerData);
-        ShowSpaceTaken(true);
+        ShowSpaceTaken();
     }
 
-    public void ShowSpaceTaken(bool isVisible)
+    public void ShowSpaceTaken()
     {
-        _spaceTakenCircle.enabled = isVisible;
+        _spaceTakenCircle.enabled = true;
     }
 
     public virtual void HideVisuals()
     {
-        ShowSpaceTaken(false);
+        _spaceTakenCircle.enabled = false;
     }
 
     public void Initialize(TowerData data)

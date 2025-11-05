@@ -30,6 +30,20 @@ public abstract class RangedTower : Tower
         _triggerDetector = _rangeSphere.AddComponent<TriggerDetector>();
     }
 
+    public override void ShowVisuals()
+    {
+        base.ShowVisuals();
+
+        _rangeMesh.enabled = true;
+    }
+
+    public override void HideVisuals()
+    {
+        base.HideVisuals();
+
+        _rangeMesh.enabled = false;
+    }
+
     protected override void OnEnabled()
     {
         _triggerDetector.OnTriggerEnterDetected += TriggerEnterDetected;
@@ -42,11 +56,6 @@ public abstract class RangedTower : Tower
         _triggerDetector.OnTriggerExitDetected -= TriggerExitDetected;
     }
 
-    protected virtual void TriggerEnterDetected(Collider other)
-    {
-    }
-
-    protected virtual void TriggerExitDetected(Collider other)
-    {
-    }
+    protected virtual void TriggerEnterDetected(Collider other) { }
+    protected virtual void TriggerExitDetected(Collider other) { }
 }

@@ -31,7 +31,10 @@ public class BuilderManager
     {
         foreach (Tower tower in _builtTowers)
         {
-            tower.ShowSpaceTaken(isVisible);
+            if (isVisible)
+                tower.ShowSpaceTaken();
+            else
+                tower.HideVisuals();
         }
     }
 
