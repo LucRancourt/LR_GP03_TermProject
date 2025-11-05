@@ -15,8 +15,13 @@ public class BuilderManager
         _groundLayer = groundLayer;
     }
 
-    public void SetNewTower(Tower newTower)
+    public void SetNewTower(Tower newTower, out TowerData towerDataResult)
     {
+        if (_tower == null)
+            towerDataResult = null;
+        else
+            towerDataResult = _tower.TowerData;
+
         if (newTower == null) return;
 
         ClearTower();
@@ -25,6 +30,8 @@ public class BuilderManager
         _tower.SetLayer(true);
 
         ShowSpaceOnBuilds(true);
+
+        towerDataResult = _tower.TowerData;
     }
 
     private void ShowSpaceOnBuilds(bool isVisible)

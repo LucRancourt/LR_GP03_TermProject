@@ -4,12 +4,10 @@ using UnityEngine.EventSystems;
 
 using _Project.Code.Core.ServiceLocator;
 
-[RequireComponent(typeof(PlayerController))]
-[RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerInventory))]
 [RequireComponent(typeof(PlayerWallet))]
 
-public class PlayerBase : MonoBehaviour
+public class PlayerTowerMediator : MonoBehaviour
 {
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask towerModelLayer;
@@ -50,9 +48,7 @@ public class PlayerBase : MonoBehaviour
             return;
         }
 
-        _newTowerData = towerData;
-
-        _builderManager.SetNewTower(_towerManager.SpawnTower(_newTowerData));
+        _builderManager.SetNewTower(_towerManager.SpawnTower(towerData), out _newTowerData);
     }
 
     private void SpawnTower(int index)
@@ -68,6 +64,8 @@ public class PlayerBase : MonoBehaviour
     private IEnumerator CheckClick()
     {
         yield return null;
+
+        if (EventSystem.current.IsPointerOverGameObject()) yield break;
 
         if (_newTowerData != null)
         {
@@ -89,6 +87,18 @@ public class PlayerBase : MonoBehaviour
     private void ClearSelectedTower()
     {
         if (_selectedTower != null)
+        {
+            TowerUIWindow.Instance.Hide();
+            _selectedTower.HideVisuals();
+            _selectedTower = null;
+        }
+    }
+
+    private IEnumerator HideElements()
+    {
+        yield return null;
+
+        if (!EventSystem.current.IsPointerOverGameObject() && _selectedTower != null)
         {
             TowerUIWindow.Instance.Hide();
             _selectedTower.HideVisuals();
