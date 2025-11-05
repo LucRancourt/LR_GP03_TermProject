@@ -62,13 +62,11 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
         _spaceTakenCircle.drawMode = SpriteDrawMode.Sliced;
         _spaceTakenCircle.sprite = spaceTakenSprite;
 
-        SetLayer(false);
-
         Initialize();
 
-        _hasBeenInitialized = true;
+        SetLayer(false);
 
-        OnEnabled();
+        _hasBeenInitialized = true;
     }
 
     protected abstract void Initialize();
@@ -142,12 +140,14 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
         {
             gameObject.layer = buildingLayer;
             _spaceTakenObject.layer = buildingLayer;
+            OnDisabled();
         }
         else
         {
             gameObject.layer = towerModelLayer;
             _spaceTakenObject.layer = towerSpaceLayer;
             _spaceTakenCircle.material = spaceMat;
+            OnEnabled();
         }
     }
 }

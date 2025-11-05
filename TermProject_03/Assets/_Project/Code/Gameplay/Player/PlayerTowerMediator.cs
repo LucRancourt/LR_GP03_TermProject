@@ -100,7 +100,9 @@ public class PlayerTowerMediator : MonoBehaviour
     {
         if (_selectedTower != null)
         {
-            TowerUIWindow.Instance.Hide();
+            if (TowerUIWindow.Instance)
+                TowerUIWindow.Instance.Hide();
+
             _selectedTower.HideVisuals();
             _selectedTower = null;
         }

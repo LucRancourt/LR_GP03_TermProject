@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 [System.Serializable]
@@ -21,5 +22,9 @@ public class NavPath : MonoBehaviour
         }
     }
 
+    public void ReversePath() { Array.Reverse(_waypointsPos); }
+
     public Vector3[] GetWaypoints() { return _waypointsPos; }
+
+    public int GetWaypointCount() { return _waypointsPos.Length; }
 }

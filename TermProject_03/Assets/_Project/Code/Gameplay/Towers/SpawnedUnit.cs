@@ -7,8 +7,6 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(PathNavigator))]
-
-
 [RequireComponent(typeof(CapsuleCollider))]
 [RequireComponent(typeof(Rigidbody))]
 

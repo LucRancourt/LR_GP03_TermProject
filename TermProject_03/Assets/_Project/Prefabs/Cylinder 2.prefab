@@ -136,3 +136,5 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 0
+  attackStrategies:
+  - {fileID: 11400000, guid: 5929dd65f01d0cd4cb6577858f872f02, type: 2}

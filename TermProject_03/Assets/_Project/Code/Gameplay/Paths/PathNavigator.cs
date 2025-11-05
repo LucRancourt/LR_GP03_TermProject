@@ -1,14 +1,21 @@
-using DG.Tweening;
+using _Project.Code.Core.General;
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class PathNavigator : MonoBehaviour
 {
-    // Variables
-    private Sequence _pathingSequence;
+    private NavPath _path;
+    private int _currentWaypointIndex;
+
+    private float _moveSpeed;
+
+    private bool _isMoving;
     private bool _autoPlayOnEnable = true;
 
-    // Functions
+    public event Action OnReachedTarget;
+
+
     private void OnEnable()
     {
         if (!_autoPlayOnEnable) return;
@@ -21,56 +28,81 @@ public class PathNavigator : MonoBehaviour
         StopPath();
     }
 
-    private void Awake()
-    {
-        DOTween.Init();
-        DOTween.SetTweensCapacity(2000, 200);
-    }
-
     public void SetupPath(NavPath navPath, float moveSpeed, bool isReversed)
     {
-        _pathingSequence = DOTween.Sequence();
-
-        Vector3[] path = navPath.GetWaypoints();
+        _path = navPath;
+        _moveSpeed = moveSpeed;
 
         if (isReversed)
-            Array.Reverse(path);
-
-        transform.position = path[0];
-        Vector3 lastPos = transform.position;
-        Vector3 pointPos;
-
-
-        foreach (Vector3 point in navPath.GetWaypoints())
-        {
-            if (lastPos == point)
-                continue;
-
-            pointPos = point;
-
-            _pathingSequence.Append(transform.DOMove(pointPos, Vector3.Distance(lastPos, pointPos) / moveSpeed).SetEase(Ease.Linear)); 
-            _pathingSequence.Join(transform.DOLookAt(pointPos, 0.01f).SetEase(Ease.Linear));
-
-            lastPos = pointPos;
-        }
-
-        _pathingSequence.OnComplete(OnReachedPathEnd);
+            _path.ReversePath();
     }
 
-    public void OnReachedPathEnd()
+    private void OnReachedPathEnd()
     {
-        Debug.Log("Reached Path End!");
+        OnReachedTarget?.Invoke();
         StopPath();
     }
 
     public void PlayPath()
     {
-        if (_pathingSequence.IsActive() && !_pathingSequence.IsPlaying())
-            _pathingSequence.Play();
+        if (!_isMoving && _path != null)
+        {
+            ResetPath();
+            _isMoving = true;
+            StartCoroutine(MoveAlongPath());
+        }
     }
 
     public void StopPath()
     {
-        _pathingSequence.Kill();
+        _isMoving = false;
+    }
+
+    private IEnumerator MoveAlongPath()
+    {
+        while (_isMoving && _currentWaypointIndex < _path.GetWaypointCount() - 1)
+        {
+            Vector3 end = _path.GetWaypoints()[_currentWaypointIndex + 1];
+
+            yield return StartCoroutine(MoveTowardsTarget(end, _moveSpeed));
+
+            _currentWaypointIndex++;
+        }
+
+        _isMoving = false;
+        OnReachedPathEnd();
+    }
+
+
+    public event Action TEMP_HitTarget;
+    public void TEMP_ChaseTarget(Vector3 targetPosition, float speed)
+    {
+        if (!_isMoving)
+        {
+            _isMoving = true;
+            StartCoroutine(MoveTowardsTarget(targetPosition, speed));
+        }
+    }
+
+    private IEnumerator MoveTowardsTarget(Vector3 targetPosition, float speed, float stopDistance = 0.15f)
+    {
+        Vector3 direction = MyUtils.GetDirection(targetPosition, transform.position);
+        transform.rotation = Quaternion.LookRotation(direction);
+
+        while (Vector3.Distance(transform.position, targetPosition) > stopDistance)
+        {
+            transform.position += direction * speed * Time.deltaTime;
+
+            yield return null;
+        }
+
+        TEMP_HitTarget?.Invoke();
+    }
+
+    private void ResetPath()
+    {
+        _currentWaypointIndex = 0;
+
+        transform.position = _path.GetWaypoints()[0];
     }
 }
