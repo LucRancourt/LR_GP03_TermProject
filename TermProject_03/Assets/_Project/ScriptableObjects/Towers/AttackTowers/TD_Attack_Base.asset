@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: TEST
   UnitLimit: 1
-  SpaceTaken: 0
+  SpaceTaken: 1.5
   NextUpgradeTier: {fileID: 0}
   Model: {fileID: 1364516805103444731, guid: f0c5b894671758941b3c8e14f8a6cae5, type: 3}
   Icon: {fileID: 0}

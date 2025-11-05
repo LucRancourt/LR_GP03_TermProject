@@ -10,13 +10,17 @@ public abstract class RangedTower : Tower
     private MeshRenderer _rangeMesh;
     private TriggerDetector _triggerDetector;
 
-    protected List<Enemy> _enemiesInRange = new List<Enemy>();
-
 
     protected override void Initialize()
     {
+        SetupRangeSphere();
+    }
+
+    private void SetupRangeSphere()
+    {
         _rangeSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         _rangeSphere.transform.SetParent(transform);
+        _rangeSphere.name = "RangedTower - RangeIndicator";
         _rangeSphere.transform.localPosition = Vector3.zero;
         _rangeSphere.transform.localScale = new Vector3(towerData.Range, towerData.Range, towerData.Range);
 
@@ -38,26 +42,11 @@ public abstract class RangedTower : Tower
         _triggerDetector.OnTriggerExitDetected -= TriggerExitDetected;
     }
 
-    private void TriggerEnterDetected(Collider other)
+    protected virtual void TriggerEnterDetected(Collider other)
     {
-        if (other.TryGetComponent(out Enemy newEnemy))
-            if (!_enemiesInRange.Contains(newEnemy))
-                _enemiesInRange.Add(newEnemy);
     }
 
-    private void TriggerExitDetected(Collider other)
+    protected virtual void TriggerExitDetected(Collider other)
     {
-        if (other.TryGetComponent(out Enemy newEnemy))
-            if (_enemiesInRange.Contains(newEnemy))
-                _enemiesInRange.Remove(newEnemy);
-    }
-
-    protected void ClearListOfInactives()
-    {
-        for (int i = _enemiesInRange.Count - 1; i >= 0; i--)
-        {
-            if (!_enemiesInRange[i].isActiveAndEnabled)
-                _enemiesInRange.Remove(_enemiesInRange[i]);
-        }
     }
 }

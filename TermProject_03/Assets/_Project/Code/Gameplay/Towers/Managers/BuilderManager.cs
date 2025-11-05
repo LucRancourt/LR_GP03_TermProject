@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using _Project.Code.Core.General;
-
+using System.Collections.Generic;
 
 public class BuilderManager
 {
@@ -9,6 +9,7 @@ public class BuilderManager
     private LayerMask _groundLayer;
 
     private Tower _tower;
+    private List<Tower> _builtTowers = new();
 
     public BuilderManager(LayerMask groundLayer)
     {
@@ -17,9 +18,22 @@ public class BuilderManager
 
     public void SetNewTower(Tower newTower)
     {
+        if (newTower == null) return;
+
         ClearTower();
 
         _tower = newTower;
+        _tower.SetLayer(true);
+
+        ShowSpaceOnBuilds(true);
+    }
+
+    private void ShowSpaceOnBuilds(bool isVisible)
+    {
+        foreach (Tower tower in _builtTowers)
+        {
+            tower.ShowSpaceTaken(isVisible);
+        }
     }
 
     public void ClearTower()
@@ -28,12 +42,29 @@ public class BuilderManager
         {
             _tower.DespawnTower();
             _tower = null;
+
+            ShowSpaceOnBuilds(false);
         }
     }
 
     public void BuildTower()
     {
-        _tower = null;
+        if (_tower == null) return;
+
+        if (_tower.CanPlace())
+        {
+            _tower.SetLayer(false);
+
+            _builtTowers.Add(_tower);
+            ShowSpaceOnBuilds(false);
+
+            _tower = null;
+        }
+    }
+
+    public void SellTower(Tower towerToSell)
+    {
+        _builtTowers.Remove(towerToSell);
     }
 
     public void Update()

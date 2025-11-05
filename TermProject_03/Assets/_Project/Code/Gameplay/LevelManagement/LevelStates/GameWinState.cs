@@ -16,12 +16,10 @@ public class LevelWinState : LevelState
 
     public override void Enter()
     {
-        Debug.Log("GameWinState - Enter");
     }
 
     public override void Update()
     {
-        Debug.Log("GameWinState - Execute");
     }
 
     public override void Exit()

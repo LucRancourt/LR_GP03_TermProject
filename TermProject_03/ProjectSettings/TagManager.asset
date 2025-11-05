@@ -14,8 +14,8 @@ TagManager:
   - WorldBorder
   - BaseLayer
   - Ground
-  - 
-  - 
+  - TowerBeingBuilt
+  - Towers
   - 
   - 
   - 

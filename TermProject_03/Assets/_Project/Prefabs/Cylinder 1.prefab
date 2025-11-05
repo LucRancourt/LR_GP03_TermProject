@@ -123,7 +123,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb029871efb25e4287ab17db25f2a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerData: {fileID: 0}
+  towerLayer: 10
+  buildingLayer: 9
+  spaceTakenSprite: {fileID: 21300000, guid: 6c011aee9474d2c41b3e9e685b6c91f5, type: 3}
+  spaceMat: {fileID: 2100000, guid: 20cd4e89dc7c9b64996552e37c32bfc4, type: 2}
+  spaceOverlapMat: {fileID: 2100000, guid: 2eb7d487f1c9e904da8c91cbf00b2762, type: 2}
+  spaceLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   rangeMaterial: {fileID: 2100000, guid: 0a1e7da76cde82541be34407110c5c9a, type: 2}
   detectionLayer:
     serializedVersion: 2
