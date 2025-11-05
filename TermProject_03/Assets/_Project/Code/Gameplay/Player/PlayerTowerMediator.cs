@@ -121,4 +121,26 @@ public class PlayerTowerMediator : MonoBehaviour
     {
         _builderManager.Update();
     }
+
+    private void OnDestroy()
+    {
+        ClearSelectedTower();
+
+        if (ServiceLocator.TryGet(out InputController inputController))
+        {
+            ServiceLocator.Get<InputController>().HotbarItemSelectedEvent -= SpawnTower;
+            ServiceLocator.Get<InputController>().ClickEvent -= ClickCallback;
+        }
+
+        if (TowerUIWindow.Instance)
+        {
+            TowerUIWindow.Instance.OnUpgrade -= SellSelectedTower;
+            TowerUIWindow.Instance.OnSell -= SellSelectedTower;
+        }
+
+        if (_playerInventory)
+        {
+            _playerInventory.OnTowerSelected -= SpawnTower;
+        }
+    }
 }

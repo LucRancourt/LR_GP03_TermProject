@@ -4,7 +4,7 @@ using UnityEngine;
 public class HUDManager : MonoBehaviour
 {
     [SerializeField] private HUDItem[] hudItems;
-    private Dictionary<HUDItemKey, GameObject> _hudDictionary;
+    private Dictionary<HUDItemKey, GameObject> _hudDictionary = new();
 
 
     private void Awake()
@@ -14,6 +14,7 @@ public class HUDManager : MonoBehaviour
             if (!_hudDictionary.ContainsKey(item.key))
             {
                 _hudDictionary[item.key] = item.uiElement;
+                _hudDictionary[item.key].SetActive(false);
             }
             else
                 Debug.LogWarning($"Duplicate key [{item.key}]!.");

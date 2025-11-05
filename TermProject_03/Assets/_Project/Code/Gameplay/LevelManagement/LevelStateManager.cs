@@ -12,11 +12,11 @@ public class LevelStateManager : MonoBehaviour
 
     private void Awake()
     {
-        _smGameStates = new StateMachine<LevelState>(new PreparationState(this, hudManager.gameObject));////hudManager.Get(HUDItemKey.UnitInventory)));
+        _smGameStates = new StateMachine<LevelState>(new PreparationState(this, hudManager.gameObject));// hudManager.Get(HUDItemKey.UnitInventory)));
         _smGameStates.AddState(new WaveState(this, waveManager));
         _smGameStates.AddState(new BreakState(this));
-        _smGameStates.AddState(new LevelWinState(this));
-        _smGameStates.AddState(new LevelOverState(this));
+        _smGameStates.AddState(new LevelWinState(this, hudManager.Get(HUDItemKey.WinScreen)));
+        _smGameStates.AddState(new LevelOverState(this, hudManager.Get(HUDItemKey.LossScreen)));
     }
 
     public void TransitionToState<TState>() where TState : LevelState
