@@ -15,8 +15,8 @@ TagManager:
   - BaseLayer
   - Ground
   - TowerBeingBuilt
-  - Towers
-  - 
+  - TowerModels
+  - TowerSpaceColliders
   - 
   - 
   - 

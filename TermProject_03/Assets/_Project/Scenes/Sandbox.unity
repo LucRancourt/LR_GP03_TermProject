@@ -912,6 +912,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+  towerModelLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &400168919
 MonoBehaviour:
   m_ObjectHideFlags: 0

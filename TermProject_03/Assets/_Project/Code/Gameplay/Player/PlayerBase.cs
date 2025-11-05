@@ -1,7 +1,8 @@
-using _Project.Code.Core.ServiceLocator;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
+
+using _Project.Code.Core.ServiceLocator;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(PlayerMovement))]
@@ -11,12 +12,14 @@ using UnityEngine.EventSystems;
 public class PlayerBase : MonoBehaviour
 {
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private LayerMask towerModelLayer;
 
     private PlayerInventory _playerInventory;
     private TowerManager _towerManager;
     private BuilderManager _builderManager;
 
     private TowerData _newTowerData;
+    private Tower _selectedTower;
 
 
     private void Awake()
@@ -31,13 +34,15 @@ public class PlayerBase : MonoBehaviour
     private void Start()
     {
         ServiceLocator.Get<InputController>().HotbarItemSelectedEvent += SpawnTower;
-        ServiceLocator.Get<InputController>().ClickEvent += PlaceTowerCallback;
+        ServiceLocator.Get<InputController>().ClickEvent += ClickCallback;
     }
 
     private void SpawnTower(TowerData towerData)
     {
         if (towerData == null) return;
-        
+
+        ClearSelectedTower();
+
         if (_newTowerData == towerData)
         {
             _builderManager.ClearTower();
@@ -57,18 +62,45 @@ public class PlayerBase : MonoBehaviour
         SpawnTower(towerData);
     }
 
-    private void PlaceTowerCallback() { StartCoroutine(PlaceTower()); }
 
-    private IEnumerator PlaceTower()
+    private void ClickCallback() { StartCoroutine(CheckClick()); }
+
+    private IEnumerator CheckClick()
     {
         yield return null;
 
+        if (_newTowerData != null)
+        {
+            PlaceTower();
+        }
+        else
+        {
+            ClearSelectedTower();
+
+            if (CameraToMouseRaycast.TryRaycastWithComponent(towerModelLayer, out _selectedTower))
+            {
+                _selectedTower.ShowVisuals();
+            }
+        }
+    }
+
+    private void ClearSelectedTower()
+    {
+        if (_selectedTower != null)
+        {
+            _selectedTower.HideVisuals();
+            _selectedTower = null;
+        }
+    }
+
+    private void PlaceTower()
+    {
         if (EventSystem.current.IsPointerOverGameObject())
             _builderManager.ClearTower();
         else
         {
-            _builderManager.BuildTower();
-            _newTowerData = null;
+            if (_builderManager.TryBuildTower())
+                _newTowerData = null;
         }
     }
 

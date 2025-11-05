@@ -8,7 +8,8 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
 {
     protected TowerData towerData;
     private bool _hasBeenInitialized = false;
-    [SerializeField] private int towerLayer;
+    [SerializeField] private int towerSpaceLayer;
+    [SerializeField] private int towerModelLayer;
     [SerializeField] private int buildingLayer;
 
     private GameObject _spaceTakenObject;
@@ -24,11 +25,13 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
     [SerializeField] private LayerMask spaceLayer;
 
     public event Action<Tower, TowerData> OnDespawned;
+    public event Action<Tower, TowerData> OnClicked;
 
 
 
     public virtual void ShowVisuals()
     {
+        OnClicked?.Invoke(this, towerData);
         ShowSpaceTaken(true);
     }
 
@@ -109,7 +112,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
 
     private void CheckSpaceOverlap()
     {
-        if (gameObject.layer == towerLayer) return;
+        if (gameObject.layer == towerModelLayer) return;
 
         if (Physics.CheckSphere(transform.position, towerData.SpaceTaken * 1.2f, spaceLayer))
         {
@@ -137,8 +140,8 @@ public abstract class Tower : MonoBehaviour, IPoolable, IClickable
         }
         else
         {
-            gameObject.layer = towerLayer;
-            _spaceTakenObject.layer = towerLayer;
+            gameObject.layer = towerModelLayer;
+            _spaceTakenObject.layer = towerSpaceLayer;
             _spaceTakenCircle.material = spaceMat;
         }
     }

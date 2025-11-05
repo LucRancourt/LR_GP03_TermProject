@@ -1,17 +1,16 @@
 using UnityEngine;
-
-using _Project.Code.Core.General;
 using System.Collections.Generic;
+
 
 public class BuilderManager
 {
     // Variables
-    private LayerMask _groundLayer;
+    private int _groundLayer;
 
     private Tower _tower;
     private List<Tower> _builtTowers = new();
 
-    public BuilderManager(LayerMask groundLayer)
+    public BuilderManager(int groundLayer)
     {
         _groundLayer = groundLayer;
     }
@@ -47,9 +46,9 @@ public class BuilderManager
         }
     }
 
-    public void BuildTower()
+    public bool TryBuildTower()
     {
-        if (_tower == null) return;
+        if (_tower == null) return false;
 
         if (_tower.CanPlace())
         {
@@ -59,7 +58,11 @@ public class BuilderManager
             ShowSpaceOnBuilds(false);
 
             _tower = null;
+
+            return true;
         }
+
+        return false;
     }
 
     public void SellTower(Tower towerToSell)
@@ -71,17 +74,8 @@ public class BuilderManager
     {
         if (_tower)
         {
-            Vector3 pos = Input.mousePosition;
-            pos.z += 5.0f;
-            pos = Camera.main.ScreenToWorldPoint(pos);
-
-            Vector3 dir = MyUtils.GetDirection(pos, Camera.main.transform.position);
-
-            Debug.DrawLine(Camera.main.transform.position, dir * 200.0f);
-            if (Physics.Raycast(Camera.main.transform.position, dir, out RaycastHit hit, 2000.0f, _groundLayer))
-            {
+            if(CameraToMouseRaycast.TryRaycast(_groundLayer, out RaycastHit hit))
                 _tower.transform.position = hit.point;
-            }
         }
     }
 }
