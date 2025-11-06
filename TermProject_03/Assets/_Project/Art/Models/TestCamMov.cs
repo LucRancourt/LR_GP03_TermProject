@@ -1,51 +1,55 @@
+using _Project.Code.Core.General;
 using UnityEngine;
 
-public class TestCamMov : MonoBehaviour
+public class TestCamMov : Singleton<TestCamMov>
 {
     [SerializeField] private GameObject[] waypoints_path1;
-    [SerializeField] private GameObject[] waypoints_path2;
+    //[SerializeField] private GameObject[] waypoints_path2;
     [SerializeField] private GameObject[] menus;
-    [SerializeField] private bool isPath1 = true;
+    // [SerializeField] private bool isPath1 = true;
     private int index = 0;
 
-    // Update is called once per frame
-    void Update()
+
+    public void NextCamPos()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (index >= waypoints_path1.Length - 1)
         {
-            
-            if (isPath1)
+            foreach (GameObject menu in menus)
             {
-                if (index >= waypoints_path1.Length - 1)
-                {
-                    foreach (GameObject menu in menus)
-                    {
-                        menu.SetActive(true);
-                    }
-
-                    return;
-                }
-
-                transform.position = waypoints_path1[index].transform.position;
-                transform.rotation = waypoints_path1[index].transform.rotation;
-            }
-            else
-            {
-                if (index >= waypoints_path2.Length-2)
-                {
-                    foreach (GameObject menu in menus)
-                    {
-                        menu.SetActive(true);
-                    }
-
-                    return;
-                }
-
-                transform.position = waypoints_path2[index].transform.position;
-                transform.rotation = waypoints_path2[index].transform.rotation;
+                menu.SetActive(true);
             }
 
-            index++;
+            return;
         }
+
+        waypoints_path1[index+1].SetActive(true);
+        waypoints_path1[index].SetActive(false);
+
+        index++;
+
+        if (index != 1 && index != 7)
+            Invoke("NextCamPos", 2.0f);
+        
+        if (index == 3)
+        {
+            Invoke("StartFade", 1.0f);
+        }
+    }
+
+    private void StartFade()
+    {
+        FadeTo.Instance.Fade(true);
+        FadeTo.Instance.OnFadeComplete += UnFade;
+    }
+
+    private void UnFade()
+    {
+        Invoke("RealUnFade", 1.5f);
+    }
+
+    private void RealUnFade()
+    {
+        FadeTo.Instance.Fade(false);
+        FadeTo.Instance.OnFadeComplete -= UnFade;
     }
 }
