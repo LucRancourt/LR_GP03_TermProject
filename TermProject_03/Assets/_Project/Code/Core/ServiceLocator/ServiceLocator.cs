@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace _Project.Code.Core.ServiceLocator
 {
+    [DefaultExecutionOrder(-100)]
     public static class ServiceLocator
     {
         private static readonly Dictionary<Type, IService> _services = new();

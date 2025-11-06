@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project.Code.Core.ServiceLocator
 {
-    [DefaultExecutionOrder(-1)]
+    [DefaultExecutionOrder(-50)]
     public class GameInitializer : MonoBehaviour
     {
         [Header("Persistent Services")]

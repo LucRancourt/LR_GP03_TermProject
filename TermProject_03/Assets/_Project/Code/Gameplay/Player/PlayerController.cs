@@ -1,7 +1,7 @@
 using UnityEngine;
 
 using _Project.Code.Core.ServiceLocator;
-using System;
+
 //[RequireComponent(typeof(InputController))]
 [RequireComponent(typeof(PlayerMovement))]
 
@@ -34,6 +34,10 @@ public class PlayerController : MonoBehaviour
             inputController.LookEvent += HandleLookInput;
             inputController.CameraRotateEvent += HandleRotateCamInput;
             inputController.ZoomEvent += HandleZoomInput;
+        }
+        else
+        {
+            Debug.LogError("ServiceLocator did not have the InputController!");
         }
     }
 
