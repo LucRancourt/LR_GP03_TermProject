@@ -11,7 +11,8 @@ public class LoadingScreen : MonoBehaviour
     private void Awake()
     {
         _loadingScreen = transform.GetChild(0).gameObject;
-        _loadingBar = GetComponentInChildren<Slider>();
+        _loadingBar = GetComponentInChildren<Slider>(true);
+        Debug.Log(_loadingBar);
     }
 
     public void Activate()
