@@ -89,12 +89,16 @@ public class PathNavigator : MonoBehaviour
         Vector3 direction = MyUtils.GetDirection(targetPosition, transform.position);
         transform.rotation = Quaternion.LookRotation(direction);
 
+
+
         while (Vector3.Distance(transform.position, targetPosition) > stopDistance)
         {
-            transform.position += direction * speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
             yield return null;
         }
+
+
 
         TEMP_HitTarget?.Invoke();
     }
