@@ -3414,7 +3414,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveSet: {fileID: 11400000, guid: 6afae4bc663e1484ba04032e5ed01e8a, type: 2}
-  path: {fileID: 1998197570}
+  paths:
+  - {fileID: 1998197570}
+  - {fileID: 1998197570}
 --- !u!114 &1508472362
 MonoBehaviour:
   m_ObjectHideFlags: 0

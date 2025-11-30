@@ -41,16 +41,36 @@ public class AudioManager : Singleton<AudioManager>
     #endregion
 
     #region Plays
+        /*  Old version as just in case
         private void PlayMusic(AudioCue music)
+            {
+                _musicSource = gameObject.AddComponent<AudioSource>();
+                _musicSource.outputAudioMixerGroup = musicMixer;
+
+                SetupSource(ref _musicSource, music);
+
+                _musicSource.loop = true;
+                _musicSource.Play();
+            }
+        */
+
+        private void PlayMusic(AudioCue music, bool isLooped = true)
         {
-            _musicSource = gameObject.AddComponent<AudioSource>();
-            _musicSource.outputAudioMixerGroup = musicMixer;
+            if (_musicSource == null)
+            {
+                _musicSource = gameObject.AddComponent<AudioSource>();
+                _musicSource.outputAudioMixerGroup = musicMixer;
+            }
+
+            if (_musicSource.isPlaying) { _musicSource.Stop(); }
+
+            if (isLooped) { _musicSource.loop = true; } else { _musicSource.loop = false; }
 
             SetupSource(ref _musicSource, music);
 
-            _musicSource.loop = true;
             _musicSource.Play();
         }
+
 
         public void PlaySound(AudioCue sound)
         {

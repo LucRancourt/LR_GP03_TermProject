@@ -8,7 +8,7 @@ using _Project.Code.Core.General;
 public class WaveManager : MonoBehaviour
 {
     [SerializeField] private WaveSet waveSet;
-    [SerializeField] private NavPath path;
+    [SerializeField] private NavPath[] paths;
 
     private int _currentWaveIndex = 0;
     private EnemyManager _enemyManager;
@@ -52,7 +52,7 @@ public class WaveManager : MonoBehaviour
 
         for (int i = 0; i < enemyGroup.Count; i++)
         {
-            _enemyManager.SpawnEnemy(enemyGroup.Enemy, path);
+            _enemyManager.SpawnEnemy(enemyGroup.Enemy, MyUtils.RandomFrom(paths));
 
             if (i != enemyGroup.Count - 1)
                 yield return new WaitForSeconds(enemyGroup.DelayBetweenEnemies.RandomValue());

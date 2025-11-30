@@ -181,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: def4f29a31ac0544c8956e9c535e9dd8, type: 3}
       propertyPath: m_Name
-      value: pokeblackcafeexterior
+      value: CafeExterior
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: def4f29a31ac0544c8956e9c535e9dd8, type: 3}
       propertyPath: m_IsActive
@@ -693,6 +693,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ca344b97013752c4ab1d9a23bdf49491, type: 3}
       propertyPath: m_Name
       value: pookecafe
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ca344b97013752c4ab1d9a23bdf49491, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1888,7 +1892,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 37f2c64f6670f0b408e5f426c661928b, type: 3}
       propertyPath: m_Name
-      value: Cafe00
+      value: CafeInterior
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2230,6 +2234,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c4c62cf6c24131741a463a292a35b81b, type: 3}
       propertyPath: m_Name
       value: CafeMenu00
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c4c62cf6c24131741a463a292a35b81b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3398,7 +3406,7 @@ GameObject:
   - component: {fileID: 1033566791}
   - component: {fileID: 1033566789}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas_FadeTo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4440,37 +4448,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438121391}
   m_CullTransparentMesh: 1
---- !u!1 &1471870191
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1471870192}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1471870192
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1471870191}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.000020221492, y: 0.9999796, z: -0.004809747, w: -0.004198399}
-  m_LocalPosition: {x: -9.834297, y: 0.6851048, z: -13.575105}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1490592648
 GameObject:
   m_ObjectHideFlags: 0
@@ -5699,7 +5676,7 @@ GameObject:
   - component: {fileID: 1863662281}
   - component: {fileID: 1863662280}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas_GameTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6306,18 +6283,17 @@ SceneRoots:
   - {fileID: 1734610920}
   - {fileID: 1553877150}
   - {fileID: 138123099}
-  - {fileID: 545019501}
   - {fileID: 607927450}
+  - {fileID: 545019501}
   - {fileID: 1392994001}
-  - {fileID: 1471870192}
   - {fileID: 11978557}
-  - {fileID: 176392016}
-  - {fileID: 1863662283}
   - {fileID: 867566246}
   - {fileID: 663646184}
   - {fileID: 68822337}
   - {fileID: 777630041}
-  - {fileID: 1761802699}
+  - {fileID: 176392016}
   - {fileID: 2073441742}
+  - {fileID: 1863662283}
   - {fileID: 1033566793}
+  - {fileID: 1761802699}
   - {fileID: 1662721978}

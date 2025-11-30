@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-
 using _Project.Code.Core.Factory;
-using UnityEngine;
 
 public class EnemyManager
 {
@@ -10,12 +8,18 @@ public class EnemyManager
 
     public EnemyManager(WaveSet waveSet)
     {
-        Dictionary<EnemyData, int> enemyCounts = new();
+        //Dictionary<EnemyData, int> enemyCounts = new();
+        List<EnemyData> enemyTypes = new();
 
         foreach (WaveData wave in waveSet.waves)
         {
             foreach (EnemyGroup enemy in wave.enemiesToSpawn)
             {
+                _enemyPoolFactory[enemy.Enemy.Name] = new PooledFactory<Enemy>(enemy.Enemy.Prefab);
+            }
+        }
+
+                /* - Pooled InitialCapacity adjusted method
                 if (enemyCounts.TryGetValue(enemy.Enemy, out int count))
                 {
                     if (enemy.Count > count)
@@ -32,6 +36,7 @@ public class EnemyManager
         {
             _enemyPoolFactory[enemyToPool.Name] = new PooledFactory<Enemy>(enemyToPool.Prefab, enemyCounts[enemyToPool]);
         }
+        */
     }
 
     public void SpawnEnemy(EnemyData enemyData, NavPath path)
