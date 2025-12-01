@@ -1,18 +1,31 @@
-using UnityEngine;
+using System;
 
-public class PlayerWallet
+using _Project.Code.Core.General;
+using _Project.Code.Core.MVC;
+
+
+public class PlayerWallet : Singleton<PlayerWallet>, IModel
 {
-    private float _wallet = 10000.0f;
+    private int _wallet = 0;
+
+    public event Action OnDataChanged;
 
 
-    public void AddToWallet(float amount)
+    public void Initialize() { SetWallet(500); }
+
+    private void SetWallet(int amount)
     {
-        _wallet += amount;
-
-        Debug.Log(_wallet);
+        _wallet = amount;
+        OnDataChanged?.Invoke();
     }
 
-    public bool SufficientFunds(float amount)
+    public void AddToWallet(int amount)
+    {
+        _wallet += amount;
+        OnDataChanged?.Invoke();
+    }
+
+    public bool SufficientFunds(int amount)
     {
         if (_wallet >= amount)
             return true;
@@ -20,14 +33,15 @@ public class PlayerWallet
         return false;
     }
 
-    public bool MakeTransaction(float amount)
+    public bool MakeTransaction(int amount)
     {
         if (!SufficientFunds(amount)) return false;
 
         _wallet -= amount;
-
-        Debug.Log(_wallet);
+        OnDataChanged?.Invoke();
 
         return true;
     }
+
+    public void Dispose() {  }
 }

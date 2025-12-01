@@ -68,4 +68,9 @@ public class TowerManager
         _towerPoolFactory[towerToDespawn.TowerData.Name].Pool.Return(towerToDespawn);
         _towerPoolFactory[towerToDespawn.TowerData.Name].SubtractFromCurrentLimit();
     }
+
+    public int GetCurrentUnitLimit(BaseTowerData towerData)
+    {
+        return _towerPoolFactory[towerData.Name].CurrentUnitLimit;
+    }
 }

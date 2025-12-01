@@ -13,7 +13,6 @@ public class PlayerTowerMediator : MonoBehaviour
     [SerializeField] private LayerMask towerModelLayer;
 
     private PlayerInventory _playerInventory;
-    private PlayerWallet _playerWallet;
     private TowerManager _towerManager;
     private BuilderManager _builderManager;
 
@@ -24,7 +23,6 @@ public class PlayerTowerMediator : MonoBehaviour
     private void Awake()
     {
         _playerInventory = GetComponent<PlayerInventory>();
-        _playerWallet = new();
         _towerManager = new TowerManager(_playerInventory.GetTowerList());
         _builderManager = new BuilderManager(groundLayer);
 
@@ -46,15 +44,16 @@ public class PlayerTowerMediator : MonoBehaviour
 
         int upgradeCost = _selectedTower.GetUpgradeCost();
 
-        if (!_playerWallet.SufficientFunds(upgradeCost)) return;
+        if (!PlayerWallet.Instance.SufficientFunds(upgradeCost)) return;
 
-        _playerWallet.MakeTransaction(upgradeCost);
+        PlayerWallet.Instance.MakeTransaction(upgradeCost);
         _selectedTower.UpgradeTower();
+        TowerUIWindow.Instance.UpdateDisplay(_selectedTower.TowerData, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
     }
 
     private void SellSelectedTower()
     {
-        _playerWallet.AddToWallet(_selectedTower.TowerData.GetTowerTierData(_selectedTower.TowerTier).SellValue);
+        PlayerWallet.Instance.AddToWallet(_selectedTower.TowerData.GetTowerTierData(_selectedTower.TowerTier).SellValue);
         _builderManager.RemoveTower(_selectedTower);
         _towerManager.DespawnTower(_selectedTower);
 
@@ -74,7 +73,7 @@ public class PlayerTowerMediator : MonoBehaviour
             return;
         }
 
-        if (!_playerWallet.SufficientFunds(towerData.GetTowerTierData(0).Cost)) return;
+        if (!PlayerWallet.Instance.SufficientFunds(towerData.GetTowerTierData(0).Cost)) return;
 
         _builderManager.SetNewTower(_towerManager.SpawnTower(towerData), out _newTowerData);
     }
@@ -106,7 +105,7 @@ public class PlayerTowerMediator : MonoBehaviour
             if (CameraToMouseRaycast.TryRaycastWithComponent(towerModelLayer, out _selectedTower))
             {
                 _selectedTower.ShowVisuals();
-                TowerUIWindow.Instance.UpdateDisplay(_selectedTower);
+                TowerUIWindow.Instance.UpdateDisplay(_selectedTower.TowerData, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
                 TowerUIWindow.Instance.Show();
             }
         }
@@ -138,7 +137,7 @@ public class PlayerTowerMediator : MonoBehaviour
         {
             if (_builderManager.TryBuildTower())
             {
-                _playerWallet.MakeTransaction(_newTowerData.GetTowerTierData(0).Cost);
+                PlayerWallet.Instance.MakeTransaction(_newTowerData.GetTowerTierData(0).Cost);
                 _newTowerData = null;
             }
         }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BreakState : LevelState
 {
     private float timeUntilAutoExit = 10.0f;
-    // Give money based on Difficulty / Wave Number
+    private int waveClearedReward = 300;
 
     public BreakState(LevelStateManager levelStateManager) : base(levelStateManager) { }
 
@@ -13,6 +13,7 @@ public class BreakState : LevelState
     public override void Enter()
     {
         _levelStateManager.StartCoroutine(AutoExit());
+        PlayerWallet.Instance.AddToWallet(waveClearedReward);
     }
 
     public override void Update()

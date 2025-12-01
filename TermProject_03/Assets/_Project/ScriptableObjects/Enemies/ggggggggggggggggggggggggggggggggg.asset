@@ -16,3 +16,4 @@ MonoBehaviour:
   Prefab: {fileID: 6193620580075898845, guid: f71042f6cd74a9e4ebf5339b71266c49, type: 3}
   Health: 22
   Speed: 2
+  Value: 150

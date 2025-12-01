@@ -9,6 +9,7 @@ using _Project.Code.Core.Pool;
 public class Enemy : BaseDamageable, IPoolable
 {
     public string Name { get; private set; }
+    public int Value { get; private set; }
 
     private PathNavigator _pathNavigator;
 
@@ -33,6 +34,8 @@ public class Enemy : BaseDamageable, IPoolable
 
         SetHealthDefaults(data.Health);
         OnDied += OnEnemyDied;
+
+        Value = data.Value;
 
         _pathNavigator.SetupPath(path, data.Speed, false);
         _pathNavigator.PlayPath();

@@ -51,6 +51,9 @@ public class EnemyManager
     public void DespawnEnemy(Enemy enemyToDespawn)
     {
         enemyToDespawn.OnEnemyDiedEvent -= DespawnEnemy;
+
+        PlayerWallet.Instance.AddToWallet(enemyToDespawn.Value);
+
         _enemyPoolFactory[enemyToDespawn.Name].Return(enemyToDespawn);
 
         ActiveEnemyCount--;

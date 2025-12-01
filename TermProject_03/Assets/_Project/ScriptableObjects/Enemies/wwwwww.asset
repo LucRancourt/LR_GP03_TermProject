@@ -15,4 +15,5 @@ MonoBehaviour:
   Name: NotOrc
   Prefab: {fileID: 6193620580075898845, guid: 40570c8283667d549a3da186eee55a12, type: 3}
   Health: 2
-  Speed: 20
+  Speed: 12
+  Value: 35
