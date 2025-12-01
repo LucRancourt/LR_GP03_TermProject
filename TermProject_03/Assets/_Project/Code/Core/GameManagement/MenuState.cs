@@ -20,6 +20,9 @@ namespace _Project.Code.Core.GameManagement
             Time.timeScale = 1f;
             _inputService?.EnableUIActions();
 
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             EventBus.Instance.Publish(new GameStateChangedEvent { StateName = "Menu" });
         }
     }

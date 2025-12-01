@@ -22,5 +22,4 @@ public class TowerGroup : ITower
             tower.HideVisuals();
         }
     }
-
 }

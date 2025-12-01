@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using _Project.Code.Core.ServiceLocator;
 
 [RequireComponent(typeof(PlayerInventory))]
-[RequireComponent(typeof(PlayerWallet))]
+
 
 public class PlayerTowerMediator : MonoBehaviour
 {
@@ -13,16 +13,18 @@ public class PlayerTowerMediator : MonoBehaviour
     [SerializeField] private LayerMask towerModelLayer;
 
     private PlayerInventory _playerInventory;
+    private PlayerWallet _playerWallet;
     private TowerManager _towerManager;
     private BuilderManager _builderManager;
 
-    private TowerData _newTowerData;
+    private BaseTowerData _newTowerData;
     private Tower _selectedTower;
 
 
     private void Awake()
     {
         _playerInventory = GetComponent<PlayerInventory>();
+        _playerWallet = new();
         _towerManager = new TowerManager(_playerInventory.GetTowerList());
         _builderManager = new BuilderManager(groundLayer);
 
@@ -34,20 +36,32 @@ public class PlayerTowerMediator : MonoBehaviour
         ServiceLocator.Get<InputController>().HotbarItemSelectedEvent += SpawnTower;
         ServiceLocator.Get<InputController>().ClickEvent += ClickCallback;
 
-        TowerUIWindow.Instance.OnUpgrade += SellSelectedTower;
+        TowerUIWindow.Instance.OnUpgrade += UpgradeSelectedTower;
         TowerUIWindow.Instance.OnSell += SellSelectedTower;
+    }
+
+    private void UpgradeSelectedTower()
+    {
+        if (!_selectedTower.CanUpgrade()) return;
+
+        int upgradeCost = _selectedTower.GetUpgradeCost();
+
+        if (!_playerWallet.SufficientFunds(upgradeCost)) return;
+
+        _playerWallet.MakeTransaction(upgradeCost);
+        _selectedTower.UpgradeTower();
     }
 
     private void SellSelectedTower()
     {
+        _playerWallet.AddToWallet(_selectedTower.TowerData.GetTowerTierData(_selectedTower.TowerTier).SellValue);
         _builderManager.RemoveTower(_selectedTower);
         _towerManager.DespawnTower(_selectedTower);
-        Debug.Log("Sold for " + _selectedTower.TowerData.SellValue);
 
         ClearSelectedTower();
     }
 
-    private void SpawnTower(TowerData towerData)
+    private void SpawnTower(BaseTowerData towerData)
     {
         if (towerData == null) return;
 
@@ -55,17 +69,19 @@ public class PlayerTowerMediator : MonoBehaviour
 
         if (_newTowerData == towerData)
         {
-            _builderManager.ClearTower();
+            ClearInBuildTower();
             _newTowerData = null;
             return;
         }
+
+        if (!_playerWallet.SufficientFunds(towerData.GetTowerTierData(0).Cost)) return;
 
         _builderManager.SetNewTower(_towerManager.SpawnTower(towerData), out _newTowerData);
     }
 
     private void SpawnTower(int index)
     {
-        TowerData towerData = _playerInventory.GetTowerData(index);
+        BaseTowerData towerData = _playerInventory.GetTowerData(index);
 
         SpawnTower(towerData);
     }
@@ -90,10 +106,16 @@ public class PlayerTowerMediator : MonoBehaviour
             if (CameraToMouseRaycast.TryRaycastWithComponent(towerModelLayer, out _selectedTower))
             {
                 _selectedTower.ShowVisuals();
-                TowerUIWindow.Instance.UpdateDisplay(_selectedTower.TowerData);
+                TowerUIWindow.Instance.UpdateDisplay(_selectedTower);
                 TowerUIWindow.Instance.Show();
             }
         }
+    }
+
+    private void ClearInBuildTower()
+    {
+        if (_builderManager.TryClearTower(out Tower clearedTower))
+            _towerManager.DespawnTower(clearedTower);
     }
 
     private void ClearSelectedTower()
@@ -111,11 +133,14 @@ public class PlayerTowerMediator : MonoBehaviour
     private void PlaceTower()
     {
         if (EventSystem.current.IsPointerOverGameObject())
-            _builderManager.ClearTower();
+            ClearInBuildTower();
         else
         {
             if (_builderManager.TryBuildTower())
+            {
+                _playerWallet.MakeTransaction(_newTowerData.GetTowerTierData(0).Cost);
                 _newTowerData = null;
+            }
         }
     }
 
@@ -136,7 +161,7 @@ public class PlayerTowerMediator : MonoBehaviour
 
         if (TowerUIWindow.Instance)
         {
-            TowerUIWindow.Instance.OnUpgrade -= SellSelectedTower;
+            TowerUIWindow.Instance.OnUpgrade -= UpgradeSelectedTower;
             TowerUIWindow.Instance.OnSell -= SellSelectedTower;
         }
 

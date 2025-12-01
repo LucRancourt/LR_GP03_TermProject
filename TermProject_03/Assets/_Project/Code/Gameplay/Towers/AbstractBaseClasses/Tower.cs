@@ -3,10 +3,15 @@ using UnityEngine;
 
 using _Project.Code.Core.Pool;
 
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
+
 
 public abstract class Tower : MonoBehaviour, IPoolable, ITower
 {
-    public TowerData TowerData { get; private set; }
+    public BaseTowerData TowerData { get; private set; }
+    public int TowerTier { get; private set; } = 0;
+
     private bool _hasBeenInitialized = false;
     [SerializeField] private int towerSpaceLayer;
     [SerializeField] private int towerModelLayer;
@@ -16,15 +21,20 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     private SpriteRenderer _spaceTakenCircle;
     [SerializeField] private Sprite spaceTakenSprite;
     private float _spaceTakenYRotation = 0.0f;
+    private float _spaceTakenRotationSpeed = 10.0f;
+    private float _spaceTakenSizeAdjustment = 1.2f;
     [SerializeField] private Material spaceMat;
     [SerializeField] private Material spaceOverlapMat;
 
     private bool _isOverlapping;
 
+    private MeshFilter _meshFilter;
+    private MeshRenderer _meshRenderer;
 
     [SerializeField] private LayerMask spaceLayer;
 
     public event Action<Tower> OnDespawned;
+    public event Action OnUpgraded;
 
 
     public void OnClick() { }
@@ -44,12 +54,27 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
         _spaceTakenCircle.enabled = false;
     }
 
-    public void Initialize(TowerData data)
+    public void Initialize(BaseTowerData data)
     {
         TowerData = data;
 
         if (_hasBeenInitialized) return;
 
+        SetupSpaceTaken();
+
+
+        _meshFilter = GetComponent<MeshFilter>();
+        _meshRenderer = GetComponent<MeshRenderer>();
+
+        Initialize();
+
+        SetLayer(false);
+
+        _hasBeenInitialized = true;
+    }
+
+    private void SetupSpaceTaken()
+    {
         _spaceTakenObject = new GameObject();
         _spaceTakenObject.AddComponent<SphereCollider>().radius = 2.3f;
         _spaceTakenObject.name = "SpaceTaken Collider";
@@ -61,21 +86,9 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
         _spaceTakenCircle = _spaceTakenObject.AddComponent<SpriteRenderer>();
         _spaceTakenCircle.drawMode = SpriteDrawMode.Sliced;
         _spaceTakenCircle.sprite = spaceTakenSprite;
-
-        Initialize();
-
-        SetLayer(false);
-
-        _hasBeenInitialized = true;
     }
 
     protected abstract void Initialize();
-
-    public void DespawnTower()
-    {
-        SetLayer(false);
-        OnDespawned?.Invoke(this);
-    }
 
     protected virtual void OnEnabled() { }
     protected virtual void OnDisabled() { }
@@ -87,6 +100,8 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
         {
             ShowVisuals();
             OnEnabled();
+
+            ResetTierTowerData();
         }
     }
 
@@ -96,7 +111,18 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
         {
             HideVisuals();
             OnDisabled();
+
+            ResetTierTowerData();
+
+            SetLayer(false);
+            OnDespawned?.Invoke(this);
         }
+    }
+
+    private void ResetTierTowerData()
+    {
+        TowerTier = 0;
+        SetMesh();
     }
 
     protected virtual void Update()
@@ -109,15 +135,15 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
     private void RotateSpaceTakenCircle()
     {
-        _spaceTakenYRotation += Time.deltaTime * 10.0f;
-        _spaceTakenObject.transform.localRotation = Quaternion.Euler(90, _spaceTakenYRotation, 0);
+        _spaceTakenYRotation += Time.deltaTime * _spaceTakenRotationSpeed;
+        _spaceTakenObject.transform.localRotation = Quaternion.Euler(90.0f, _spaceTakenYRotation, 0.0f);
     }
 
     private void CheckSpaceOverlap()
     {
         if (gameObject.layer == towerModelLayer) return;
 
-        if (Physics.CheckSphere(transform.position, TowerData.SpaceTaken * 1.2f, spaceLayer))
+        if (Physics.CheckSphere(transform.position, TowerData.SpaceTaken * _spaceTakenSizeAdjustment, spaceLayer))
         {
             _isOverlapping = true;
             _spaceTakenCircle.material = spaceOverlapMat;
@@ -149,5 +175,23 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
             _spaceTakenCircle.material = spaceMat;
             OnEnabled();
         }
+    }
+
+
+    public bool CanUpgrade() { return TowerTier + 1 < TowerData.TowerTiers.Count; }
+
+    public int GetUpgradeCost() { return TowerData.TowerTiers[TowerTier + 1].Cost; }
+
+    public void UpgradeTower()
+    {
+        TowerTier++;
+        SetMesh(); 
+        OnUpgraded?.Invoke();
+    }
+
+    private void SetMesh()
+    {
+        _meshFilter.sharedMesh = TowerData.TowerTiers[TowerTier].Model.GetComponent<MeshFilter>().sharedMesh;
+        _meshRenderer.sharedMaterials = TowerData.TowerTiers[TowerTier].Model.GetComponent<MeshRenderer>().sharedMaterials;
     }
 }

@@ -122,6 +122,8 @@ public class InputController : MonoBehaviourService
     {
         _inputActions.Gameplay.Disable();
         _inputActions.UI.Enable();
+
+        CameraRotateEvent?.Invoke(false);
     }
 
     public void DisableAllActions()

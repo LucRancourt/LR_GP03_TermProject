@@ -12,7 +12,7 @@ public class BuilderManager
         _groundLayer = groundLayer;
     }
 
-    public void SetNewTower(Tower newTower, out TowerData towerDataResult)
+    public void SetNewTower(Tower newTower, out BaseTowerData towerDataResult)
     {
         if (_tower == null)
             towerDataResult = null;
@@ -39,15 +39,23 @@ public class BuilderManager
             _builtTowers.HideVisuals();
     }
 
-    public void ClearTower()
+    private void ClearTower()
     {
+        _tower = null;
+        ShowSpaceOnBuilds(false);
+    }
+
+    public bool TryClearTower(out Tower clearedTower)
+    {
+        clearedTower = _tower;
+
         if (_tower)
         {
-            _tower.DespawnTower();
-            _tower = null;
-
-            ShowSpaceOnBuilds(false);
+            ClearTower();
+            return true;
         }
+
+        return false;
     }
 
     public bool TryBuildTower()
@@ -72,6 +80,14 @@ public class BuilderManager
     public void RemoveTower(Tower towerToSell)
     {
         _builtTowers.Remove(towerToSell);
+    }
+
+    public void UpgradeTower(Tower towerToUpgrade)
+    {
+        if (towerToUpgrade != null)
+        {
+            
+        }
     }
 
     public void Update()

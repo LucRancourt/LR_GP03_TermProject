@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private TowerData[] towers;
+    [SerializeField] private BaseTowerData[] towers;
     [SerializeField] private GameObject towerInventoryHUD;
 
-    public event Action<TowerData> OnTowerSelected;
+    public event Action<BaseTowerData> OnTowerSelected;
 
     private void Awake()
     {
@@ -27,12 +27,12 @@ public class PlayerInventory : MonoBehaviour
         OnTowerSelected?.Invoke(towers[index]);
     }
 
-    public TowerData[] GetTowerList()
+    public BaseTowerData[] GetTowerList()
     {
         return towers;
     }
 
-    public TowerData GetTowerData(int index)
+    public BaseTowerData GetTowerData(int index)
     {
         index--;
 

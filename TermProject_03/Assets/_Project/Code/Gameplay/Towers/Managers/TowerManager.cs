@@ -24,15 +24,15 @@ public class TowerManager
 
     private Dictionary<string, LimitedPool> _towerPoolFactory = new();
 
-    public TowerManager(TowerData[] playerInventory)   
+    public TowerManager(BaseTowerData[] playerInventory)   
     {
-        foreach (TowerData tower in playerInventory)
+        foreach (BaseTowerData tower in playerInventory)
         {
-            _towerPoolFactory[tower.Name] = new LimitedPool(tower.UnitLimit, new PooledFactory<Tower>(tower.Model, tower.UnitLimit));
+            _towerPoolFactory[tower.Name] = new LimitedPool(tower.UnitLimit, new PooledFactory<Tower>(tower.GetTowerTierData(0).Model, tower.UnitLimit));
         }
     }
 
-    public Tower SpawnTower(TowerData towerData)
+    public Tower SpawnTower(BaseTowerData towerData)
     {
         if (_towerPoolFactory[towerData.Name].CurrentUnitLimit < _towerPoolFactory[towerData.Name].MaxUnitLimit)
         {
@@ -41,15 +41,13 @@ public class TowerManager
 
             tower.Initialize(towerData);
 
-            tower.OnDespawned += DespawnTower;
-
             return tower;
         }
 
         return null;
     }
 
-    public bool TrySpawnTower(TowerData towerData, out Tower towerSpawned)
+    public bool TrySpawnTower(BaseTowerData towerData, out Tower towerSpawned)
     {
         if (_towerPoolFactory[towerData.Name].CurrentUnitLimit < _towerPoolFactory[towerData.Name].MaxUnitLimit)
         {
@@ -57,8 +55,6 @@ public class TowerManager
             _towerPoolFactory[towerData.Name].AddToCurrentLimit();
 
             towerSpawned.Initialize(towerData);
-
-            towerSpawned.OnDespawned += DespawnTower;
 
             return true;
         }
@@ -69,8 +65,6 @@ public class TowerManager
 
     public void DespawnTower(Tower towerToDespawn)
     {
-        towerToDespawn.OnDespawned -= DespawnTower;
-
         _towerPoolFactory[towerToDespawn.TowerData.Name].Pool.Return(towerToDespawn);
         _towerPoolFactory[towerToDespawn.TowerData.Name].SubtractFromCurrentLimit();
     }

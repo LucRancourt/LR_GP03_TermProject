@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerUIWindow : Singleton<TowerUIWindow>, IView<TowerData>
+public class TowerUIWindow : Singleton<TowerUIWindow>, IView<Tower>
 {
     [SerializeField] private CanvasGroup panel;
 
@@ -37,15 +37,15 @@ public class TowerUIWindow : Singleton<TowerUIWindow>, IView<TowerData>
         sellButton.onClick.AddListener(() => OnSell?.Invoke());
     }
 
-    public void UpdateDisplay(TowerData data)
+    public void UpdateDisplay(Tower tower)
     {
-        if (data == null) return;
+        if (tower == null) return;
 
-        nameText.text = data.Name;
-        unitLimitText.text = data.UnitLimit.ToString();
-        iconImage.sprite = data.Icon;
+        nameText.text = tower.TowerData.Name;
+        unitLimitText.text = tower.TowerData.UnitLimit.ToString();
+        iconImage.sprite = tower.TowerData.Icon;
 
-        SetOptionalRow(specialEffectRow, testText, "Poison ", data.SpaceTaken.ToString());
+        SetOptionalRow(specialEffectRow, testText, "Poison ", tower.TowerData.SpaceTaken.ToString());
     }
 
     private void SetOptionalRow(GameObject row, TextMeshProUGUI text, string title, string value)

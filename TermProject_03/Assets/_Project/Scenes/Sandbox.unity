@@ -1196,7 +1196,6 @@ GameObject:
   - component: {fileID: 400168913}
   - component: {fileID: 400168917}
   - component: {fileID: 400168920}
-  - component: {fileID: 400168919}
   - component: {fileID: 400168918}
   m_Layer: 0
   m_Name: Player
@@ -1298,18 +1297,6 @@ MonoBehaviour:
   towerModelLayer:
     serializedVersion: 2
     m_Bits: 1024
---- !u!114 &400168919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 400168912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51903178138be424fb31014c4613768b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &400168920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,8 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towers:
-  - {fileID: 11400000, guid: 750c5bfd468356a41997437422f0ed98, type: 2}
-  - {fileID: 11400000, guid: e38ac79d93e91a840aa057f0a0958ba3, type: 2}
+  - {fileID: 11400000, guid: a24e7f0f90c4be349bbd7adc8d6df985, type: 2}
   towerInventoryHUD: {fileID: 690669125}
 --- !u!1 &403930617
 GameObject:

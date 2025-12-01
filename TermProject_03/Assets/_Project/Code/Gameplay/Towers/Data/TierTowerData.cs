@@ -1,32 +1,18 @@
 using UnityEngine;
 using UnityEditor;
 
-
-// CANT WORK FOR THE UPGRADES AND INITIAL PLACEMENT AS SETUP NOW
-
-// Maybe have another class to add to the SO para?
-// Tier / Stats / Costs/CanUpgrade / Model
-// Name / Icon / Limit / PlacementCost / List of the above for each upgrade tier?
-
-
-
-[CustomEditor(typeof(TowerData))]
-public class TowerDataCustomEditor : Editor
+[CustomEditor(typeof(TierTowerData))]
+public class TierTowerDataCustomEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        TowerData towerData = (TowerData)target;
+        TierTowerData towerData = (TierTowerData)target;
 
 
         EditorGUILayout.LabelField("General", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
-        towerData.Name = EditorGUILayout.TextField("Name", towerData.Name);
-        towerData.UnitLimit = EditorGUILayout.IntField("Unit Limit", towerData.UnitLimit);
-        towerData.SpaceTaken = EditorGUILayout.FloatField("Space Taken", towerData.SpaceTaken);
-        towerData.NextUpgradeTier = (TowerData)EditorGUILayout.ObjectField("Upgrade Tier", towerData.NextUpgradeTier, typeof(TowerData), false);
         towerData.Model = (Tower)EditorGUILayout.ObjectField("Tower Model", towerData.Model, typeof(Tower), false);
-        towerData.Icon = (Sprite)EditorGUILayout.ObjectField("Tower Icon", towerData.Icon, typeof(Sprite), false);
 
         EditorGUILayout.Space(20.0f);
 
@@ -34,8 +20,7 @@ public class TowerDataCustomEditor : Editor
         EditorGUILayout.LabelField("Costs", EditorStyles.boldLabel);
         EditorGUILayout.Space();
 
-        towerData.PlacementCost = EditorGUILayout.IntField("Placement Cost", towerData.PlacementCost);
-        towerData.UpgradeCost = EditorGUILayout.IntField("Upgrade Cost", towerData.UpgradeCost);
+        towerData.Cost = EditorGUILayout.IntField("Cost", towerData.Cost);
         towerData.SellValue = EditorGUILayout.IntField("Sell Value", towerData.SellValue);
 
         EditorGUILayout.Space(20.0f);
@@ -46,7 +31,7 @@ public class TowerDataCustomEditor : Editor
         EditorGUILayout.Space();
 
         if (towerData.Type == TowerType.Attack || towerData.Type == TowerType.Spawn)
-            towerData.Rate = EditorGUILayout.FloatField("Rate", towerData.Rate);
+            towerData.Cooldown = EditorGUILayout.FloatField("Cooldown", towerData.Cooldown);
 
         if (towerData.Type == TowerType.Attack || towerData.Type == TowerType.Support)
             towerData.Range = EditorGUILayout.FloatField("Range", towerData.Range);
@@ -74,26 +59,19 @@ public class TowerDataCustomEditor : Editor
 }
 
 
-[CreateAssetMenu(fileName = "NewTowerData", menuName = "Scriptable Objects/Tower/Data")]
-public class TowerData : ScriptableObject
+[CreateAssetMenu(fileName = "NewTierTowerData", menuName = "Scriptable Objects/Tower/TierData")]
+public class TierTowerData : ScriptableObject
 {
-    // All Towers
-    public string Name;
-    public int UnitLimit;
-    public float SpaceTaken;
-    public TowerData NextUpgradeTier;
     public Tower Model;
-    public Sprite Icon;
 
-    public int PlacementCost;
-    public int UpgradeCost;
+    public int Cost;
     public int SellValue;
-
 
     public TowerType Type;
 
+
     // Attack / Spawn shared
-    public float Rate;
+    public float Cooldown;
 
     // Attack / Support shared
     public float Range;
@@ -107,12 +85,4 @@ public class TowerData : ScriptableObject
     // Support
     //increased stat
     //reduced stat
-}
-
-
-public enum TowerType
-{
-    Attack,
-    Spawn,
-    Support // Money Maker +
 }

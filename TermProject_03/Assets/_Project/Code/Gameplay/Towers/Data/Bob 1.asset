@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e392738ea83c85c4abd5b85a95804db1, type: 3}
-  m_Name: wwwwww
+  m_Script: {fileID: 11500000, guid: 10b04318ab87d7a47a5933aaaba55437, type: 3}
+  m_Name: Bob 1
   m_EditorClassIdentifier: 
-  Name: NotOrc
-  Prefab: {fileID: 6193620580075898845, guid: 40570c8283667d549a3da186eee55a12, type: 3}
-  Health: 2
-  Speed: 20
+  Model: {fileID: 1364516805103444731, guid: 7d3c015338ed04b478629e66174c013d, type: 3}
+  Cost: 2000
+  SellValue: 600
+  Type: 0
+  Cooldown: 5
+  Range: 24
+  Damage: 12
+  SpawnedUnit: {fileID: 0}

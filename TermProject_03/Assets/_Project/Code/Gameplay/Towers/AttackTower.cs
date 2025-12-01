@@ -47,7 +47,7 @@ public class AttackTower : RangedTower
 
                 Debug.DrawLine(transform.position, _enemiesInRange[0].transform.position, Color.red, 2.0f);
 
-                _cooldown = TowerData.Rate;
+                _cooldown = TowerData.TowerTiers[TowerTier].Cooldown;
             }
         }
     }
@@ -58,7 +58,7 @@ public class AttackTower : RangedTower
 
         if (_enemiesInRange[0])
         {
-            _enemiesInRange[0].OnDamaged(TowerData.Damage);
+            _enemiesInRange[0].OnDamaged(TowerData.TowerTiers[TowerTier].Damage);
         }
     }
 

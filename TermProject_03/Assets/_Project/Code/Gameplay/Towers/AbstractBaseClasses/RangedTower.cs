@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class RangedTower : Tower
@@ -14,6 +13,9 @@ public abstract class RangedTower : Tower
     protected override void Initialize()
     {
         SetupRangeSphere();
+
+        OnDespawned += (tower) => AdjustRangeSphereSize();
+        OnUpgraded += AdjustRangeSphereSize;
     }
 
     private void SetupRangeSphere()
@@ -22,12 +24,17 @@ public abstract class RangedTower : Tower
         _rangeSphere.transform.SetParent(transform);
         _rangeSphere.name = "RangedTower - RangeIndicator";
         _rangeSphere.transform.localPosition = Vector3.zero;
-        _rangeSphere.transform.localScale = new Vector3(TowerData.Range, TowerData.Range, TowerData.Range);
+        AdjustRangeSphereSize();
 
         _rangeMesh = _rangeSphere.GetComponent<MeshRenderer>();
         _rangeMesh.material = rangeMaterial;
 
         _triggerDetector = _rangeSphere.AddComponent<TriggerDetector>();
+    }
+
+    private void AdjustRangeSphereSize()
+    {
+        _rangeSphere.transform.localScale = new Vector3(TowerData.TowerTiers[TowerTier].Range, TowerData.TowerTiers[TowerTier].Range, TowerData.TowerTiers[TowerTier].Range);
     }
 
     public override void ShowVisuals()

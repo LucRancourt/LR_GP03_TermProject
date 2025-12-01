@@ -1,12 +1,10 @@
 using UnityEngine;
 
-public class PlayerWallet : MonoBehaviour
+public class PlayerWallet
 {
-    // Variables
-    private float _wallet;
+    private float _wallet = 10000.0f;
 
 
-    // Functions
     public void AddToWallet(float amount)
     {
         _wallet += amount;
@@ -14,18 +12,22 @@ public class PlayerWallet : MonoBehaviour
         Debug.Log(_wallet);
     }
 
-    public bool MakeTransaction(float amount)
+    public bool SufficientFunds(float amount)
     {
         if (_wallet >= amount)
-        {
-            _wallet -= amount;
-
-            Debug.Log(_wallet);
-
-
             return true;
-        }
 
         return false;
+    }
+
+    public bool MakeTransaction(float amount)
+    {
+        if (!SufficientFunds(amount)) return false;
+
+        _wallet -= amount;
+
+        Debug.Log(_wallet);
+
+        return true;
     }
 }
