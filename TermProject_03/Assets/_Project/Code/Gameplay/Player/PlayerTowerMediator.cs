@@ -53,7 +53,7 @@ public class PlayerTowerMediator : MonoBehaviour
 
     private void SellSelectedTower()
     {
-        PlayerWallet.Instance.AddToWallet(_selectedTower.TowerData.GetTowerTierData(_selectedTower.TowerTier).SellValue);
+        PlayerWallet.Instance.AddToWallet(_selectedTower.TowerData.GetTowerTierData(_selectedTower.TowerTier).SellValue, false);
         _builderManager.RemoveTower(_selectedTower);
         _towerManager.DespawnTower(_selectedTower);
 

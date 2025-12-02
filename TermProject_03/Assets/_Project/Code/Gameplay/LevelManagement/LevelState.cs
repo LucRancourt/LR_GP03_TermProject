@@ -17,5 +17,5 @@ public enum LevelStateKeys
     WaveState,
     BreakState,
     GameWinState,
-    GameOverState
+    GameLossState
 }

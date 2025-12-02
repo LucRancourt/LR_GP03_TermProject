@@ -906,7 +906,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 403930618}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1425237702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1697,7 +1697,7 @@ RectTransform:
   - {fileID: 1493417699}
   - {fileID: 236172655}
   - {fileID: 16794090}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1425237702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1716,7 +1716,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68fabce6b173e8438a462139b79b6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudItems: []
+  _timeText: {fileID: 0}
+  _waveText: {fileID: 0}
+  _cashText: {fileID: 0}
 --- !u!1 &696491965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,6 +2268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 992714891}
   - component: {fileID: 992714890}
+  - component: {fileID: 992714892}
   m_Layer: 0
   m_Name: HUDManager
   m_TagString: Untagged
@@ -2285,11 +2288,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68fabce6b173e8438a462139b79b6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hudItems:
-  - key: 4
-    uiElement: {fileID: 734984909}
-  - key: 5
-    uiElement: {fileID: 660386847}
+  _timeText: {fileID: 0}
+  _waveText: {fileID: 0}
+  _cashText: {fileID: 0}
 --- !u!4 &992714891
 Transform:
   m_ObjectHideFlags: 0
@@ -2305,6 +2306,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &992714892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992714889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7568454a0328fc8429c699f25680fae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiItems:
+  - key: 5
+    uiElement: {fileID: 660386847}
+  - key: 4
+    uiElement: {fileID: 734984909}
 --- !u!1 &1028792666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,7 +2431,7 @@ RectTransform:
   m_Children:
   - {fileID: 660386850}
   - {fileID: 734984910}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1425237702}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3126,6 +3144,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362569224}
   m_CullTransparentMesh: 1
+--- !u!1 &1425237701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1425237702}
+  m_Layer: 0
+  m_Name: Canvases
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1425237702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1425237701}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -70.95593, y: 1.6905951, z: -15.312927}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1056370110}
+  - {fileID: 210042743}
+  - {fileID: 690669129}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1487082013
 GameObject:
   m_ObjectHideFlags: 0
@@ -3381,7 +3433,7 @@ GameObject:
   - component: {fileID: 1508472362}
   - component: {fileID: 1508472361}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: LevelManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3429,7 +3481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveManager: {fileID: 1508472361}
-  hudManager: {fileID: 992714890}
+  uiManager: {fileID: 992714892}
 --- !u!4 &1508472364
 Transform:
   m_ObjectHideFlags: 0
@@ -3966,8 +4018,6 @@ SceneRoots:
   - {fileID: 1998197569}
   - {fileID: 790014498}
   - {fileID: 1508472364}
-  - {fileID: 210042743}
-  - {fileID: 690669129}
   - {fileID: 2029870789}
-  - {fileID: 1056370110}
   - {fileID: 992714891}
+  - {fileID: 1425237702}

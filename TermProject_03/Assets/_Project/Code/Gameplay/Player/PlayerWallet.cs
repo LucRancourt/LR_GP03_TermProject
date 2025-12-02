@@ -6,7 +6,7 @@ using _Project.Code.Core.MVC;
 
 public class PlayerWallet : Singleton<PlayerWallet>, IModel
 {
-    private int _wallet = 0;
+    private int _wallet = 50000;
 
     public event Action OnDataChanged;
 
@@ -19,9 +19,13 @@ public class PlayerWallet : Singleton<PlayerWallet>, IModel
         OnDataChanged?.Invoke();
     }
 
-    public void AddToWallet(int amount)
+    public void AddToWallet(int amount, bool applyDifficultyModifier = true)
     {
+        if (applyDifficultyModifier)
+            amount = (int)(amount * LevelDifficulty.Instance.DifficultyModifier);
+
         _wallet += amount;
+
         OnDataChanged?.Invoke();
     }
 
