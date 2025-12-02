@@ -21,7 +21,9 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
 
     [Header("Buttons")]
     [SerializeField] private Button upgradeButton;
+    [SerializeField] private TextMeshProUGUI upgradeCost;
     [SerializeField] private Button sellButton;
+    [SerializeField] private TextMeshProUGUI sellValue;
 
     public event Action OnUpgrade;
     public event Action OnSell;
@@ -42,11 +44,22 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
     {
         if (tower == null) return;
 
-        nameText.text = tower.TowerData.Name;
-        unitLimitText.text = currentUnitLimit.ToString() + " / " + tower.TowerData.UnitLimit.ToString();
-        iconImage.sprite = tower.TowerData.Icon;
+        BaseTowerData towerData = tower.TowerData;
+
+        nameText.text = towerData.Name;
+        unitLimitText.text = currentUnitLimit.ToString() + " / " + towerData.UnitLimit.ToString();
+        iconImage.sprite = towerData.Icon;
+
+        TierTowerData tierTowerData = towerData.GetTowerTierData(tower.TowerTier);
+
+        upgradeCost.text = "Upgrade<br><color=#ff0000><b>" + tierTowerData.Cost.ToString() + "</b><color=#000000>";
+        sellValue.text = "Sell<br><color=#00ff00><b>" + tierTowerData.SellValue.ToString() + "</b><color=#000000>";
 
         SetOptionalRow(specialEffectRow, testText, "Poison ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
+        SetOptionalRow(specialEffectRow, testText, "wwww ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
+        SetOptionalRow(specialEffectRow, testText, "Poisaaaaon ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
+        SetOptionalRow(specialEffectRow, testText, "Poisssssson ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
+        SetOptionalRow(specialEffectRow, testText, "Poisoxxxxxxn ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
     }
 
     private void SetOptionalRow(GameObject row, TextMeshProUGUI text, string title, string value)

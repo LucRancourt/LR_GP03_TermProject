@@ -547,7 +547,7 @@ GameObject:
   - component: {fileID: 4664317330310163173}
   - component: {fileID: 6817970154761926972}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 2057602467075598648}
   - component: {fileID: 6064234414385143352}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1290,7 +1290,9 @@ MonoBehaviour:
   specialEffectRow: {fileID: 1526117925510227150}
   testText: {fileID: 6501424173500920184}
   upgradeButton: {fileID: 3808525693718712209}
+  upgradeCost: {fileID: 6064234414385143352}
   sellButton: {fileID: 8131661271940354633}
+  sellValue: {fileID: 6817970154761926972}
 --- !u!1 &7116849327428453156
 GameObject:
   m_ObjectHideFlags: 0
