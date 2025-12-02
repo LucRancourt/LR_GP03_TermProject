@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 using _Project.Code.Core.General;
 using _Project.Code.Core.MVC;
@@ -6,12 +7,15 @@ using _Project.Code.Core.MVC;
 
 public class PlayerWallet : Singleton<PlayerWallet>, IModel
 {
-    private int _wallet = 50000;
+    [SerializeField] private int defaultFunds = 500;
+    private int _wallet;
 
     public event Action OnDataChanged;
 
 
-    public void Initialize() { SetWallet(500); }
+    private void Start() { Initialize(); }
+
+    public void Initialize() { SetWallet(defaultFunds); }
 
     private void SetWallet(int amount)
     {
