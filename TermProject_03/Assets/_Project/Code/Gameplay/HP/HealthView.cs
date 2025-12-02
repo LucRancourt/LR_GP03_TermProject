@@ -14,7 +14,5 @@ public class HealthView : BaseView<float>
     {
         if (healthBar != null)
             healthBar.value = data / 100.0f;
-
-        Debug.Log(gameObject.name + " has " + data + " health!!!!");
     }
 }

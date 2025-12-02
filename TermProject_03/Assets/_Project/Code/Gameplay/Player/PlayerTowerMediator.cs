@@ -48,7 +48,7 @@ public class PlayerTowerMediator : MonoBehaviour
 
         PlayerWallet.Instance.MakeTransaction(upgradeCost);
         _selectedTower.UpgradeTower();
-        TowerUIWindow.Instance.UpdateDisplay(_selectedTower.TowerData, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
+        TowerUIWindow.Instance.UpdateDisplay(_selectedTower, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
     }
 
     private void SellSelectedTower()
@@ -105,7 +105,7 @@ public class PlayerTowerMediator : MonoBehaviour
             if (CameraToMouseRaycast.TryRaycastWithComponent(towerModelLayer, out _selectedTower))
             {
                 _selectedTower.ShowVisuals();
-                TowerUIWindow.Instance.UpdateDisplay(_selectedTower.TowerData, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
+                TowerUIWindow.Instance.UpdateDisplay(_selectedTower, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
                 TowerUIWindow.Instance.Show();
             }
         }

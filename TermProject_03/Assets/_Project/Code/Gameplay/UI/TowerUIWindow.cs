@@ -38,15 +38,15 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         sellButton.onClick.AddListener(() => OnSell?.Invoke());
     }
 
-    public void UpdateDisplay(BaseTowerData towerData, int currentUnitLimit)
+    public void UpdateDisplay(Tower tower, int currentUnitLimit)
     {
-        if (towerData == null) return;
+        if (tower == null) return;
 
-        nameText.text = towerData.Name;
-        unitLimitText.text = currentUnitLimit.ToString() + " / " + towerData.UnitLimit.ToString();
-        iconImage.sprite = towerData.Icon;
+        nameText.text = tower.TowerData.Name;
+        unitLimitText.text = currentUnitLimit.ToString() + " / " + tower.TowerData.UnitLimit.ToString();
+        iconImage.sprite = tower.TowerData.Icon;
 
-        SetOptionalRow(specialEffectRow, testText, "Poison ", towerData.SpaceTaken.ToString());
+        SetOptionalRow(specialEffectRow, testText, "Poison ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
     }
 
     private void SetOptionalRow(GameObject row, TextMeshProUGUI text, string title, string value)
