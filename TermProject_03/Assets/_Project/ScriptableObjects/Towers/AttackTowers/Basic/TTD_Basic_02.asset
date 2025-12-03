@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10b04318ab87d7a47a5933aaaba55437, type: 3}
-  m_Name: Bob
+  m_Name: TTD_Basic_02
   m_EditorClassIdentifier: 
-  Model: {fileID: 1364516805103444731, guid: f0c5b894671758941b3c8e14f8a6cae5, type: 3}
-  Cost: 150
-  SellValue: 125
+  Model: {fileID: 1364516805103444731, guid: 7d3c015338ed04b478629e66174c013d, type: 3}
+  Cost: 2000
+  SellValue: 600
   Type: 0
-  Cooldown: 1
-  Range: 12
-  Damage: 5
+  Cooldown: 5
+  Range: 24
+  Damage: 12
   SpawnedUnit: {fileID: 0}

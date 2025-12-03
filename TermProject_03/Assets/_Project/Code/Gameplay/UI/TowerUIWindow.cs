@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 using _Project.Code.Core.General;
 
+[RequireComponent(typeof(StatRowManager))]
 
 public class TowerUIWindow : Singleton<TowerUIWindow>
 {
@@ -15,15 +16,13 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
     [SerializeField] private TextMeshProUGUI unitLimitText;
     [SerializeField] private Image iconImage;
 
-    [Header("Optionals")]
-    [SerializeField] private GameObject specialEffectRow;
-    [SerializeField] private TextMeshProUGUI testText;
-
     [Header("Buttons")]
     [SerializeField] private Button upgradeButton;
     [SerializeField] private TextMeshProUGUI upgradeCost;
     [SerializeField] private Button sellButton;
     [SerializeField] private TextMeshProUGUI sellValue;
+
+    private StatRowManager _statRowManager;
 
     public event Action OnUpgrade;
     public event Action OnSell;
@@ -37,6 +36,8 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         ClearButtonListeners();
 
         sellButton.onClick.AddListener(() => OnSell?.Invoke());
+
+        _statRowManager = GetComponent<StatRowManager>();
     }
 
     public void UpdateDisplay(Tower tower, int currentUnitLimit)
@@ -52,40 +53,26 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         TierTowerData tierTowerData = towerData.GetTowerTierData(tower.TowerTier);
 
         upgradeButton.onClick.RemoveAllListeners();
+        upgradeButton.interactable = false;
 
         if (towerData.TryGetTowerTierData(tower.TowerTier + 1, out TierTowerData nextTierTowerData))
         {
             upgradeButton.onClick.AddListener(() => OnUpgrade?.Invoke());
 
-            upgradeButton.interactable = true;
-            upgradeCost.text = "Upgrade<br><color=#ff0000><b>" + nextTierTowerData.Cost.ToString() + "</b><color=#000000>";
+            if (PlayerWallet.Instance.SufficientFunds(nextTierTowerData.Cost))
+                upgradeButton.interactable = true;
+
+            upgradeCost.text = "Upgrade<br><b>" + nextTierTowerData.Cost.ToString() + "</b>";
         }
         else
         {
-            upgradeButton.interactable = false;
-            upgradeCost.text = "Maxed";
+            upgradeCost.text = "MAX";
         }
 
-        sellValue.text = "Sell<br><color=#00ff00><b>" + tierTowerData.SellValue.ToString() + "</b><color=#000000>";
+        sellValue.text = "Sell<br><b>" + tierTowerData.SellValue.ToString() + "</b>";
 
-        SetOptionalRow(specialEffectRow, testText, "Poison ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
-        SetOptionalRow(specialEffectRow, testText, "wwww ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
-        SetOptionalRow(specialEffectRow, testText, "Poisaaaaon ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
-        SetOptionalRow(specialEffectRow, testText, "Poisssssson ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
-        SetOptionalRow(specialEffectRow, testText, "Poisoxxxxxxn ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());
-    }
 
-    private void SetOptionalRow(GameObject row, TextMeshProUGUI text, string title, string value)
-    {
-        if (!string.IsNullOrEmpty(value))
-        {
-            row.SetActive(true);
-            text.text = value;
-        }
-        else
-        {
-            row.SetActive(false);
-        }
+        _statRowManager.SetupStats(tierTowerData);
     }
 
     public void Dispose()
