@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bob
   m_EditorClassIdentifier: 
   Model: {fileID: 1364516805103444731, guid: f0c5b894671758941b3c8e14f8a6cae5, type: 3}
-  Cost: 500
+  Cost: 150
   SellValue: 125
   Type: 0
   Cooldown: 1

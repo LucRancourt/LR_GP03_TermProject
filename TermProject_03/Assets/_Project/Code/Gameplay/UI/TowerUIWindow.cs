@@ -36,7 +36,6 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         Hide();
         ClearButtonListeners();
 
-        upgradeButton.onClick.AddListener(() => OnUpgrade?.Invoke());
         sellButton.onClick.AddListener(() => OnSell?.Invoke());
     }
 
@@ -52,7 +51,21 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
 
         TierTowerData tierTowerData = towerData.GetTowerTierData(tower.TowerTier);
 
-        upgradeCost.text = "Upgrade<br><color=#ff0000><b>" + tierTowerData.Cost.ToString() + "</b><color=#000000>";
+        upgradeButton.onClick.RemoveAllListeners();
+
+        if (towerData.TryGetTowerTierData(tower.TowerTier + 1, out TierTowerData nextTierTowerData))
+        {
+            upgradeButton.onClick.AddListener(() => OnUpgrade?.Invoke());
+
+            upgradeButton.interactable = true;
+            upgradeCost.text = "Upgrade<br><color=#ff0000><b>" + nextTierTowerData.Cost.ToString() + "</b><color=#000000>";
+        }
+        else
+        {
+            upgradeButton.interactable = false;
+            upgradeCost.text = "Maxed";
+        }
+
         sellValue.text = "Sell<br><color=#00ff00><b>" + tierTowerData.SellValue.ToString() + "</b><color=#000000>";
 
         SetOptionalRow(specialEffectRow, testText, "Poison ", tower.TowerData.GetTowerTierData(tower.TowerTier).Cost.ToString());

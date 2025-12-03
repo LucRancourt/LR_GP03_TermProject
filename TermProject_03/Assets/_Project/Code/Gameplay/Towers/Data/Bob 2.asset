@@ -15,8 +15,8 @@ MonoBehaviour:
   Model: {fileID: 0}
   Cost: 500
   SellValue: 1200000
-  Type: 0
-  Rate: 0
+  Type: 1
+  Cooldown: 0
   Range: 0
   Damage: 0
   SpawnedUnit: {fileID: 0}
