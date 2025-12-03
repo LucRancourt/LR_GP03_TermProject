@@ -3013,6 +3013,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[Canvas_TowerUIWindow]'
       objectReference: {fileID: 0}
+    - target: {fileID: 7986246485104443162, guid: 6046a055db47ff64ba6e9cbe90563c10, type: 3}
+      propertyPath: duration
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b04318ab87d7a47a5933aaaba55437, type: 3}
   m_Name: TTD_Basic_03
   m_EditorClassIdentifier: 
-  Model: {fileID: 0}
-  Cost: 500
-  SellValue: 1200000
+  Model: {fileID: 1364516805103444731, guid: f0c5b894671758941b3c8e14f8a6cae5, type: 3}
+  Cost: 50000
+  SellValue: 10000
   Type: 0
   Cooldown: 0
   Range: 0

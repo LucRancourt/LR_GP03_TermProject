@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 using _Project.Code.Core.General;
 
@@ -23,6 +24,10 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
     [SerializeField] private TextMeshProUGUI sellValue;
 
     private StatRowManager _statRowManager;
+
+    private Tween _tween;
+    [Header("Tween")]
+    [SerializeField] private float duration = 0.25f;
 
     public event Action OnUpgrade;
     public event Action OnSell;
@@ -94,9 +99,21 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         panel.alpha = 1.0f;
         panel.interactable = true;
         panel.blocksRaycasts = true;
+
+        _tween?.Kill();
+        _tween = panel.transform.DOScale(1.0f, duration);
+        _tween.Play();
     }
 
     public void Hide()
+    {
+        _tween?.Kill();
+        _tween = panel.transform.DOScale(0.0f, duration);
+        _tween.onComplete += HidePanel;
+        _tween.Play();
+    }
+    
+    private void HidePanel()
     {
         panel.blocksRaycasts = false;
         panel.interactable = false;

@@ -20,3 +20,4 @@ MonoBehaviour:
   TowerTiers:
   - {fileID: 11400000, guid: 398ceef0791dde34d9eb2907fc65bd98, type: 2}
   - {fileID: 11400000, guid: 1bbd8483c748bfd4882a7262412837aa, type: 2}
+  - {fileID: 11400000, guid: e8c67d5f91dc47c408656bd71571522f, type: 2}
