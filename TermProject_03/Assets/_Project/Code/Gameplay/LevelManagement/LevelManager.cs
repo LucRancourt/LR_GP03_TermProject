@@ -29,4 +29,9 @@ public class LevelManager : Singleton<LevelManager>
         playerBase.OnDied -= SetGameOver;
         _levelStateManager.TransitionToState<LevelOverState>();
     }
+
+    private void OnDestroy()
+    {
+        _levelStateManager.CallCoroutineEnd();
+    }
 }

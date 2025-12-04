@@ -11,8 +11,8 @@ public class LevelStateManager
 
     public void Initialize(WaveManager waveManager, UIManager uiManager)
     {
-        _smGameStates = new StateMachine<LevelState>(new PreparationState(this, uiManager.gameObject));// hudManager.Get(HUDItemKey.UnitInventory)));
-        _smGameStates.AddState(new WaveState(this, waveManager, uiManager));
+        _smGameStates = new StateMachine<LevelState>(new PreparationState(this, uiManager.gameObject));// Get(UIItemKey.UnitInventory), uiManager.Get(UIItemKey.DifficultySelect)));
+        _smGameStates.AddState(new WaveState(this, waveManager, uiManager)); //.Get(UIItemKey.WaveCounter), uiManager.Get(UIItemKey.Notifications)));
         _smGameStates.AddState(new BreakState(this));
         _smGameStates.AddState(new LevelWinState(this, uiManager.Get(UIItemKey.WinScreen)));
         _smGameStates.AddState(new LevelOverState(this, uiManager.Get(UIItemKey.LossScreen)));
@@ -37,13 +37,14 @@ public class LevelStateManager
     {
         if (_activeCoroutine != null) { CallCoroutineEnd(); };
 
-        CoroutineExecutor.Instance.StartCoroutineExec(toCall);
+        _activeCoroutine = CoroutineExecutor.Instance.StartCoroutineExec(toCall);
     }
 
     public void CallCoroutineEnd()
     {
-        if (_activeCoroutine == null) { return; }
+        if (_activeCoroutine == null) { return; };
 
-        CoroutineExecutor.Instance.CancelCoroutine(_activeCoroutine);
+        if (CoroutineExecutor.Instance != null) 
+            CoroutineExecutor.Instance.CancelCoroutine(_activeCoroutine);
     }
 }

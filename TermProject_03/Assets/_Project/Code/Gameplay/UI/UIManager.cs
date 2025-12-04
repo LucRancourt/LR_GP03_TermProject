@@ -47,5 +47,7 @@ public enum UIItemKey
     WaveCounter,
     PlayerWallet,
     WinScreen,
-    LossScreen
+    LossScreen,
+    Notifications,
+    DifficultySelect
 }
