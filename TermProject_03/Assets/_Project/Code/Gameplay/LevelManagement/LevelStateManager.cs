@@ -1,16 +1,15 @@
 using UnityEngine;
 
 using _Project.Code.Core.StateMachine;
+using _Project.Code.Core.General;
+using System.Collections;
 
-public class LevelStateManager : MonoBehaviour
+public class LevelStateManager
 {
     private StateMachine<LevelState> _smGameStates;
+    private Coroutine _activeCoroutine;
 
-    [SerializeField] private WaveManager waveManager;
-    [SerializeField] private UIManager uiManager;
-
-
-    private void Awake()
+    public void Initialize(WaveManager waveManager, UIManager uiManager)
     {
         _smGameStates = new StateMachine<LevelState>(new PreparationState(this, uiManager.gameObject));// hudManager.Get(HUDItemKey.UnitInventory)));
         _smGameStates.AddState(new WaveState(this, waveManager, uiManager));
@@ -29,8 +28,22 @@ public class LevelStateManager : MonoBehaviour
         return _smGameStates.CurrentState;
     }
 
-    private void Update()
+    public void UpdateActiveState()
     {
         _smGameStates.Update();
+    }
+
+    public void CallCoroutineStart(IEnumerator toCall)
+    {
+        if (_activeCoroutine != null) { CallCoroutineEnd(); };
+
+        CoroutineExecutor.Instance.StartCoroutineExec(toCall);
+    }
+
+    public void CallCoroutineEnd()
+    {
+        if (_activeCoroutine == null) { return; }
+
+        CoroutineExecutor.Instance.CancelCoroutine(_activeCoroutine);
     }
 }

@@ -12,7 +12,7 @@ public class BreakState : LevelState
 
     public override void Enter()
     {
-        _levelStateManager.StartCoroutine(AutoExit());
+        _levelStateManager.CallCoroutineStart(AutoExit());
         PlayerWallet.Instance.AddToWallet(waveClearedReward);
     }
 
@@ -22,7 +22,7 @@ public class BreakState : LevelState
 
     public override void Exit()
     {
-        _levelStateManager.StopAllCoroutines();
+        _levelStateManager.CallCoroutineEnd();
     }
 
 

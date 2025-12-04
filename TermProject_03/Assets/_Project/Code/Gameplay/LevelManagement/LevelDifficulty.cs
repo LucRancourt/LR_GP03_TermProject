@@ -8,10 +8,13 @@ public class LevelDifficulty : Singleton<LevelDifficulty>
     private static readonly float _hardModifier = 0.45f;
 
     public float DifficultyModifier { get; private set; } = _mediumModifier;
+    public Difficulty DifficultyLevel { get; private set; } = Difficulty.Medium;
 
     public void SetDifficulty(Difficulty selectedDifficulty)
     {
-        switch (selectedDifficulty)
+        DifficultyLevel = selectedDifficulty;
+
+        switch (DifficultyLevel)
         {
             case Difficulty.Easy:
                 DifficultyModifier = _easyModifier;

@@ -3,22 +3,25 @@ using UnityEngine;
 using _Project.Code.Core.General;
 
 
-[RequireComponent(typeof(LevelStateManager))]
-
 public class LevelManager : Singleton<LevelManager>
 {
-    LevelStateManager _levelStateManager;
+    LevelStateManager _levelStateManager = new LevelStateManager();
 
+    [SerializeField] private WaveManager waveManager;
+    [SerializeField] private UIManager uiManager;
     [SerializeField] private Base playerBase;
 
     // Difficulty set somewhere per level -> not sure where to get from, maybe WaveManager? Idk
 
-    
 
     private void Start()
     {
-        _levelStateManager = GetComponent<LevelStateManager>();
+        waveManager.Initialize();
+        _levelStateManager.Initialize(waveManager, uiManager);
+
         playerBase.OnDied += SetGameOver;
+
+        //uiManager.Get(UIItemKey.Timer);
     }
 
     public void SetGameOver()

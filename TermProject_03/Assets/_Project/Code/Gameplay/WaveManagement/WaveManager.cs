@@ -7,11 +7,20 @@ using _Project.Code.Core.General;
 
 public class WaveManager : MonoBehaviour
 {
-    [SerializeField] private WaveSet waveSet;
+    private bool bWasInitialized = false;
+
+    [Tooltip("One for each of the 3 Difficulty levels")]
+    [SerializeField] private WaveSet[] waveSets = new WaveSet[3];
+    private WaveSet _activeWaveSet;
+
+    private int _selectedDifficulty;
+
     [SerializeField] private NavPath[] paths;
 
     private int _currentWaveIndex = 0;
-    private EnemyManager _enemyManager;
+
+    private EnemyManager[] _enemyManagers = new EnemyManager[3];
+    private EnemyManager _activeEnemyManager;
 
     public event Action WaveCompleted;
     public event Action AllWavesCompleted;
@@ -21,20 +30,35 @@ public class WaveManager : MonoBehaviour
     private int _wavesCompleted = 0;
 
 
-    public void Awake()
+    private void Awake()
     {
-        _enemyManager = new EnemyManager(waveSet);
+        for (int i = 0; i < 3; i++)
+        {
+            _enemyManagers[i] = new EnemyManager(waveSets[i]);
+        }        
+    }
+
+    public void Initialize()
+    {
+        _selectedDifficulty = (int)LevelDifficulty.Instance.DifficultyLevel;
+
+        _activeWaveSet = waveSets[_selectedDifficulty];
+        _activeEnemyManager = _enemyManagers[_selectedDifficulty];
+
+        bWasInitialized = true;
     }
 
     public void StartNextWave()
     {
-        if (_currentWaveIndex >= waveSet.waves.Length)
+        if (!bWasInitialized) return;
+
+        if (_currentWaveIndex >= _activeWaveSet.waves.Length)
             return;
 
 
-        _wavesToSpawn += waveSet.waves[_currentWaveIndex].enemiesToSpawn.Length;
+        _wavesToSpawn += _activeWaveSet.waves[_currentWaveIndex].enemiesToSpawn.Length;
 
-        foreach (EnemyGroup enemyGroup in waveSet.waves[_currentWaveIndex].enemiesToSpawn)
+        foreach (EnemyGroup enemyGroup in _activeWaveSet.waves[_currentWaveIndex].enemiesToSpawn)
         {
             StartCoroutine(SpawnWave(enemyGroup));
         }
@@ -42,7 +66,7 @@ public class WaveManager : MonoBehaviour
 
         _currentWaveIndex++;
 
-        if (_currentWaveIndex >= waveSet.waves.Length)
+        if (_currentWaveIndex >= _activeWaveSet.waves.Length)
             AllWavesCompleted?.Invoke();
     }
 
@@ -52,7 +76,7 @@ public class WaveManager : MonoBehaviour
 
         for (int i = 0; i < enemyGroup.Count; i++)
         {
-            _enemyManager.SpawnEnemy(enemyGroup.Enemy, MyUtils.RandomFrom(paths));
+            _activeEnemyManager.SpawnEnemy(enemyGroup.Enemy, MyUtils.RandomFrom(paths));
 
             if (i != enemyGroup.Count - 1)
                 yield return new WaitForSeconds(enemyGroup.DelayBetweenEnemies.RandomValue());
@@ -73,7 +97,7 @@ public class WaveManager : MonoBehaviour
     private void StartEndWaveCheck()
     {
         _waveCompletedCoroutine = CoroutineExecutor.Instance.CallbackOnConditionMet(
-            () => _enemyManager.ActiveEnemyCount == 0,
+            () => _activeEnemyManager.ActiveEnemyCount == 0,
             WaveCompleted);
     }
 

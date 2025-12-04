@@ -20,7 +20,7 @@ public class PreparationState : LevelState
     {
         _preparationUI.SetActive(true);
 
-        _levelStateManager.StartCoroutine(AutoExit());
+        _levelStateManager.CallCoroutineStart(AutoExit());
 
 
         // Select Difficulty UI -> send to GameManager?
@@ -34,7 +34,7 @@ public class PreparationState : LevelState
     {
         _preparationUI.SetActive(false);
 
-        _levelStateManager.StopAllCoroutines();
+        _levelStateManager.CallCoroutineEnd();
     }
 
 

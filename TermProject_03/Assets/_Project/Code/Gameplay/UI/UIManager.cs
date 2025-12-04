@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviour
     }
 }
 
+
 [System.Serializable]
 public class UIItem
 {
@@ -42,6 +43,7 @@ public enum UIItemKey
 {
     UnitInventory,
     PlayerInventory,
+    Timer,
     WaveCounter,
     PlayerWallet,
     WinScreen,
