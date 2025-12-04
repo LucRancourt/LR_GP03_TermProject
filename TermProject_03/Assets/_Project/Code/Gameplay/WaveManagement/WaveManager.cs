@@ -17,14 +17,13 @@ public class WaveManager : MonoBehaviour
 
     [SerializeField] private NavPath[] paths;
 
-    private int _currentWaveIndex = 0;
-
     private EnemyManager[] _enemyManagers = new EnemyManager[3];
     private EnemyManager _activeEnemyManager;
 
-    public event Action WaveCompleted;
-    public event Action AllWavesCompleted;
+    public event Action OnWaveCompleted;
+    public event Action OnAllWavesCompleted;
 
+    private int _currentWaveIndex = 0;
     private Coroutine _waveCompletedCoroutine;
     private int _wavesToSpawn;
     private int _wavesCompleted = 0;
@@ -67,7 +66,7 @@ public class WaveManager : MonoBehaviour
         _currentWaveIndex++;
 
         if (_currentWaveIndex >= _activeWaveSet.waves.Length)
-            AllWavesCompleted?.Invoke();
+            OnAllWavesCompleted?.Invoke();
     }
 
     private IEnumerator SpawnWave(EnemyGroup enemyGroup)
@@ -98,7 +97,7 @@ public class WaveManager : MonoBehaviour
     {
         _waveCompletedCoroutine = CoroutineExecutor.Instance.CallbackOnConditionMet(
             () => _activeEnemyManager.ActiveEnemyCount == 0,
-            WaveCompleted);
+            OnWaveCompleted);
     }
 
     public void CancelEndWaveCheck()

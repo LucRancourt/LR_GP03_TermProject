@@ -5,12 +5,12 @@ using _Project.Code.Core.General;
 using _Project.Code.Core.MVC;
 
 
-public class PlayerWallet : Singleton<PlayerWallet>, IModel
+public class PlayerWallet : Singleton<PlayerWallet>
 {
     [SerializeField] private int defaultFunds = 500;
     private int _wallet;
 
-    public event Action OnDataChanged;
+    public event Action<int> OnDataChanged;
 
 
     private void Start() { Initialize(); }
@@ -20,7 +20,7 @@ public class PlayerWallet : Singleton<PlayerWallet>, IModel
     private void SetWallet(int amount)
     {
         _wallet = amount;
-        OnDataChanged?.Invoke();
+        OnDataChanged?.Invoke(_wallet);
     }
 
     public void AddToWallet(int amount, bool applyDifficultyModifier = true)
@@ -30,7 +30,7 @@ public class PlayerWallet : Singleton<PlayerWallet>, IModel
 
         _wallet += amount;
 
-        OnDataChanged?.Invoke();
+        OnDataChanged?.Invoke(_wallet);
     }
 
     public bool SufficientFunds(int amount)
@@ -46,7 +46,7 @@ public class PlayerWallet : Singleton<PlayerWallet>, IModel
         if (!SufficientFunds(amount)) return false;
 
         _wallet -= amount;
-        OnDataChanged?.Invoke();
+        OnDataChanged?.Invoke(_wallet);
 
         return true;
     }

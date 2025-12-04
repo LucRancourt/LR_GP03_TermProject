@@ -35,8 +35,8 @@ public class WaveState : LevelState
 
     public override void Exit()
     {
-        _waveManager.WaveCompleted -= WaveCompleted;
-        _waveManager.AllWavesCompleted -= AllWavesCleared;
+        _waveManager.OnWaveCompleted -= WaveCompleted;
+        _waveManager.OnAllWavesCompleted -= AllWavesCleared;
 
         _waveManager.CancelEndWaveCheck();
     }
@@ -46,8 +46,8 @@ public class WaveState : LevelState
     {
         yield return _delayBeforeStart;
 
-        _waveManager.WaveCompleted += WaveCompleted;
-        _waveManager.AllWavesCompleted += AllWavesCleared;
+        _waveManager.OnWaveCompleted += WaveCompleted;
+        _waveManager.OnAllWavesCompleted += AllWavesCleared;
 
         _waveManager.StartNextWave();
 
