@@ -23,6 +23,7 @@ public class Menu<T> : Singleton<T> where T : MonoBehaviour
         foreach (Button button in _menuButtons)
         {
             button.onClick.AddListener(PlayClickSFX);
+            button.gameObject.AddComponent<TweenedButton>();
         }
     }
 

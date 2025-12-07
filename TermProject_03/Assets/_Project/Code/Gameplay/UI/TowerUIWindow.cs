@@ -26,7 +26,7 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
     private StatRowManager _statRowManager;
 
     private Tween _tween;
-    [Header("Tween")]
+    [Header("Tween Details")]
     [SerializeField] private float duration = 0.25f;
 
     public event Action OnUpgrade;
