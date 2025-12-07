@@ -52,7 +52,8 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         BaseTowerData towerData = tower.TowerData;
 
         nameText.text = towerData.Name;
-        unitLimitText.text = currentUnitLimit.ToString() + " / " + towerData.UnitLimit.ToString();
+        unitLimitText.text = currentUnitLimit.ToString() + "/" + towerData.UnitLimit.ToString();
+        Debug.Log(towerData.Icon.name);
         iconImage.sprite = towerData.Icon;
 
         TierTowerData tierTowerData = towerData.GetTowerTierData(tower.TowerTier);

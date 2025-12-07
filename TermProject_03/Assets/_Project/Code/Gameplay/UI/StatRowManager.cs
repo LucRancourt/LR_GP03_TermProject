@@ -17,9 +17,10 @@ public class StatRowManager : MonoBehaviour
         {
             case TowerType.Attack:
                 statRows[0].SetStatRow(damageIcon, "Damage: " + tierTowerData.Damage.ToString());
-                statRows[1].SetStatRow(cooldownIcon, "Cooldown: " + tierTowerData.Cooldown.ToString() + "/s");
+                statRows[1].SetStatRow(cooldownIcon, "Cooldown: " + tierTowerData.Cooldown.ToString() + "s");
                 statRows[2].SetStatRow(rangeIcon, "Range: " + tierTowerData.Range.ToString());
                 statRows[3].Hide();
+                statRows[4].Hide();
                 break;
 
             case TowerType.Spawn:
