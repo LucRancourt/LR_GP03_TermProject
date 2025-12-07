@@ -12,7 +12,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     public BaseTowerData TowerData { get; private set; }
     public int TowerTier { get; private set; } = 0;
 
-    private bool _hasBeenInitialized = false;
+    protected bool bHasBeenInitialized { get; private set; } = false;
     [SerializeField] private int towerSpaceLayer;
     [SerializeField] private int towerModelLayer;
     [SerializeField] private int buildingLayer;
@@ -58,7 +58,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     {
         TowerData = data;
 
-        if (_hasBeenInitialized) return;
+        if (bHasBeenInitialized) return;
 
         SetupSpaceTaken();
 
@@ -70,7 +70,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
         SetLayer(false);
 
-        _hasBeenInitialized = true;
+        bHasBeenInitialized = true;
     }
 
     private void SetupSpaceTaken()
@@ -96,7 +96,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     public void OnCreateForPool() { }
     public void OnSpawnFromPool()
     {
-        if (_hasBeenInitialized)
+        if (bHasBeenInitialized)
         {
             ShowVisuals();
             OnEnabled();
@@ -107,7 +107,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
     public void OnReturnToPool()
     {
-        if (_hasBeenInitialized)
+        if (bHasBeenInitialized)
         {
             HideVisuals();
             OnDisabled();
@@ -127,7 +127,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
     protected virtual void Update()
     {
-        if (!_hasBeenInitialized) return;
+        if (!bHasBeenInitialized) return;
 
         RotateSpaceTakenCircle();
         CheckSpaceOverlap();

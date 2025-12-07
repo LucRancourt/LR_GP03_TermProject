@@ -58,6 +58,7 @@ public class PlayerTowerMediator : MonoBehaviour
         PlayerWallet.Instance.AddToWallet(_selectedTower.TowerData.GetTowerTierData(_selectedTower.TowerTier).SellValue, false);
         _builderManager.RemoveTower(_selectedTower);
         _towerManager.DespawnTower(_selectedTower);
+        _playerInventory.UpdateView(_selectedTower.TowerData, _towerManager.GetCurrentUnitLimit(_selectedTower.TowerData));
 
         ClearSelectedTower();
     }
@@ -140,6 +141,7 @@ public class PlayerTowerMediator : MonoBehaviour
             if (_builderManager.TryBuildTower())
             {
                 PlayerWallet.Instance.MakeTransaction(_newTowerData.GetPlacementCost());
+                _playerInventory.UpdateView(_newTowerData, _towerManager.GetCurrentUnitLimit(_newTowerData));
                 _newTowerData = null;
             }
         }

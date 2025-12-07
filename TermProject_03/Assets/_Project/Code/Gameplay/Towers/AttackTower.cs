@@ -26,6 +26,8 @@ public class AttackTower : RangedTower
 
     protected override void Update()
     {
+        if (!bHasBeenInitialized) return;
+
         base.Update();
 
         _cooldown -= Time.deltaTime;

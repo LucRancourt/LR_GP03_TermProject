@@ -7,12 +7,15 @@ public class PlayerHotbarView : MonoBehaviour
     private Button[] _buttons;
     [SerializeField] private StatRow[] inventorySpaces;
 
+    private bool[] _bHitLimit;
+
     public event Action<int> OnTowerClicked;
 
 
     private void Awake()
     {
         _buttons = GetComponentsInChildren<Button>(true);
+        _bHitLimit = new bool[_buttons.Length];
 
         for (int i = 0; i < _buttons.Length; i++)
         {
@@ -21,16 +24,47 @@ public class PlayerHotbarView : MonoBehaviour
         }
     }
 
-    public void UpdateDisplay(BaseTowerData[] towerDatas)
+    public void UpdateDisplay(BaseTowerData[] towerDatas, bool bResetCurrentUnitLimit = false)
     {
         for (int i = 0; i < (towerDatas.Length > inventorySpaces.Length ? inventorySpaces.Length : towerDatas.Length); i++)
         {
-            inventorySpaces[i].SetStatRow(towerDatas[i].GetDefaultIcon(), towerDatas[i].GetPlacementCost().ToString());
+            if (bResetCurrentUnitLimit)
+            {
+                inventorySpaces[i].SetStatRow(towerDatas[i].GetDefaultIcon(),
+                                                         towerDatas[i].GetPlacementCost().ToString(),
+                                                         "0/" + towerDatas[i].UnitLimit);
+            }
+            else
+            {
+                inventorySpaces[i].SetStatRow(towerDatas[i].GetDefaultIcon(),
+                                                         towerDatas[i].GetPlacementCost().ToString());
+            }
+           
 
-            if (!PlayerWallet.Instance.SufficientFunds(towerDatas[i].GetPlacementCost()))
+            if (!PlayerWallet.Instance.SufficientFunds(towerDatas[i].GetPlacementCost()) || _bHitLimit[i])
                 _buttons[i].interactable = false;
             else
                 _buttons[i].interactable = true;
+        }
+    }
+
+    public void UpdateSingleDisplay(BaseTowerData towerData, int currentUnitLimit, int index)
+    {
+        inventorySpaces[index].SetStatRow(towerData.GetDefaultIcon(),
+                                      towerData.GetPlacementCost().ToString(),
+                                      currentUnitLimit + "/" + towerData.UnitLimit);
+
+        if (currentUnitLimit >= towerData.UnitLimit)
+        {
+            _bHitLimit[index] = true;
+            _buttons[index].interactable = false;
+        }
+        else
+        {
+            _bHitLimit[index] = false;
+
+            if (PlayerWallet.Instance.SufficientFunds(towerData.GetPlacementCost()))
+                _buttons[index].interactable = true;
         }
     }
 }

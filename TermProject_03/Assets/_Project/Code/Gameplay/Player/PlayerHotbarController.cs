@@ -11,7 +11,7 @@ public class PlayerHotbarController : MonoBehaviour
 
     private void Start()
     {
-        playerInventoryHUD.UpdateDisplay(towers);
+        playerInventoryHUD.UpdateDisplay(towers, true);
         PlayerWallet.Instance.OnDataChanged += (int amount) => playerInventoryHUD.UpdateDisplay(towers);
 
         playerInventoryHUD.OnTowerClicked += OnPressWithParameters;
@@ -24,10 +24,12 @@ public class PlayerHotbarController : MonoBehaviour
         OnTowerSelected?.Invoke(towers[index]);
     }
 
-    public BaseTowerData[] GetTowerList()
-    {
-        return towers;
+    public void UpdateView(BaseTowerData towerData, int currentUnitLimit) 
+    { 
+        playerInventoryHUD.UpdateSingleDisplay(towerData, currentUnitLimit, Array.IndexOf(towers, towerData)); 
     }
+
+    public BaseTowerData[] GetTowerList() { return towers; }
 
     public BaseTowerData GetTowerData(int index)
     {
