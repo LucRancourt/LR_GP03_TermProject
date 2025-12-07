@@ -34,7 +34,7 @@ public class TweenedButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerDown(PointerEventData eventData)
     {
         _tween?.Kill();
-        _tween = transform.DOScale(_initialScale * downwardScaleValue, duration).SetUpdate(true);
+        _tween = transform.DOScale(_initialScale * downwardScaleValue, duration / 4.0f).SetUpdate(true);
         _tween.Play();
     }
 
