@@ -24,6 +24,8 @@ public class HealthController : BaseController<HealthModel, HealthView>, IDamage
         _maxHealth = value;
         Model?.SetMaxHealth(_maxHealth);
         CurrentHealth = Model.Data;
+
+        View?.UpdateDisplay(CurrentHealth, _maxHealth);
     }
 
     public override void Initialize()
@@ -57,7 +59,7 @@ public class HealthController : BaseController<HealthModel, HealthView>, IDamage
             if (Model != null)
                 CurrentHealth = Model.Data;
 
-            View?.UpdateDisplay(CurrentHealth);
+            View?.UpdateDisplay(CurrentHealth, _maxHealth);
         }
     }
 

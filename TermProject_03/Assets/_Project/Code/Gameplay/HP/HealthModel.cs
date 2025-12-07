@@ -24,6 +24,8 @@ public class HealthModel : IModel<float>
     {
         _maxHealth = value;
         _currentHealth = _maxHealth;
+
+        OnDataChanged?.Invoke();
     }
 
     public void OnDamaged(float value)

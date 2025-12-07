@@ -18,7 +18,6 @@ public class TweenedButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _initialScale = transform.localScale;
     }
 
-
     public void OnPointerEnter(PointerEventData eventData)
     {
         _tween?.Kill();

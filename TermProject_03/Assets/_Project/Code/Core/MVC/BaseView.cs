@@ -66,6 +66,11 @@ namespace _Project.Code.Core.MVC
             // Override in derived classes
         }
 
+        public virtual void UpdateDisplay(T data1, T data2)
+        {
+            // Override in derived classes
+        }
+
         public virtual void Dispose()
         {
             // Cleanup logic if needed
