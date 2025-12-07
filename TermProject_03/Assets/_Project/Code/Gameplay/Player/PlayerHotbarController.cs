@@ -9,9 +9,11 @@ public class PlayerHotbarController : MonoBehaviour
     public event Action<BaseTowerData> OnTowerSelected;
 
 
-    private void Awake()
+    private void Start()
     {
-        playerInventoryHUD.SetDisplay(towers);
+        playerInventoryHUD.UpdateDisplay(towers);
+        PlayerWallet.Instance.OnDataChanged += (int amount) => playerInventoryHUD.UpdateDisplay(towers);
+
         playerInventoryHUD.OnTowerClicked += OnPressWithParameters;
     }
 
