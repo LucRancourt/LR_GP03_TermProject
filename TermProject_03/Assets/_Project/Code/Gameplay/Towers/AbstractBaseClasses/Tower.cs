@@ -22,7 +22,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     [SerializeField] private Sprite spaceTakenSprite;
     private float _spaceTakenYRotation = 0.0f;
     private float _spaceTakenRotationSpeed = 10.0f;
-    private float _spaceTakenSizeAdjustment = 1.2f;
+    private float _spaceTakenSizeAdjustment = 1.0f;
     [SerializeField] private Material spaceMat;
     [SerializeField] private Material spaceOverlapMat;
 
@@ -76,7 +76,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     private void SetupSpaceTaken()
     {
         _spaceTakenObject = new GameObject();
-        _spaceTakenObject.AddComponent<SphereCollider>().radius = 2.3f;
+        _spaceTakenObject.AddComponent<SphereCollider>().radius = 1.0f;
         _spaceTakenObject.name = "SpaceTaken Collider";
         _spaceTakenObject.transform.SetParent(transform);
         _spaceTakenObject.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);

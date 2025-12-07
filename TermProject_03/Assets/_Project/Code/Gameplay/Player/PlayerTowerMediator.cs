@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 using _Project.Code.Core.ServiceLocator;
 
-[RequireComponent(typeof(PlayerInventory))]
+[RequireComponent(typeof(PlayerHotbarController))]
 
 
 public class PlayerTowerMediator : MonoBehaviour
@@ -12,7 +12,7 @@ public class PlayerTowerMediator : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask towerModelLayer;
 
-    private PlayerInventory _playerInventory;
+    private PlayerHotbarController _playerInventory;
     private TowerManager _towerManager;
     private BuilderManager _builderManager;
 
@@ -22,7 +22,7 @@ public class PlayerTowerMediator : MonoBehaviour
 
     private void Awake()
     {
-        _playerInventory = GetComponent<PlayerInventory>();
+        _playerInventory = GetComponent<PlayerHotbarController>();
         _towerManager = new TowerManager(_playerInventory.GetTowerList());
         _builderManager = new BuilderManager(groundLayer);
 
@@ -73,7 +73,7 @@ public class PlayerTowerMediator : MonoBehaviour
             return;
         }
 
-        if (!PlayerWallet.Instance.SufficientFunds(towerData.GetTowerTierData(0).Cost)) return;
+        if (!PlayerWallet.Instance.SufficientFunds(towerData.GetPlacementCost())) return;
 
         _builderManager.SetNewTower(_towerManager.SpawnTower(towerData), out _newTowerData);
     }
@@ -137,7 +137,7 @@ public class PlayerTowerMediator : MonoBehaviour
         {
             if (_builderManager.TryBuildTower())
             {
-                PlayerWallet.Instance.MakeTransaction(_newTowerData.GetTowerTierData(0).Cost);
+                PlayerWallet.Instance.MakeTransaction(_newTowerData.GetPlacementCost());
                 _newTowerData = null;
             }
         }

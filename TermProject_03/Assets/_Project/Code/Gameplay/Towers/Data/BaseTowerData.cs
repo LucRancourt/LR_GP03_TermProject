@@ -23,8 +23,6 @@ public class BaseTowerDataCustomEditor : Editor
         EditorGUILayout.Space();
 
         towerData.Name = EditorGUILayout.TextField("Name", towerData.Name);
-        towerData.Icon = (Sprite)EditorGUILayout.ObjectField("Tower Icon", towerData.Icon, typeof(Sprite), false);
-
         towerData.UnitLimit = EditorGUILayout.IntField("Unit Limit", towerData.UnitLimit);
         towerData.SpaceTaken = EditorGUILayout.FloatField("Space Taken", towerData.SpaceTaken);
 
@@ -90,8 +88,6 @@ public class BaseTowerDataCustomEditor : Editor
 public class BaseTowerData : ScriptableObject
 {
     public string Name;
-    public Sprite Icon;
-
     public int UnitLimit;
     public float SpaceTaken;
 
@@ -117,6 +113,28 @@ public class BaseTowerData : ScriptableObject
 
         towerData = null;
         return false;
+    }
+
+    public Sprite GetDefaultIcon()
+    {
+        if (TryGetTowerTierData(0, out TierTowerData towerData))
+        {
+            return towerData.Icon;
+        }
+
+        Debug.LogError("No Tier 1 exists!");
+        return null;
+    }
+
+    public int GetPlacementCost()
+    {
+        if (TryGetTowerTierData(0, out TierTowerData towerData))
+        {
+            return towerData.Cost;
+        }
+
+        Debug.LogError("No Tier 1 exists!");
+        return -1;
     }
 }
 

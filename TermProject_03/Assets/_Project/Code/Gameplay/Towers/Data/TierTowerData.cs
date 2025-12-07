@@ -13,6 +13,7 @@ public class TierTowerDataCustomEditor : Editor
         EditorGUILayout.Space();
 
         towerData.Model = (Tower)EditorGUILayout.ObjectField("Tower Model", towerData.Model, typeof(Tower), false);
+        towerData.Icon = (Sprite)EditorGUILayout.ObjectField("Tower Icon", towerData.Icon, typeof(Sprite), false);
 
         EditorGUILayout.Space(20.0f);
 
@@ -63,6 +64,7 @@ public class TierTowerDataCustomEditor : Editor
 public class TierTowerData : ScriptableObject
 {
     public Tower Model;
+    public Sprite Icon;
 
     public int Cost;
     public int SellValue;

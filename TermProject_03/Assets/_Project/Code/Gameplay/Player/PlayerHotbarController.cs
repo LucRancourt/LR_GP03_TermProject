@@ -1,23 +1,18 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerHotbarController : MonoBehaviour
 {
     [SerializeField] private BaseTowerData[] towers;
-    [SerializeField] private GameObject towerInventoryHUD;
+    [SerializeField] private PlayerHotbarView playerInventoryHUD;
 
     public event Action<BaseTowerData> OnTowerSelected;
 
+
     private void Awake()
     {
-        Button[] buttons = towerInventoryHUD.GetComponentsInChildren<Button>(true);
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            int index = i;
-            buttons[i].onClick.AddListener(() => OnPressWithParameters(index));
-        }
+        playerInventoryHUD.SetDisplay(towers);
+        playerInventoryHUD.OnTowerClicked += OnPressWithParameters;
     }
 
     private void OnPressWithParameters(int index)

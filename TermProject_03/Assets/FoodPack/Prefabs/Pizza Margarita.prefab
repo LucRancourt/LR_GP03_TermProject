@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4415416304364139761}
   - component: {fileID: 786280733988141908}
   - component: {fileID: 3246419546298929054}
+  - component: {fileID: -1522779185721785128}
   m_Layer: 0
   m_Name: Pizza Margarita
   m_TagString: Untagged
@@ -86,3 +87,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &-1522779185721785128
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3894880375354682955}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.49633944
+  m_Height: 0.060353853
+  m_Direction: 1
+  m_Center: {x: -0.00000055134296, y: 0.03017696, z: -0.00000029802322}

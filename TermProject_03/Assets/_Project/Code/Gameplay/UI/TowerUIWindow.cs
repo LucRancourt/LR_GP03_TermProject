@@ -53,10 +53,12 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
 
         nameText.text = towerData.Name;
         unitLimitText.text = currentUnitLimit.ToString() + "/" + towerData.UnitLimit.ToString();
-        Debug.Log(towerData.Icon.name);
-        iconImage.sprite = towerData.Icon;
+
 
         TierTowerData tierTowerData = towerData.GetTowerTierData(tower.TowerTier);
+
+        iconImage.sprite = tierTowerData.Icon;
+
 
         upgradeButton.onClick.RemoveAllListeners();
         upgradeButton.interactable = false;
