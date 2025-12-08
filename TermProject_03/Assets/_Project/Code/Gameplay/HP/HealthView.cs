@@ -35,19 +35,13 @@ public class HealthView : BaseView<float>
     public override void Show()
     {
         if (healthBar)
-            healthBar.enabled = true;
-
-        if (healthText)
-            healthText.enabled = true;
+            healthBar.transform.parent.gameObject.SetActive(true);
     }
 
     public override void Hide()
     {
         if (healthBar)
-            healthBar.enabled = false;
-
-        if (healthText)
-            healthText.enabled = false;
+            healthBar.transform.parent.gameObject.SetActive(false);
     }
 
     public override void UpdateDisplay(float currentHealth, float maxHealth)
