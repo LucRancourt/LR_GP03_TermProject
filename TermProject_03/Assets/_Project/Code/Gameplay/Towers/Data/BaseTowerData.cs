@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
-
+#if UNITY_EDITOR
+using UnityEditor;
 [CustomEditor(typeof(BaseTowerData))]
 public class BaseTowerDataCustomEditor : Editor
 {
@@ -82,7 +82,7 @@ public class BaseTowerDataCustomEditor : Editor
         }
     }
 }
-
+#endif
 
 [CreateAssetMenu(fileName = "NewBaseTowerData", menuName = "Scriptable Objects/Tower/BaseData")]
 public class BaseTowerData : ScriptableObject

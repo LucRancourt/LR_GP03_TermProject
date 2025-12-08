@@ -1,4 +1,7 @@
 using UnityEngine;
+
+
+#if UNITY_EDITOR
 using UnityEditor;
 
 [CustomEditor(typeof(TierTowerData))]
@@ -58,6 +61,7 @@ public class TierTowerDataCustomEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
 
 
 [CreateAssetMenu(fileName = "NewTierTowerData", menuName = "Scriptable Objects/Tower/TierData")]
