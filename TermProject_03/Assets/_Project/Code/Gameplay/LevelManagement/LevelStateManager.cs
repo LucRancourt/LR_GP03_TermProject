@@ -8,14 +8,20 @@ public class LevelStateManager
 {
     private StateMachine<LevelState> _smGameStates;
     private Coroutine _activeCoroutine;
+    public PhaseNotifier Notifier { get; private set; }
 
-    public void Initialize(WaveManager waveManager, UIManager uiManager)
+
+    public void Initialize(WaveManager waveManager, PhaseNotifier phaseNotifier, WaveCounter waveCounter, WaveSkipper waveSkipper, DifficultySelection difficultySelection)
     {
-        _smGameStates = new StateMachine<LevelState>(new PreparationState(this, uiManager.gameObject));// Get(UIItemKey.UnitInventory), uiManager.Get(UIItemKey.DifficultySelect)));
-        _smGameStates.AddState(new WaveState(this, waveManager, uiManager)); //.Get(UIItemKey.WaveCounter), uiManager.Get(UIItemKey.Notifications)));
+        Notifier = phaseNotifier;
+
+        waveCounter.ResetWaveCount();
+
+        _smGameStates = new StateMachine<LevelState>(new PreparationState(this, difficultySelection));// Get(UIItemKey.UnitInventory), uiManager.Get(UIItemKey.DifficultySelect)));
+        _smGameStates.AddState(new WaveState(this, waveManager, waveCounter, waveSkipper)); //.Get(UIItemKey.WaveCounter), uiManager.Get(UIItemKey.Notifications)));
         _smGameStates.AddState(new BreakState(this));
-        _smGameStates.AddState(new LevelWinState(this, uiManager.Get(UIItemKey.WinScreen)));
-        _smGameStates.AddState(new LevelOverState(this, uiManager.Get(UIItemKey.LossScreen)));
+        _smGameStates.AddState(new LevelWinState(this));
+        _smGameStates.AddState(new LevelOverState(this));
     }
 
     public void TransitionToState<TState>() where TState : LevelState

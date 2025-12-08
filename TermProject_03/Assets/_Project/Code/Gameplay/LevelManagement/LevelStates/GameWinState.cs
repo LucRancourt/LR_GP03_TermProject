@@ -13,9 +13,9 @@ public class LevelWinState : LevelState
     // Replay or Return Options
 
 
-    public LevelWinState(LevelStateManager levelStateManager, GameObject winScreen) : base(levelStateManager)
+    public LevelWinState(LevelStateManager levelStateManager) : base(levelStateManager)
     {
-        _winScreen = winScreen;
+        _winScreen = null;
     }
 
 

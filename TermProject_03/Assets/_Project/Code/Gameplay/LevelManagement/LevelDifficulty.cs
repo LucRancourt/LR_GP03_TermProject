@@ -7,6 +7,7 @@ public class LevelDifficulty : Singleton<LevelDifficulty>
     private static readonly float _mediumModifier = 0.72f;
     private static readonly float _hardModifier = 0.45f;
 
+
     public float DifficultyModifier { get; private set; } = _mediumModifier;
     public Difficulty DifficultyLevel { get; private set; } = Difficulty.Medium;
 

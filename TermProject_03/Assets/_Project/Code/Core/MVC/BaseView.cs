@@ -6,6 +6,12 @@ namespace _Project.Code.Core.MVC
     {
         [SerializeField] protected bool _startVisible = true;
 
+        
+        protected virtual void Awake()
+        {
+            Initialize();
+        }
+
         public virtual void Initialize()
         {
             if (_startVisible)
@@ -37,7 +43,13 @@ namespace _Project.Code.Core.MVC
     public abstract class BaseView<T> : MonoBehaviour, IView<T>
     {
         [SerializeField] protected bool _startVisible = true;
-        
+
+
+        protected virtual void Awake()
+        {
+            Initialize();
+        }
+
         public virtual void Initialize()
         {
             if (_startVisible)

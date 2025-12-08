@@ -6,25 +6,27 @@ using UnityEngine;
 public class WaveState : LevelState
 {
     private WaveManager _waveManager;
-    private UIManager _hudManager;
     private bool _allWavesCleared;
 
     private WaitForSeconds _delayBeforeStart = new WaitForSeconds(3.0f);
     private WaitForSeconds _delayAfterEnd = new WaitForSeconds(3.0f);
 
-    // Skip Wave option
+    private WaveCounter _waveCounter;
+    private WaveSkipper _waveSkipper;
 
-    public WaveState(LevelStateManager levelStateManager, WaveManager waveManager, UIManager hudManager) : base(levelStateManager)
+
+    public WaveState(LevelStateManager levelStateManager, WaveManager waveManager, WaveCounter waveCounter, WaveSkipper waveSkipper) : base(levelStateManager)
     {
         _waveManager = waveManager;
-        _hudManager = hudManager;
+        _waveCounter = waveCounter;
+        _waveSkipper = waveSkipper;
     }
 
     public override void Enter()
     {
         _allWavesCleared = false;
 
-        //hud set new wave notif
+        _levelStateManager.Notifier.UpdateDisplay("Wave Starting!");
 
         CoroutineExecutor.Instance.StartCoroutineExec(StartWaveDelay());
     }
@@ -51,13 +53,19 @@ public class WaveState : LevelState
 
         _waveManager.StartNextWave();
 
-        // hud open skip option
+        _waveCounter.IncrementWaveCount();
+
+        _waveSkipper.OnWaveSkipped += WaveCompleted;
+        _waveSkipper.Show();
     }
 
 
     private void WaveCompleted()
     {
-        // hud wave cleared notif
+        _waveSkipper.Hide();
+        _waveSkipper.OnWaveSkipped -= WaveCompleted;
+
+        _levelStateManager.Notifier.UpdateDisplay($"Wave {_waveCounter.CurrentWave} Cleared!");
 
         CoroutineExecutor.Instance.StartCoroutineExec(WaveCompleteDelay());
     }

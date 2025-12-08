@@ -12,9 +12,9 @@ public class LevelOverState : LevelState
     // Stats Display
     // Replay or Return Options
 
-    public LevelOverState(LevelStateManager levelStateManager, GameObject lossScreen) : base(levelStateManager)
+    public LevelOverState(LevelStateManager levelStateManager) : base(levelStateManager)
     {
-        _lossScreen = lossScreen;
+        _lossScreen = null;
     }
     
 

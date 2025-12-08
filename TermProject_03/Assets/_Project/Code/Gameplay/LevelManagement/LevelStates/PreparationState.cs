@@ -5,25 +5,25 @@ using UnityEngine;
 public class PreparationState : LevelState
 {
     private float timeUntilAutoExit = 10.0f;
-    private float _currentTimeUntilAutoExit;
 
-    private GameObject _preparationUI;
+    private DifficultySelection _difficultySelection;
+
     // Change Tower Inventory // Do Later
 
-    public PreparationState(LevelStateManager levelStateManager, GameObject preparationUI) : base(levelStateManager) 
+
+    public PreparationState(LevelStateManager levelStateManager, DifficultySelection difficultySelection) : base(levelStateManager) 
     {
-        _preparationUI = preparationUI;
+        _difficultySelection = difficultySelection;
     }
 
 
     public override void Enter()
     {
-        _preparationUI.SetActive(true);
+        _levelStateManager.Notifier.UpdateDisplay("Please select a difficulty!");
+
+        _difficultySelection.Show();
 
         _levelStateManager.CallCoroutineStart(AutoExit());
-
-
-        // Select Difficulty UI -> send to GameManager?
     }
 
     public override void Update()
@@ -32,7 +32,7 @@ public class PreparationState : LevelState
 
     public override void Exit()
     {
-        _preparationUI.SetActive(false);
+        _difficultySelection.Hide();
 
         _levelStateManager.CallCoroutineEnd();
     }

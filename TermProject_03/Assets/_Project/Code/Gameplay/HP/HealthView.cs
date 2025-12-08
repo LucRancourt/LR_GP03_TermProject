@@ -14,6 +14,8 @@ public class HealthView : BaseView<float>
     private Color _green = new Color(69.0f / 255.0f, 227.0f / 255.0f, 61.0f / 255.0f);//new Color(161.0f / 255.0f, 254.0f / 255.0f, 167.0f / 255.0f);
 
 
+    protected override void Awake() { }
+
     public override void Initialize()
     {
         base.Initialize();
