@@ -21,7 +21,6 @@ public class WaveManager : MonoBehaviour
     private EnemyManager _activeEnemyManager;
 
     public event Action OnWaveCompleted;
-    public event Action OnAllWavesCompleted;
 
     private int _currentWaveIndex = 0;
     private Coroutine _waveCompletedCoroutine;
@@ -39,6 +38,7 @@ public class WaveManager : MonoBehaviour
 
     public void Initialize()
     {
+        Debug.Log("Official " + LevelDifficulty.Instance.DifficultyLevel);
         _selectedDifficulty = (int)LevelDifficulty.Instance.DifficultyLevel;
 
         _activeWaveSet = waveSets[_selectedDifficulty];
@@ -46,6 +46,8 @@ public class WaveManager : MonoBehaviour
 
         bWasInitialized = true;
     }
+
+    public bool AreAllWavesSpawned() { return _currentWaveIndex >= _activeWaveSet.waves.Length; }
 
     public void StartNextWave()
     {
@@ -64,9 +66,6 @@ public class WaveManager : MonoBehaviour
 
 
         _currentWaveIndex++;
-
-        if (_currentWaveIndex >= _activeWaveSet.waves.Length)
-            OnAllWavesCompleted?.Invoke();
     }
 
     private IEnumerator SpawnWave(EnemyGroup enemyGroup)

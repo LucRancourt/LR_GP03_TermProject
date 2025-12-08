@@ -6,13 +6,14 @@ using UnityEngine;
 public class WaveState : LevelState
 {
     private WaveManager _waveManager;
-    private bool _allWavesCleared;
 
     private WaitForSeconds _delayBeforeStart = new WaitForSeconds(3.0f);
     private WaitForSeconds _delayAfterEnd = new WaitForSeconds(3.0f);
 
     private WaveCounter _waveCounter;
     private WaveSkipper _waveSkipper;
+
+    private bool _isFirstEntry = true;
 
 
     public WaveState(LevelStateManager levelStateManager, WaveManager waveManager, WaveCounter waveCounter, WaveSkipper waveSkipper) : base(levelStateManager)
@@ -24,7 +25,11 @@ public class WaveState : LevelState
 
     public override void Enter()
     {
-        _allWavesCleared = false;
+        if (_isFirstEntry)
+        {
+            _waveManager.Initialize();
+            _isFirstEntry = false;
+        }
 
         _levelStateManager.Notifier.UpdateDisplay("Wave Starting!");
 
@@ -38,7 +43,6 @@ public class WaveState : LevelState
     public override void Exit()
     {
         _waveManager.OnWaveCompleted -= WaveCompleted;
-        _waveManager.OnAllWavesCompleted -= AllWavesCleared;
 
         _waveManager.CancelEndWaveCheck();
     }
@@ -49,14 +53,16 @@ public class WaveState : LevelState
         yield return _delayBeforeStart;
 
         _waveManager.OnWaveCompleted += WaveCompleted;
-        _waveManager.OnAllWavesCompleted += AllWavesCleared;
 
         _waveManager.StartNextWave();
 
         _waveCounter.IncrementWaveCount();
 
-        _waveSkipper.OnWaveSkipped += WaveCompleted;
-        _waveSkipper.Show();
+        if (!_waveManager.AreAllWavesSpawned())
+        {
+            _waveSkipper.OnWaveSkipped += WaveCompleted;
+            _waveSkipper.Show();
+        }
     }
 
 
@@ -74,14 +80,9 @@ public class WaveState : LevelState
     {
         yield return _delayAfterEnd;
 
-        if (_allWavesCleared)
+        if (_waveManager.AreAllWavesSpawned())
             _levelStateManager.TransitionToState<LevelWinState>();
         else
             _levelStateManager.TransitionToState<BreakState>();
-    }
-
-    private void AllWavesCleared()
-    {
-        _allWavesCleared = true;
     }
 }

@@ -19,16 +19,9 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private DifficultySelection difficultySelection;
 
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _levelStateManager.Initialize(waveManager, phaseNotifier, waveCounter, waveSkipper, difficultySelection);
-    }
-
     private void Start()
     {
-        waveManager.Initialize();
+        _levelStateManager.Initialize(waveManager, phaseNotifier, waveCounter, waveSkipper, difficultySelection);
 
         playerBase.OnDied += SetGameOver;
 

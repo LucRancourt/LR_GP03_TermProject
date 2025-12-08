@@ -5,21 +5,37 @@ using UnityEngine.UI;
 public class DifficultySelection : BaseView
 {
     [Tooltip("In order of: Easy - Medium - Hard")]
-    [SerializeField] private Button[] difficultySelectButtons = new Button[3];
+    [SerializeField] private Button[] buttons = new Button[3];
+    [SerializeField] private Color selectedColor;
 
 
     protected override void Awake()
     {
         base.Awake();
 
-        if (difficultySelectButtons.Length != 3)
+        if (buttons.Length != 3)
         {
             Debug.LogError("Should be 3 difficulty buttons!");
             return;
         }
 
-        difficultySelectButtons[0].onClick.AddListener(() => LevelDifficulty.Instance.SetDifficulty(Difficulty.Easy));
-        difficultySelectButtons[1].onClick.AddListener(() => LevelDifficulty.Instance.SetDifficulty(Difficulty.Medium));
-        difficultySelectButtons[2].onClick.AddListener(() => LevelDifficulty.Instance.SetDifficulty(Difficulty.Hard));
+        buttons[0].onClick.AddListener(() => { SetLevelDifficulty(Difficulty.Easy); SetButtonSelected(0); } );
+        buttons[1].onClick.AddListener(() => { SetLevelDifficulty(Difficulty.Medium); SetButtonSelected(1); });
+        buttons[2].onClick.AddListener(() => { SetLevelDifficulty(Difficulty.Hard); SetButtonSelected(2); });
+    }
+
+    private void SetLevelDifficulty(Difficulty difficulty)
+    {
+        LevelDifficulty.Instance.SetDifficulty(difficulty);
+    }
+
+    private void SetButtonSelected(int index)
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].image.color = Color.white;
+        }
+
+        buttons[index].image.color = selectedColor;
     }
 }
