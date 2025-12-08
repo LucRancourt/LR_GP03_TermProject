@@ -14,7 +14,6 @@ public class LevelDifficulty : Singleton<LevelDifficulty>
     public void SetDifficulty(Difficulty selectedDifficulty)
     {
         DifficultyLevel = selectedDifficulty;
-        UnityEngine.Debug.Log("New " + selectedDifficulty);
 
         switch (DifficultyLevel)
         {

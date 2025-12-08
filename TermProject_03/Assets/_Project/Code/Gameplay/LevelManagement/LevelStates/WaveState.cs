@@ -13,24 +13,19 @@ public class WaveState : LevelState
     private WaveCounter _waveCounter;
     private WaveSkipper _waveSkipper;
 
-    private bool _isFirstEntry = true;
-
 
     public WaveState(LevelStateManager levelStateManager, WaveManager waveManager, WaveCounter waveCounter, WaveSkipper waveSkipper) : base(levelStateManager)
     {
         _waveManager = waveManager;
         _waveCounter = waveCounter;
         _waveSkipper = waveSkipper;
+
+        _waveManager.Initialize();
+        _waveCounter.UpdateDisplay(_waveManager.CurrentWaveIndex, _waveManager.TotalNumberOfWaves());
     }
 
     public override void Enter()
     {
-        if (_isFirstEntry)
-        {
-            _waveManager.Initialize();
-            _isFirstEntry = false;
-        }
-
         _levelStateManager.Notifier.UpdateDisplay("Wave Starting!");
 
         CoroutineExecutor.Instance.StartCoroutineExec(StartWaveDelay());
@@ -56,7 +51,7 @@ public class WaveState : LevelState
 
         _waveManager.StartNextWave();
 
-        _waveCounter.IncrementWaveCount();
+        _waveCounter.UpdateDisplay(_waveManager.CurrentWaveIndex, _waveManager.TotalNumberOfWaves());
 
         if (!_waveManager.AreAllWavesSpawned())
         {
@@ -71,7 +66,7 @@ public class WaveState : LevelState
         _waveSkipper.Hide();
         _waveSkipper.OnWaveSkipped -= WaveCompleted;
 
-        _levelStateManager.Notifier.UpdateDisplay($"Wave {_waveCounter.CurrentWave} Cleared!");
+        _levelStateManager.Notifier.UpdateDisplay($"Wave {_waveManager.CurrentWaveIndex} Cleared!");
 
         CoroutineExecutor.Instance.StartCoroutineExec(WaveCompleteDelay());
     }

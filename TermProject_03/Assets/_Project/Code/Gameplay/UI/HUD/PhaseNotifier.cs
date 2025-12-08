@@ -10,7 +10,7 @@ public class PhaseNotifier : BaseView<string>
 
     private Tween _tween;
     [Header("Tween Details")]
-    [SerializeField] private float duration = 0.25f;
+    [SerializeField] private float duration = 0.2f;
 
 
     public override void UpdateDisplay(string message)
@@ -25,6 +25,7 @@ public class PhaseNotifier : BaseView<string>
         if (gameObject.activeSelf)
         {
             Hide();
+            CancelInvoke();
             Invoke("Show", duration + 0.1f);
             return;
         }

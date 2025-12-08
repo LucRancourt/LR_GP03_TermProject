@@ -15,8 +15,6 @@ public class LevelStateManager
     {
         Notifier = phaseNotifier;
 
-        waveCounter.ResetWaveCount();
-
         _smGameStates = new StateMachine<LevelState>(new PreparationState(this, difficultySelection));// Get(UIItemKey.UnitInventory), uiManager.Get(UIItemKey.DifficultySelect)));
         _smGameStates.AddState(new WaveState(this, waveManager, waveCounter, waveSkipper)); //.Get(UIItemKey.WaveCounter), uiManager.Get(UIItemKey.Notifications)));
         _smGameStates.AddState(new BreakState(this));

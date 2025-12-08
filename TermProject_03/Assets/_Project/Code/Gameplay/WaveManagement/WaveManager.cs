@@ -22,7 +22,7 @@ public class WaveManager : MonoBehaviour
 
     public event Action OnWaveCompleted;
 
-    private int _currentWaveIndex = 0;
+    public int CurrentWaveIndex { get; private set; } = 0;
     private Coroutine _waveCompletedCoroutine;
     private int _wavesToSpawn;
     private int _wavesCompleted = 0;
@@ -38,7 +38,6 @@ public class WaveManager : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.Log("Official " + LevelDifficulty.Instance.DifficultyLevel);
         _selectedDifficulty = (int)LevelDifficulty.Instance.DifficultyLevel;
 
         _activeWaveSet = waveSets[_selectedDifficulty];
@@ -47,25 +46,26 @@ public class WaveManager : MonoBehaviour
         bWasInitialized = true;
     }
 
-    public bool AreAllWavesSpawned() { return _currentWaveIndex >= _activeWaveSet.waves.Length; }
+    public bool AreAllWavesSpawned() { return CurrentWaveIndex >= _activeWaveSet.waves.Length; }
+    public int TotalNumberOfWaves() { return _activeWaveSet != null ? _activeWaveSet.waves.Length : -1; }
 
     public void StartNextWave()
     {
         if (!bWasInitialized) return;
 
-        if (_currentWaveIndex >= _activeWaveSet.waves.Length)
+        if (AreAllWavesSpawned())
             return;
 
 
-        _wavesToSpawn += _activeWaveSet.waves[_currentWaveIndex].enemiesToSpawn.Length;
+        _wavesToSpawn += _activeWaveSet.waves[CurrentWaveIndex].enemiesToSpawn.Length;
 
-        foreach (EnemyGroup enemyGroup in _activeWaveSet.waves[_currentWaveIndex].enemiesToSpawn)
+        foreach (EnemyGroup enemyGroup in _activeWaveSet.waves[CurrentWaveIndex].enemiesToSpawn)
         {
             StartCoroutine(SpawnWave(enemyGroup));
         }
 
 
-        _currentWaveIndex++;
+        CurrentWaveIndex++;
     }
 
     private IEnumerator SpawnWave(EnemyGroup enemyGroup)

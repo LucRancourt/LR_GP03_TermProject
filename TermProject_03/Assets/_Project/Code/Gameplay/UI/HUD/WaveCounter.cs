@@ -1,26 +1,14 @@
+using _Project.Code.Core.MVC;
 using TMPro;
 using UnityEngine;
 
-public class WaveCounter : MonoBehaviour
+public class WaveCounter : BaseView<int>
 {
     [SerializeField] private TextMeshProUGUI waveCountText;
-    public int CurrentWave { get; private set; } = 0;
 
 
-    public void ResetWaveCount()
+    public override void UpdateDisplay(int currentWave, int totalWaves)
     {
-        CurrentWave = 0;
-        SetWaveCountText();
-    }
-
-    public void IncrementWaveCount()
-    {
-        CurrentWave++;
-        SetWaveCountText();
-    }
-
-    private void SetWaveCountText()
-    {
-        waveCountText.text = "Wave: " + CurrentWave;
+        waveCountText.text = "Wave: " + currentWave + "/" + totalWaves;
     }
 }
