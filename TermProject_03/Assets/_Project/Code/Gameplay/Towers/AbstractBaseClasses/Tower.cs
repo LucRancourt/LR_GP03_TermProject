@@ -77,6 +77,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     {
         _spaceTakenObject = new GameObject();
         _spaceTakenObject.AddComponent<SphereCollider>().radius = 1.0f;
+        _spaceTakenObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         _spaceTakenObject.name = "SpaceTaken Collider";
         _spaceTakenObject.transform.SetParent(transform);
         _spaceTakenObject.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);

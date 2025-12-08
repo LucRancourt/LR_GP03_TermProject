@@ -26,6 +26,7 @@ public class Enemy : BaseDamageable, IPoolable
 
     public void OnSpawnFromPool()
     {
+        HideVisuals();
     }
 
     public void Initialize(EnemyData data, NavPath path)
@@ -84,4 +85,8 @@ public class Enemy : BaseDamageable, IPoolable
     {
         SetUIDisplay(false);
     }
+
+
+    private void OnMouseOver() { ShowVisuals(); }
+    private void OnMouseExit() { HideVisuals(); }
 }

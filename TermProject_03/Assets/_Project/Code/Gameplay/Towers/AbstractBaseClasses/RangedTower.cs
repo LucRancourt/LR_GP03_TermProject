@@ -22,6 +22,7 @@ public abstract class RangedTower : Tower
     {
         _rangeSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         _rangeSphere.transform.SetParent(transform);
+        _rangeSphere.layer = LayerMask.NameToLayer("Ignore Raycast");
         _rangeSphere.name = "RangedTower - RangeIndicator";
         _rangeSphere.transform.localPosition = Vector3.zero;
         AdjustRangeSphereSize();

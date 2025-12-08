@@ -60,7 +60,7 @@ public class TowerUIWindow : Singleton<TowerUIWindow>
         iconImage.sprite = tierTowerData.Icon;
 
 
-        upgradeButton.onClick.RemoveAllListeners();
+        upgradeButton.onClick.RemoveListener(() => OnUpgrade?.Invoke());
         upgradeButton.interactable = false;
 
         if (towerData.TryGetTowerTierData(tower.TowerTier + 1, out TierTowerData nextTierTowerData))

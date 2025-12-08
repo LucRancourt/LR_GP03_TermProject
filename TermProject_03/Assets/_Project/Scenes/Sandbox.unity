@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 75474164}
   - component: {fileID: 75474163}
   - component: {fileID: 75474166}
+  - component: {fileID: 75474167}
   m_Layer: 5
   m_Name: DifficultyPanel_Hard
   m_TagString: Untagged
@@ -661,6 +662,19 @@ MonoBehaviour:
   duration: 0.25
   upwardScaleValue: 1.1
   downwardScaleValue: 0.9
+--- !u!114 &75474167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75474161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0324ed92b04a9f4fbbd0be6e741f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 0526092597130984d89e1419003ce951, type: 2}
 --- !u!1 &170731170
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +823,7 @@ GameObject:
   - component: {fileID: 210042742}
   - component: {fileID: 210042741}
   m_Layer: 5
-  m_Name: Canvas_HealthBars
+  m_Name: Canvas_HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1346,6 +1360,7 @@ GameObject:
   - component: {fileID: 296758246}
   - component: {fileID: 296758245}
   - component: {fileID: 296758248}
+  - component: {fileID: 296758249}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1470,6 +1485,19 @@ MonoBehaviour:
   duration: 0.25
   upwardScaleValue: 1.1
   downwardScaleValue: 0.9
+--- !u!114 &296758249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296758243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0324ed92b04a9f4fbbd0be6e741f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 0526092597130984d89e1419003ce951, type: 2}
 --- !u!1001 &359554249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2663,6 +2691,7 @@ GameObject:
   - component: {fileID: 699203937}
   - component: {fileID: 699203936}
   - component: {fileID: 699203939}
+  - component: {fileID: 699203940}
   m_Layer: 5
   m_Name: DifficultyPanel_Medium
   m_TagString: Untagged
@@ -2787,6 +2816,19 @@ MonoBehaviour:
   duration: 0.25
   upwardScaleValue: 1.1
   downwardScaleValue: 0.9
+--- !u!114 &699203940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699203934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0324ed92b04a9f4fbbd0be6e741f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 0526092597130984d89e1419003ce951, type: 2}
 --- !u!1 &734984909
 GameObject:
   m_ObjectHideFlags: 0
@@ -4455,6 +4497,7 @@ GameObject:
   - component: {fileID: 1415129885}
   - component: {fileID: 1415129884}
   - component: {fileID: 1415129887}
+  - component: {fileID: 1415129888}
   m_Layer: 5
   m_Name: DifficultyPanel_Easy
   m_TagString: Untagged
@@ -4579,6 +4622,19 @@ MonoBehaviour:
   duration: 0.25
   upwardScaleValue: 1.1
   downwardScaleValue: 0.9
+--- !u!114 &1415129888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415129882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0324ed92b04a9f4fbbd0be6e741f23e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 11400000, guid: 0526092597130984d89e1419003ce951, type: 2}
 --- !u!1 &1419719809
 GameObject:
   m_ObjectHideFlags: 0

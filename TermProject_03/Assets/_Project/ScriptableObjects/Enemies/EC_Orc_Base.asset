@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Orc
   Prefab: {fileID: 6193620580075898845, guid: ed3e112d8c25327439f5e25ca893a7dc, type: 3}
   Health: 10
-  Speed: 5
+  Speed: 1
   Value: 5

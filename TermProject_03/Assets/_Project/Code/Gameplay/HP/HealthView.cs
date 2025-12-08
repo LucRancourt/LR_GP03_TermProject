@@ -20,7 +20,7 @@ public class HealthView : BaseView<float>
     {
         base.Initialize();
 
-        if (healthBar != null && healthBar.type == Image.Type.Filled)
+        if (healthBar && healthBar.type == Image.Type.Filled)
         {
             healthBar.fillAmount = 1.0f;
 
@@ -28,13 +28,31 @@ public class HealthView : BaseView<float>
                 UpdateColor(1.0f);
         }
 
-        if (healthText != null)
+        if (healthText)
             healthText.text = "#/0";
+    }
+
+    public override void Show()
+    {
+        if (healthBar)
+            healthBar.enabled = true;
+
+        if (healthText)
+            healthText.enabled = true;
+    }
+
+    public override void Hide()
+    {
+        if (healthBar)
+            healthBar.enabled = false;
+
+        if (healthText)
+            healthText.enabled = false;
     }
 
     public override void UpdateDisplay(float currentHealth, float maxHealth)
     {
-        if (healthBar != null && healthBar.type == Image.Type.Filled)
+        if (healthBar && healthBar.type == Image.Type.Filled)
         {
             float currentPercentage = currentHealth / maxHealth;
             healthBar.fillAmount = currentPercentage;
@@ -43,7 +61,7 @@ public class HealthView : BaseView<float>
                 UpdateColor(currentPercentage);
         }
 
-        if (healthText != null)
+        if (healthText)
             healthText.text = currentHealth + "/" + maxHealth;
     }
 
