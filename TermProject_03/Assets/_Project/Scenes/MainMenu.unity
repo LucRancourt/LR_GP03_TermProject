@@ -3179,7 +3179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFadeToBlack: 0
-  dividerToSlowFade: 1.15
+  dividerToSlowFade: 1.18
 --- !u!114 &1033566791
 MonoBehaviour:
   m_ObjectHideFlags: 0
