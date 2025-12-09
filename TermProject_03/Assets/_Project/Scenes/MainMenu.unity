@@ -1949,7 +1949,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Title
+  m_text: Pastry Panic
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: add63824b1c3c204097b6051218e1541, type: 2}
   m_sharedMaterial: {fileID: -1427443435149688028, guid: add63824b1c3c204097b6051218e1541, type: 2}
@@ -5739,7 +5739,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Title
+  m_text: Pastry Panic
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 84ca1ce2de6d0174989574fab4fefb50, type: 2}
   m_sharedMaterial: {fileID: -5550616005712566394, guid: 84ca1ce2de6d0174989574fab4fefb50, type: 2}
@@ -5773,7 +5773,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

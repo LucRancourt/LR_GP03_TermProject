@@ -77,8 +77,8 @@ public class CinCamMov : Singleton<CinCamMov>
 
     private void DisplayLevelSelect()
     {
-        Debug.Log("Show");
-        Invoke("ReturnToMainMenu", 5.0f);
+        ServiceLocator.Get<SceneService>().LoadScene("Sandbox");
+        //Invoke("ReturnToMainMenu", 5.0f);
         //levelSelect.Show();
     }
 
@@ -93,5 +93,13 @@ public class CinCamMov : Singleton<CinCamMov>
         menus[1].PlayBackward();
 
         FadeTo.Instance.OnFadeComplete += ServiceLocator.Get<SceneService>().ReloadCurrentScene;
+    }
+
+    private void OnDestroy()
+    {
+        if (FadeTo.Instance)
+            FadeTo.Instance.OnFadeComplete -= ServiceLocator.Get<SceneService>().ReloadCurrentScene;
+
+        ClearListenersOnMenus();
     }
 }
