@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 using _Project.Code.Core.ServiceLocator;
 using _Project.Code.Core.Events;
-
+using System.Collections;
 
 public class PauseMenu : Menu<PauseMenu>
 {
@@ -16,13 +16,22 @@ public class PauseMenu : Menu<PauseMenu>
     [SerializeField] private Button openSettingsMenu;
     [SerializeField] private Button returnToMainMenu;
 
+    [Header("Tween Details")]
+    [SerializeField] private RectTransform targetPosition;
+    [SerializeField] private float moveDuration = 1.0f;
+
+    private RectTransform rectTransform;
+    private Vector3 startPosition;
+    private Coroutine currentMoveCoroutine;
+
 
     // Functions
     protected override void Awake()
     {
         base.Awake();
 
-        pauseMenu.SetActive(false);
+        rectTransform = pauseMenu.GetComponent<RectTransform>();
+        startPosition = rectTransform.anchoredPosition;
 
         resumeGame.onClick.AddListener(ResumeClicked);
         openSettingsMenu.onClick.AddListener(OpenSettingsMenu);
@@ -46,7 +55,14 @@ public class PauseMenu : Menu<PauseMenu>
     {
         Time.timeScale = 0.0f;
 
-        pauseMenu.SetActive(true);
+        OpenPauseMenu();
+    }
+
+    private void UnPauseGame()
+    {
+        ClosePauseMenu();
+
+        Time.timeScale = 1.0f;
     }
 
     private void ResumeClicked()
@@ -54,11 +70,34 @@ public class PauseMenu : Menu<PauseMenu>
         EventBus.Instance.Publish(new PauseInputEvent());
     }
 
-    private void UnPauseGame()
+    private void OpenPauseMenu()
     {
-        pauseMenu.SetActive(false);
+        if (currentMoveCoroutine != null)
+            StopCoroutine(currentMoveCoroutine);
 
-        Time.timeScale = 1.0f;
+        currentMoveCoroutine = StartCoroutine(MoveCoroutine(startPosition, targetPosition.anchoredPosition));
+    }
+
+    private void ClosePauseMenu()
+    {
+        if (currentMoveCoroutine != null)
+            StopCoroutine(currentMoveCoroutine);
+        
+        currentMoveCoroutine = StartCoroutine(MoveCoroutine(targetPosition.anchoredPosition, startPosition));
+    }
+
+    IEnumerator MoveCoroutine(Vector3 startPos, Vector3 endPos)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < moveDuration)
+        {
+            rectTransform.anchoredPosition = Vector3.Lerp(startPos, endPos, elapsedTime / moveDuration);
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        rectTransform.anchoredPosition = endPos;
     }
 
     private void OpenSettingsMenu()

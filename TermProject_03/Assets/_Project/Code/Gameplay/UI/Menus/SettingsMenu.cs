@@ -79,9 +79,7 @@ public class SettingsMenu : Menu<SettingsMenu>
     public void OpenMenu()
     {
         if (currentMoveCoroutine != null)
-        {
             StopCoroutine(currentMoveCoroutine);
-        }
 
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(startPosition, targetPosition.anchoredPosition));
     }
@@ -89,9 +87,7 @@ public class SettingsMenu : Menu<SettingsMenu>
     public void CloseMenu()
     {
         if (currentMoveCoroutine != null)
-        {
             StopCoroutine(currentMoveCoroutine);
-        }
 
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(targetPosition.anchoredPosition, startPosition));
     }
