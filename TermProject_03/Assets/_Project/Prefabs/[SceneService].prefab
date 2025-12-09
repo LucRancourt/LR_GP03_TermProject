@@ -45,4 +45,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startScreen: MainMenu
-  loadingScreen: {fileID: 2459967288756290661, guid: 0fcd459dbf520d8459ba01ea88cec083, type: 3}

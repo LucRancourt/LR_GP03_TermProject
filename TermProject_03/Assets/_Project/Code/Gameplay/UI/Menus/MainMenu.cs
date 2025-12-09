@@ -1,19 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using _Project.Code.Core.ServiceLocator;
-
 
 public class MainMenu : Menu<MainMenu>
 {
-    // Variables
     [Header("Buttons")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button quitButton;
 
 
-    // Functions
     protected override void Awake()
     {
         base.Awake();
@@ -28,7 +24,7 @@ public class MainMenu : Menu<MainMenu>
 
     private void StartGame()
     {
-        ServiceLocator.Get<SceneService>().LoadScene("Sandbox");
+        CinCamMov.Instance.NextCamPos();
     }
 
     private void OpenSettings()
