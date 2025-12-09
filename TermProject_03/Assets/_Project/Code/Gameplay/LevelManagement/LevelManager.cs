@@ -17,23 +17,29 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private WaveCounter waveCounter;
     [SerializeField] private WaveSkipper waveSkipper;
     [SerializeField] private DifficultySelection difficultySelection;
+    [SerializeField] private EndScreen endScreen;
 
 
     private void Start()
     {
-        _levelStateManager.Initialize(waveManager, phaseNotifier, waveCounter, waveSkipper, difficultySelection);
+        _levelStateManager.Initialize(waveManager, phaseNotifier, waveCounter, waveSkipper, difficultySelection, endScreen);
 
         playerBase.OnDied += SetGameOver;
 
         timer.IsActive = true;
     }
 
-    public void SetGameOver()
+    private void SetGameOver()
     {
-        timer.IsActive = false;
+        DisableTimer();
 
         playerBase.OnDied -= SetGameOver;
         _levelStateManager.TransitionToState<LevelOverState>();
+    }
+
+    public void DisableTimer()
+    {
+        timer.IsActive = false;
     }
 
     private void OnDestroy()

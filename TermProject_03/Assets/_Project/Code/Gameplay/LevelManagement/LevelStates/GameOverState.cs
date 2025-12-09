@@ -1,28 +1,26 @@
-using UnityEngine;
-
 using _Project.Code.Core.ServiceLocator;
-using UnityEngine.UI;
 using _Project.Code.Core.GameManagement;
+
 
 public class LevelOverState : LevelState
 {
-    private GameObject _lossScreen;
-    // Variables
-    // GameOver UI
-    // Stats Display
-    // Replay or Return Options
+    private EndScreen _lossScreen;
 
-    public LevelOverState(LevelStateManager levelStateManager) : base(levelStateManager)
+    // Stats Display
+
+
+    public LevelOverState(LevelStateManager levelStateManager, EndScreen endScreen) : base(levelStateManager)
     {
-        _lossScreen = null;
+        _lossScreen = endScreen;
     }
     
 
     public override void Enter()
     {
         ServiceLocator.Get<GameManagementService>().TransitionToMenu();
-        _lossScreen.SetActive(true);
-        _lossScreen.GetComponentInChildren<Button>().onClick.AddListener(Exit);
+
+        _lossScreen.UpdateDisplay(false);
+        _lossScreen.Show();
     }
 
     public override void Update()
@@ -31,7 +29,6 @@ public class LevelOverState : LevelState
 
     public override void Exit()
     {
-        _lossScreen.SetActive(false);
-        ServiceLocator.Get<SceneService>().LoadScene("MainMenu");
+        _lossScreen.Hide();
     }
 }

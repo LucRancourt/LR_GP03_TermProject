@@ -11,15 +11,16 @@ public class LevelStateManager
     public PhaseNotifier Notifier { get; private set; }
 
 
-    public void Initialize(WaveManager waveManager, PhaseNotifier phaseNotifier, WaveCounter waveCounter, WaveSkipper waveSkipper, DifficultySelection difficultySelection)
+    public void Initialize(WaveManager waveManager, PhaseNotifier phaseNotifier, WaveCounter waveCounter, 
+                            WaveSkipper waveSkipper, DifficultySelection difficultySelection, EndScreen endScreen)
     {
         Notifier = phaseNotifier;
 
         _smGameStates = new StateMachine<LevelState>(new PreparationState(this, difficultySelection));// Get(UIItemKey.UnitInventory), uiManager.Get(UIItemKey.DifficultySelect)));
         _smGameStates.AddState(new WaveState(this, waveManager, waveCounter, waveSkipper)); //.Get(UIItemKey.WaveCounter), uiManager.Get(UIItemKey.Notifications)));
         _smGameStates.AddState(new BreakState(this));
-        _smGameStates.AddState(new LevelWinState(this));
-        _smGameStates.AddState(new LevelOverState(this));
+        _smGameStates.AddState(new LevelWinState(this, endScreen));
+        _smGameStates.AddState(new LevelOverState(this, endScreen));
     }
 
     public void TransitionToState<TState>() where TState : LevelState

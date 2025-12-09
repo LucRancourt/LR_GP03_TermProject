@@ -69,6 +69,7 @@ public class SceneService : MonoBehaviourService
     private void SetActiveScene(Scene scene, LoadSceneMode mode)
     {
         SceneManager.SetActiveScene(scene);
+        CurrentSceneName = scene.name;
     }
 
     public override void Dispose()
