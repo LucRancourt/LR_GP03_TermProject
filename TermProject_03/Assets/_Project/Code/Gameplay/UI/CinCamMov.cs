@@ -28,6 +28,13 @@ public class CinCamMov : Singleton<CinCamMov>
 
         index++;
 
+
+        if (index == 4 || index == 5)
+        {
+            Invoke("NextCamPos", 3.5f);
+            return;
+        }
+
         if (index != 1 && index != 7)
             Invoke("NextCamPos", 2.0f);
         
