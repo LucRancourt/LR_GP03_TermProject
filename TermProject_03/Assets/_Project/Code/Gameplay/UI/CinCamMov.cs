@@ -1,12 +1,14 @@
 using _Project.Code.Core.General;
+using _Project.Code.Core.ServiceLocator;
 using UnityEngine;
 
 public class CinCamMov : Singleton<CinCamMov>
 {
     [SerializeField] private GameObject[] waypoints;
-    [SerializeField] private GameObject[] menus;
+    [SerializeField] private CafeMenuTween[] menus;
 
     [SerializeField] private Animator cafeDoor;
+    [SerializeField] private Animator levelSelect;
 
     private int index = 0;
 
@@ -15,10 +17,11 @@ public class CinCamMov : Singleton<CinCamMov>
     {
         if (index >= waypoints.Length - 1)
         {
-            foreach (GameObject menu in menus)
-            {
-                menu.SetActive(true);
-            }
+            ClearListenersOnMenus();
+
+            menus[0].OnTransformEnd += menus[1].PlayForward;
+            menus[1].OnTransformEnd += () => { DisplayLevelSelect(); ClearListenersOnMenus(); } ;
+            menus[0].PlayForward();
 
             return;
         }
@@ -29,7 +32,7 @@ public class CinCamMov : Singleton<CinCamMov>
         index++;
 
 
-        if (index == 4 || index == 5)
+        if (index == 4)
         {
             Invoke("NextCamPos", 3.5f);
             return;
@@ -60,5 +63,35 @@ public class CinCamMov : Singleton<CinCamMov>
     {
         FadeTo.Instance.Fade(false);
         FadeTo.Instance.OnFadeComplete -= UnFade;
+    }
+
+    private void ClearListenersOnMenus()
+    {
+        menus[0].OnTransformEnd -= menus[1].PlayForward;
+        menus[1].OnTransformEnd -= () => { DisplayLevelSelect(); ClearListenersOnMenus(); };
+
+        menus[1].OnTransformEnd -= menus[0].PlayBackward;
+        menus[1].OnTransformEnd -= StartFade;
+        menus[0].OnTransformEnd -= ClearListenersOnMenus;
+    }
+
+    private void DisplayLevelSelect()
+    {
+        Debug.Log("Show");
+        Invoke("ReturnToMainMenu", 5.0f);
+        //levelSelect.Show();
+    }
+
+    public void ReturnToMainMenu()
+    {
+        //levelSelect.Hide();
+        ClearListenersOnMenus();
+
+        menus[1].OnTransformEnd += menus[0].PlayBackward;
+        menus[1].OnTransformEnd += StartFade;
+        menus[0].OnTransformEnd += ClearListenersOnMenus;
+        menus[1].PlayBackward();
+
+        FadeTo.Instance.OnFadeComplete += ServiceLocator.Get<SceneService>().ReloadCurrentScene;
     }
 }
