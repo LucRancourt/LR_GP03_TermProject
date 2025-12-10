@@ -4,7 +4,7 @@ using UnityEngine;
 using _Project.Code.Core.MVC;
 
 
-public class HealthController : BaseController<HealthModel, HealthView>, IDamageable
+public class HealthController : BaseController<HealthModel, HealthView>
 {
     public HealthController(HealthModel model, HealthView view) : base(model, view) { }
 

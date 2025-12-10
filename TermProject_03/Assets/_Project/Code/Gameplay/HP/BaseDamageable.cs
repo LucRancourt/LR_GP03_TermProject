@@ -49,6 +49,6 @@ public abstract class BaseDamageable : MonoBehaviour, IDamageable
         _healthController.SetUIDisplay(state);
     }
 
-    public void OnDamaged(float value) => _healthController.OnDamaged(value);
-    public void OnHealed(float value) => _healthController.OnHealed(value);
+    public void Damage(float value) => _healthController.OnDamaged(value);
+    public void Heal(float value) => _healthController.OnHealed(value);
 }

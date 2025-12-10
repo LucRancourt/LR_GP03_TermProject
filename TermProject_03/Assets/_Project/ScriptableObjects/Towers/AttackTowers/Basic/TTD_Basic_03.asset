@@ -17,7 +17,7 @@ MonoBehaviour:
   Cost: 40000
   SellValue: 10000
   Type: 0
-  Cooldown: 0
-  Range: 0
-  Damage: 0
+  Cooldown: 5
+  Range: 14
+  AttackStrat: {fileID: 11400000, guid: 0891d6a0161b98b42b6835b18f50a6a0, type: 2}
   SpawnedUnit: {fileID: 0}

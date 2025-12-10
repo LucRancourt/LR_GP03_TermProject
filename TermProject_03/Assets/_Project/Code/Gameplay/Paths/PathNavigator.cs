@@ -13,8 +13,6 @@ public class PathNavigator : MonoBehaviour
     private bool _isMoving;
     private bool _autoPlayOnEnable = true;
 
-    public event Action OnReachedTarget;
-
 
     private void OnEnable()
     {
@@ -35,12 +33,6 @@ public class PathNavigator : MonoBehaviour
 
         if (isReversed)
             _path.ReversePath();
-    }
-
-    private void OnReachedPathEnd()
-    {
-        OnReachedTarget?.Invoke();
-        StopPath();
     }
 
     public void PlayPath()
@@ -70,26 +62,14 @@ public class PathNavigator : MonoBehaviour
         }
 
         _isMoving = false;
-        OnReachedPathEnd();
+
+        StopPath();
     }
 
-
-    public event Action TEMP_HitTarget;
-    public void TEMP_ChaseTarget(Vector3 targetPosition, float speed)
-    {
-        if (!_isMoving)
-        {
-            _isMoving = true;
-            StartCoroutine(MoveTowardsTarget(targetPosition, speed));
-        }
-    }
-
-    private IEnumerator MoveTowardsTarget(Vector3 targetPosition, float speed, float stopDistance = 0.15f)
+    public IEnumerator MoveTowardsTarget(Vector3 targetPosition, float speed, float stopDistance = 0.15f)
     {
         Vector3 direction = MyUtils.GetDirection(targetPosition, transform.position);
         transform.rotation = Quaternion.LookRotation(direction);
-
-
 
         while (Vector3.Distance(transform.position, targetPosition) > stopDistance)
         {
@@ -97,10 +77,6 @@ public class PathNavigator : MonoBehaviour
 
             yield return null;
         }
-
-
-
-        TEMP_HitTarget?.Invoke();
     }
 
     private void ResetPath()

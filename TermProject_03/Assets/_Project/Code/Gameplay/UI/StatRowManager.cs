@@ -16,7 +16,7 @@ public class StatRowManager : MonoBehaviour
         switch (tierTowerData.Type)
         {
             case TowerType.Attack:
-                statRows[0].SetStatRow(damageIcon, "Damage: " + tierTowerData.Damage);
+                statRows[0].SetStatRow(damageIcon, "Damage: " + tierTowerData.AttackStrat.Damage);
                 statRows[1].SetStatRow(cooldownIcon, "Cooldown: " + tierTowerData.Cooldown + "s");
                 statRows[2].SetStatRow(rangeIcon, "Range: " + tierTowerData.Range);
                 statRows[3].Hide();

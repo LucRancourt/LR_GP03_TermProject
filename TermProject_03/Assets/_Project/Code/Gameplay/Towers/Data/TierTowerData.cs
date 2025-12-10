@@ -43,7 +43,7 @@ public class TierTowerDataCustomEditor : Editor
         switch (towerData.Type)
         {
             case TowerType.Attack:
-                towerData.Damage = EditorGUILayout.FloatField("Damage", towerData.Damage);
+                towerData.AttackStrat = (BaseAttackStrategy)EditorGUILayout.ObjectField("Attack Strategy", towerData.AttackStrat, typeof(BaseAttackStrategy), false);
                 break;
 
             case TowerType.Spawn:
@@ -83,7 +83,7 @@ public class TierTowerData : ScriptableObject
     public float Range;
 
     // Attack
-    public float Damage;
+    public BaseAttackStrategy AttackStrat;
 
     // Spawn
     public SpawnedUnit SpawnedUnit;

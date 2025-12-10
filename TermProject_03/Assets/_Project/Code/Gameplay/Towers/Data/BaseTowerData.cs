@@ -47,6 +47,8 @@ public class BaseTowerDataCustomEditor : Editor
 
         CheckTiersList(towerData);
 
+        /*if (towerData.Type == TowerType.Attack)
+            towerData.Projectile = (BaseProjectile)EditorGUILayout.ObjectField("Projectile", towerData.Projectile, typeof(BaseProjectile), false);*/
 
         if (GUI.changed)
             EditorUtility.SetDirty(towerData);
@@ -93,6 +95,8 @@ public class BaseTowerData : ScriptableObject
 
     public TowerType Type;
     public List<TierTowerData> TowerTiers;
+
+    //public BaseProjectile Projectile;
 
 
     public TierTowerData GetTowerTierData(int index)

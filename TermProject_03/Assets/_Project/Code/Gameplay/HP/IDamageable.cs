@@ -1,5 +1,5 @@
 public interface IDamageable
 {
-    public void OnDamaged(float value);
-    public void OnHealed(float value);
+    public void Damage(float value);
+    public void Heal(float value);
 }

@@ -57,7 +57,7 @@ public class Enemy : BaseDamageable, IPoolable
         {
             if (other.TryGetComponent(out IDamageable damageable))
             {
-                damageable.OnDamaged(GetCurrentHealth());
+                damageable.Damage(GetCurrentHealth());
                 OnEnemyDied();
             }
         }

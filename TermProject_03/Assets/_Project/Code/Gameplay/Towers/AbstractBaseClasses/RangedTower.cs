@@ -13,9 +13,6 @@ public abstract class RangedTower : Tower
     protected override void Initialize()
     {
         SetupRangeSphere();
-
-        OnDespawned += (tower) => AdjustRangeSphereSize();
-        OnUpgraded += AdjustRangeSphereSize;
     }
 
     private void SetupRangeSphere()
@@ -62,8 +59,17 @@ public abstract class RangedTower : Tower
     {
         _triggerDetector.OnTriggerEnterDetected -= TriggerEnterDetected;
         _triggerDetector.OnTriggerExitDetected -= TriggerExitDetected;
+
+        AdjustRangeSphereSize();
     }
 
     protected virtual void TriggerEnterDetected(Collider other) { }
     protected virtual void TriggerExitDetected(Collider other) { }
+
+    protected override void UpdateDataOnUpgrade()
+    {
+        base.UpdateDataOnUpgrade();
+
+        AdjustRangeSphereSize();
+    }
 }

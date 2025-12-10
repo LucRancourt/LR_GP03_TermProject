@@ -8,8 +8,7 @@ public class AttackTower : RangedTower
 
     protected List<Enemy> _enemiesInRange = new List<Enemy>();
 
-    private StrategyExecutor<AttackStrategy, AttackInput> _strategyExecutor;
-    [SerializeField] private AttackStrategy[] attackStrategies;
+    private StrategyExecutor<BaseAttackStrategy, AttackInput> _strategyExecutor;
     private AttackInput _attackInput;
 
 
@@ -19,9 +18,8 @@ public class AttackTower : RangedTower
 
         if (TowerData.Type != TowerType.Attack) Debug.LogError("Unsupported TowerType!");
 
-        _strategyExecutor = new StrategyExecutor<AttackStrategy, AttackInput>(attackStrategies[0]);
-        _strategyExecutor.CurrentStrategy.OnDamageTarget += DamageTarget;
-        _attackInput = new AttackInput(transform, transform);
+        _strategyExecutor = new StrategyExecutor<BaseAttackStrategy, AttackInput>(TowerData.GetTowerTierData(0).AttackStrat);
+        _attackInput = new AttackInput(transform, _enemiesInRange);
     }
 
     protected override void Update()
@@ -32,17 +30,17 @@ public class AttackTower : RangedTower
 
         _cooldown -= Time.deltaTime;
 
+        ClearListOfInactives();
+
         if (_cooldown <= 0.0f)
         {
-            ClearListOfInactives();
-
             if (_enemiesInRange.Count != 0)
             {
                 if (_enemiesInRange[0].TryGetComponent(out IDamageable damageable))
                 {
                     if (_strategyExecutor.CurrentStrategy)
                     {
-                        _attackInput.Target = _enemiesInRange[0].transform;
+                        _attackInput.Targets = _enemiesInRange;
                         _strategyExecutor.CurrentStrategy.Execute(_attackInput);
                     }
                 }
@@ -51,16 +49,6 @@ public class AttackTower : RangedTower
 
                 _cooldown = TowerData.TowerTiers[TowerTier].Cooldown;
             }
-        }
-    }
-
-    private void DamageTarget()
-    {
-        if (_enemiesInRange.Count == 0) return;
-
-        if (_enemiesInRange[0])
-        {
-            _enemiesInRange[0].OnDamaged(TowerData.TowerTiers[TowerTier].Damage);
         }
     }
 
@@ -85,5 +73,12 @@ public class AttackTower : RangedTower
             if (!_enemiesInRange[i].isActiveAndEnabled)
                 _enemiesInRange.Remove(_enemiesInRange[i]);
         }
+    }
+
+    protected override void UpdateDataOnUpgrade()
+    {
+        base.UpdateDataOnUpgrade();
+
+        _strategyExecutor.SetStrategy(TowerData.GetTowerTierData(TowerTier).AttackStrat);
     }
 }

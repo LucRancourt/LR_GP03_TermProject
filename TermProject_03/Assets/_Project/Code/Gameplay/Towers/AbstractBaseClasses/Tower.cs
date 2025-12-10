@@ -33,9 +33,6 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
     [SerializeField] private LayerMask spaceLayer;
 
-    public event Action<Tower> OnDespawned;
-    public event Action OnUpgraded;
-
 
     public void OnClick() { }
 
@@ -116,7 +113,6 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
             ResetTierTowerData();
 
             SetLayer(false);
-            OnDespawned?.Invoke(this);
         }
     }
 
@@ -185,9 +181,13 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
     public void UpgradeTower()
     {
+        UpdateDataOnUpgrade();
+    }
+
+    protected virtual void UpdateDataOnUpgrade()
+    {
         TowerTier++;
-        SetMesh(); 
-        OnUpgraded?.Invoke();
+        SetMesh();
     }
 
     private void SetMesh()
