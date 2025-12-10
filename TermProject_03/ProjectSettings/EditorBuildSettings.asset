@@ -9,11 +9,14 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Persistent.unity
     guid: 43eb36b141930dc4aab4d6c00f5d7940
   - enabled: 1
+    path: Assets/_Project/Scenes/MainMenu.unity
+    guid: ae6a63845e4e5884783ec79d969257e7
+  - enabled: 1
     path: Assets/_Project/Scenes/Sandbox.unity
     guid: 2056e956a36396c44810c1a62858025b
   - enabled: 1
-    path: Assets/_Project/Scenes/MainMenu.unity
-    guid: ae6a63845e4e5884783ec79d969257e7
+    path: Assets/_Project/Scenes/Level1.unity
+    guid: 720d80c340174d84a915110c03fe6407
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

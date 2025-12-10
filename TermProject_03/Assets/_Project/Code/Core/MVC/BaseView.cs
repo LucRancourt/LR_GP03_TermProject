@@ -60,11 +60,13 @@ namespace _Project.Code.Core.MVC
         
         public virtual void Show()
         {
+            Debug.Log("Yolo");
             gameObject.SetActive(true);
         }
         
         public virtual void Hide()
         {
+            Debug.Log("WFFF");
             gameObject.SetActive(false);
         }
 

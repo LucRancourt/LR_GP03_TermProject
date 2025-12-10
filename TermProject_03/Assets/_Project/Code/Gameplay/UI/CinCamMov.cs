@@ -1,17 +1,29 @@
 using _Project.Code.Core.General;
 using _Project.Code.Core.ServiceLocator;
+using System;
 using UnityEngine;
 
 public class CinCamMov : Singleton<CinCamMov>
 {
+    [Header("CamTrack Details")]
     [SerializeField] private GameObject[] waypoints;
     [SerializeField] private CafeMenuTween[] menus;
 
+    [Header("Animators")]
     [SerializeField] private Animator cafeDoor;
     [SerializeField] private Animator levelSelect;
 
     private int index = 0;
 
+    private Action _handlerReference;
+
+
+    private void Start()
+    {
+        LevelSelectMenu.Instance.OnBackedOut += ReturnToMainMenu;
+
+        _handlerReference = () => { DisplayLevelSelect(); ClearListenersOnMenus(); };
+    }
 
     public void NextCamPos()
     {
@@ -20,7 +32,7 @@ public class CinCamMov : Singleton<CinCamMov>
             ClearListenersOnMenus();
 
             menus[0].OnTransformEnd += menus[1].PlayForward;
-            menus[1].OnTransformEnd += () => { DisplayLevelSelect(); ClearListenersOnMenus(); } ;
+            menus[1].OnTransformEnd += _handlerReference;
             menus[0].PlayForward();
 
             return;
@@ -68,23 +80,22 @@ public class CinCamMov : Singleton<CinCamMov>
     private void ClearListenersOnMenus()
     {
         menus[0].OnTransformEnd -= menus[1].PlayForward;
-        menus[1].OnTransformEnd -= () => { DisplayLevelSelect(); ClearListenersOnMenus(); };
+        menus[1].OnTransformEnd -= _handlerReference;
 
         menus[1].OnTransformEnd -= menus[0].PlayBackward;
         menus[1].OnTransformEnd -= StartFade;
         menus[0].OnTransformEnd -= ClearListenersOnMenus;
     }
 
+
     private void DisplayLevelSelect()
     {
-        ServiceLocator.Get<SceneService>().LoadScene("Sandbox");
-        //Invoke("ReturnToMainMenu", 5.0f);
-        //levelSelect.Show();
+        LevelSelectMenu.Instance.OpenMenu();
+        ClearListenersOnMenus();
     }
 
     public void ReturnToMainMenu()
     {
-        //levelSelect.Hide();
         ClearListenersOnMenus();
 
         menus[1].OnTransformEnd += menus[0].PlayBackward;
@@ -101,5 +112,8 @@ public class CinCamMov : Singleton<CinCamMov>
             FadeTo.Instance.OnFadeComplete -= ServiceLocator.Get<SceneService>().ReloadCurrentScene;
 
         ClearListenersOnMenus();
+
+        if (LevelSelectMenu.Instance)
+            LevelSelectMenu.Instance.OnBackedOut -= ReturnToMainMenu;
     }
 }
