@@ -3,14 +3,21 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewAreaOfAttackAS", menuName = "Scriptable Objects/Attack Strategies/AoE Attack")]
 public class AreaOfAttackAS : BaseAttackStrategy
 {
-    //public OutwardBurstParticle ParticlePrefab;
+    public ParticleSystem ParticlePrefab;
 
     public override void Execute(AttackInput attackInput)
     {
-        //if (ParticlePrefab)
-        foreach(BaseDamageable enemy in attackInput.Targets)
+        if (ParticlePrefab)
         {
-            enemy.Damage(Damage);
+            ParticleSystem spawnedParticle = Instantiate(ParticlePrefab, attackInput.AttackOrigin.position, attackInput.AttackOrigin.rotation);
+            spawnedParticle.Play();
+
+            foreach (BaseDamageable enemy in attackInput.Targets)
+            {
+                enemy.Damage(Damage);
+            }
+
+            Destroy(spawnedParticle, 5.0f);
         }
     }
 }

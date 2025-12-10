@@ -19,5 +19,5 @@ MonoBehaviour:
   Type: 0
   Cooldown: 1
   Range: 7
-  AttackStrat: {fileID: 11400000, guid: 2ea10ed46101a5442b985eae62450e91, type: 2}
+  AttackStrat: {fileID: 11400000, guid: eed8bdcd0117d6e4b9d3df4b3224758d, type: 2}
   SpawnedUnit: {fileID: 0}

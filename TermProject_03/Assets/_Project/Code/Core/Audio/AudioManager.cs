@@ -54,7 +54,7 @@ public class AudioManager : Singleton<AudioManager>
             }
         */
 
-        private void PlayMusic(AudioCue music, bool isLooped = true)
+        public void PlayMusic(AudioCue music, bool isLooped = true)
         {
             if (_musicSource == null)
             {
