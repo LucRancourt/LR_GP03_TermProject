@@ -43,7 +43,7 @@ public class CinCamMov : Singleton<CinCamMov>
 
         index++;
 
-
+        Debug.Log(index + "    " + waypoints.Length);
         if (index == 4)
         {
             Invoke("NextCamPos", 3.5f);
@@ -51,7 +51,9 @@ public class CinCamMov : Singleton<CinCamMov>
         }
 
         if (index != 1 && index != 7)
+        {
             Invoke("NextCamPos", 2.0f);
+        }
         
         if (index == 3)
         {

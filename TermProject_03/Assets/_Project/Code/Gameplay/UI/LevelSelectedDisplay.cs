@@ -17,8 +17,6 @@ public class LevelSelectedDisplay : BaseView<LevelInfo>
 
     private void Start()
     {
-        Hide();
-
         playButton.onClick.AddListener(() => OnPlayButtonPressed?.Invoke(nameText.text));
     }
 
