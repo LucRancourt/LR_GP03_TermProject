@@ -10,6 +10,7 @@ public class Enemy : BaseDamageable, IPoolable
 {
     public string Name { get; private set; }
     public int Value { get; private set; }
+    public float Speed { get; private set; }
 
     private PathNavigator _pathNavigator;
 
@@ -38,7 +39,8 @@ public class Enemy : BaseDamageable, IPoolable
 
         Value = data.Value;
 
-        _pathNavigator.SetupPath(path, data.Speed, false);
+        Speed = data.Speed;
+        _pathNavigator.SetupPath(path, Speed, false);
         _pathNavigator.PlayPath();
     }
 
@@ -89,4 +91,7 @@ public class Enemy : BaseDamageable, IPoolable
 
     private void OnMouseOver() { ShowVisuals(); }
     private void OnMouseExit() { HideVisuals(); }
+
+
+    public void UpdateSpeed(float speedAdjustment) { _pathNavigator.SetSpeed(Speed * speedAdjustment);  }
 }

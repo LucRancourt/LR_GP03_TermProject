@@ -29,11 +29,13 @@ public class PathNavigator : MonoBehaviour
     public void SetupPath(NavPath navPath, float moveSpeed, bool isReversed)
     {
         _path = navPath;
-        _moveSpeed = moveSpeed;
+        SetSpeed(moveSpeed);
 
         if (isReversed)
             _path.ReversePath();
     }
+
+    public void SetSpeed(float moveSpeed) { _moveSpeed = moveSpeed; }
 
     public void PlayPath()
     {
