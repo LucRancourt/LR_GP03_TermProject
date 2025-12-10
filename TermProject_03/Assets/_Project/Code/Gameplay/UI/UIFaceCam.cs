@@ -13,6 +13,9 @@ public class UIFaceCam : MonoBehaviour
     private void LateUpdate()
     {
         if (_mainCamera)
-            transform.LookAt(transform.position + _mainCamera.transform.rotation * Vector3.forward, _mainCamera.transform.rotation * Vector3.up);
+        {
+            transform.LookAt(_mainCamera.transform);
+            transform.Rotate(0.0f, 180.0f, 0.0f);
+        }
     }
 }

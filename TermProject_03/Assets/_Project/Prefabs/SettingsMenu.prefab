@@ -959,7 +959,7 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -966762256, guid: bb5cee55b31f8b848988ada10e175ebf, type: 3}
+    m_HighlightedSprite: {fileID: 1742388956, guid: bb5cee55b31f8b848988ada10e175ebf, type: 3}
     m_PressedSprite: {fileID: -1674707775, guid: bb5cee55b31f8b848988ada10e175ebf, type: 3}
     m_SelectedSprite: {fileID: 1742388956, guid: bb5cee55b31f8b848988ada10e175ebf, type: 3}
     m_DisabledSprite: {fileID: 0}
@@ -1917,7 +1917,7 @@ GameObject:
   - component: {fileID: 141095491995788092}
   - component: {fileID: 554790375653603829}
   m_Layer: 5
-  m_Name: Line (1)
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

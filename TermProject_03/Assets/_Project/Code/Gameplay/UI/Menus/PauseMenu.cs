@@ -10,6 +10,11 @@ public class PauseMenu : Menu<PauseMenu>
     // Variables
     [Header("Pause Settings")]
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Image pauseBackground;
+    [SerializeField] private ConfirmationWindow confirmationWindow;
+
+    private Color _blackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.4f);
+    private Color _fullTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 
     [Header("Buttons")]
     [SerializeField] private Button resumeGame;
@@ -41,6 +46,7 @@ public class PauseMenu : Menu<PauseMenu>
     private void Start()
     {
         EventBus.Instance.Subscribe<PauseInputEvent>(this, OnPauseInputEvent);
+
     }
 
     private void OnPauseInputEvent(PauseInputEvent evt)
@@ -55,12 +61,12 @@ public class PauseMenu : Menu<PauseMenu>
     {
         Time.timeScale = 0.0f;
 
-        OpenPauseMenu();
+        OpenMenu();
     }
 
     private void UnPauseGame()
     {
-        ClosePauseMenu();
+        CloseMenu();
 
         Time.timeScale = 1.0f;
     }
@@ -70,20 +76,22 @@ public class PauseMenu : Menu<PauseMenu>
         EventBus.Instance.Publish(new PauseInputEvent());
     }
 
-    private void OpenPauseMenu()
+    public override void OpenMenu()
     {
         if (currentMoveCoroutine != null)
             StopCoroutine(currentMoveCoroutine);
 
+        pauseBackground.color = _blackTransparent;
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(startPosition, targetPosition.anchoredPosition));
     }
 
-    private void ClosePauseMenu()
+    public override void CloseMenu()
     {
         if (currentMoveCoroutine != null)
             StopCoroutine(currentMoveCoroutine);
-        
+
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(targetPosition.anchoredPosition, startPosition));
+        pauseBackground.color = _fullTransparent;
     }
 
     IEnumerator MoveCoroutine(Vector3 startPos, Vector3 endPos)
@@ -107,6 +115,21 @@ public class PauseMenu : Menu<PauseMenu>
 
     private void ReturnToMainMenu()
     {
+        confirmationWindow.OnConfirmed += SendToMainMenu;
+        confirmationWindow.OnDeclined += ClearConfirmationWindowSubscriptions;
+        confirmationWindow.OpenMenu();
+    }
+
+    private void ClearConfirmationWindowSubscriptions()
+    {
+        confirmationWindow.OnConfirmed -= SendToMainMenu;
+        confirmationWindow.OnDeclined -= ClearConfirmationWindowSubscriptions;
+    }
+
+    private void SendToMainMenu()
+    {
+        ClearConfirmationWindowSubscriptions();
+
         UnPauseGame();
         ServiceLocator.Get<SceneService>().LoadScene("MainMenu");
     }

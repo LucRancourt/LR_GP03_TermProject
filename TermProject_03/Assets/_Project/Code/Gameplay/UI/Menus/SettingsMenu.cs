@@ -76,7 +76,7 @@ public class SettingsMenu : Menu<SettingsMenu>
     }
     #endregion
 
-    public void OpenMenu()
+    public override void OpenMenu()
     {
         if (currentMoveCoroutine != null)
             StopCoroutine(currentMoveCoroutine);
@@ -84,7 +84,7 @@ public class SettingsMenu : Menu<SettingsMenu>
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(startPosition, targetPosition.anchoredPosition));
     }
 
-    public void CloseMenu()
+    public override void CloseMenu()
     {
         if (currentMoveCoroutine != null)
             StopCoroutine(currentMoveCoroutine);

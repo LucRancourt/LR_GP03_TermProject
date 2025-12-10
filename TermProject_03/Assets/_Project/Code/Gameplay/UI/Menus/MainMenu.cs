@@ -36,4 +36,13 @@ public class MainMenu : Menu<MainMenu>
     {
         Application.Quit();
     }
+
+
+    public override void OpenMenu()
+    {
+    }
+
+    public override void CloseMenu()
+    {
+    }
 }

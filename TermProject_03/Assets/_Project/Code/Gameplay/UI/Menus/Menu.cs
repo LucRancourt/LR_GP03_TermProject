@@ -5,15 +5,13 @@ using _Project.Code.Core.Audio;
 using _Project.Code.Core.General;
 
 
-public class Menu<T> : Singleton<T> where T : MonoBehaviour
+public abstract class Menu<T> : Singleton<T> where T : MonoBehaviour
 {
-    // Variables 
     [SerializeField] private AudioCue clickSFX;
 
     private Button[] _menuButtons;
 
 
-    // Functions
     protected override void Awake()
     {
         base.Awake();
@@ -31,4 +29,7 @@ public class Menu<T> : Singleton<T> where T : MonoBehaviour
     {
         AudioManager.Instance.PlaySound(clickSFX);
     }
+
+    public abstract void OpenMenu();
+    public abstract void CloseMenu();
 }
