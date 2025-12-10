@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 using _Project.Code.Core.ServiceLocator;
+using _Project.Code.Core.Audio;
 
 [RequireComponent(typeof(PlayerHotbarController))]
 
@@ -11,6 +12,8 @@ public class PlayerTowerMediator : MonoBehaviour
 {
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask towerModelLayer;
+
+    [SerializeField] private AudioCue interactSFX;
 
     private PlayerHotbarController _playerInventory;
     private TowerManager _towerManager;
@@ -140,6 +143,7 @@ public class PlayerTowerMediator : MonoBehaviour
         {
             if (_builderManager.TryBuildTower())
             {
+                AudioManager.Instance.PlaySound(interactSFX);
                 PlayerWallet.Instance.MakeTransaction(_newTowerData.GetPlacementCost());
                 _playerInventory.UpdateView(_newTowerData, _towerManager.GetCurrentUnitLimit(_newTowerData));
                 _newTowerData = null;

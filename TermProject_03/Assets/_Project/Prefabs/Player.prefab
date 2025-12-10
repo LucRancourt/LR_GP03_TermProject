@@ -130,6 +130,7 @@ MonoBehaviour:
   towerModelLayer:
     serializedVersion: 2
     m_Bits: 1024
+  interactSFX: {fileID: 11400000, guid: ab3e965c2633be54bae9428bf033791f, type: 2}
 --- !u!1 &5639015774886870717
 GameObject:
   m_ObjectHideFlags: 0

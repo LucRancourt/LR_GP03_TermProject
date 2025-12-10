@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AS_BurstShot 2
   m_EditorClassIdentifier: 
   Damage: 6
+  ShootSFX: {fileID: 11400000, guid: 78b5e332ca2b4f740bc6b350a7893ac8, type: 2}
   BulletPrefab: {fileID: 7768444179655791217, guid: fbbe15a495725d143b36c132a3de0794, type: 3}
   BurstCount: 6
   BurstDelay: 0.2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LISandbox
   m_EditorClassIdentifier: 
   Name: Sandbox
-  Icon: {fileID: 21300000, guid: 1e70de158713faa43be2fd609e5d5b73, type: 3}
+  Icon: {fileID: 21300000, guid: 804e16b236a99ed4c90dd2b884d9883d, type: 3}
   Difficulty: 1
   Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin faucibus
     orci vitae mauris maximus, ac fringilla nibh egestas. Etiam luctus ante nisl,

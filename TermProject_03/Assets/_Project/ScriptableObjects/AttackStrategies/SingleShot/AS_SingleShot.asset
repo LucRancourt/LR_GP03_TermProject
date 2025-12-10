@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: AS_SingleShot
   m_EditorClassIdentifier: 
   Damage: 5
+  ShootSFX: {fileID: 11400000, guid: 78b5e332ca2b4f740bc6b350a7893ac8, type: 2}
   BulletPrefab: {fileID: 7768444179655791217, guid: 1052316f38ac94840911844789588353, type: 3}

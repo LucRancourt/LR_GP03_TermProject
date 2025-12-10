@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: AS_AoEAttack
   m_EditorClassIdentifier: 
   Damage: 1
+  ShootSFX: {fileID: 11400000, guid: ab811a3531b861741ab5cc7d54bb91be, type: 2}
   ParticlePrefab: {fileID: 471357044464086399, guid: 2416e432a6c793845a45dfcc62cb3275, type: 3}
