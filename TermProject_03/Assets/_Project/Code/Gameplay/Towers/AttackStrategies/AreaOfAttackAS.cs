@@ -7,6 +7,8 @@ public class AreaOfAttackAS : BaseAttackStrategy
 
     public override void Execute(AttackInput attackInput)
     {
+        base.Execute(attackInput);
+
         if (ParticlePrefab)
         {
             ParticleSystem spawnedParticle = Instantiate(ParticlePrefab, attackInput.AttackOrigin.position, attackInput.AttackOrigin.rotation);

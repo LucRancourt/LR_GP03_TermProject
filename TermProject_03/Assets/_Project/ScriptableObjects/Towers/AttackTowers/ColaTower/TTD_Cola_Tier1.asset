@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b04318ab87d7a47a5933aaaba55437, type: 3}
+  m_Name: TTD_Cola_Tier1
+  m_EditorClassIdentifier: 
+  Model: {fileID: -748976248046385338, guid: b121ae1827917f045b838407f9098441, type: 3}
+  Icon: {fileID: 21300000, guid: c5f5a341ba3ab45418461f1d93869840, type: 3}
+  Cost: 500
+  SellValue: 225
+  Type: 0
+  Cooldown: 1
+  Range: 8
+  AttackStrat: {fileID: 11400000, guid: eed8bdcd0117d6e4b9d3df4b3224758d, type: 2}
+  SpawnedUnit: {fileID: 0}

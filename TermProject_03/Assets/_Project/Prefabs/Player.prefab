@@ -110,7 +110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towers:
   - {fileID: 11400000, guid: a24e7f0f90c4be349bbd7adc8d6df985, type: 2}
-  - {fileID: 11400000, guid: a24e7f0f90c4be349bbd7adc8d6df985, type: 2}
+  - {fileID: 11400000, guid: a08d15fe39179014684c14058371108c, type: 2}
+  - {fileID: 11400000, guid: 0341a6b2e4ca7f84ba497c655cfa41ea, type: 2}
   playerInventoryHUD: {fileID: 0}
 --- !u!114 &1755040840609000759
 MonoBehaviour:

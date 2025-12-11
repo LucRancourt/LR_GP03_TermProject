@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1305890368225792005}
   - component: {fileID: 3889846838301500623}
   - component: {fileID: 7112013389385002810}
+  - component: {fileID: 5718446284336507406}
   m_Layer: 0
   m_Name: Frappe B
   m_TagString: Untagged
@@ -111,3 +112,28 @@ CapsuleCollider:
   m_Height: 0.7449866
   m_Direction: 1
   m_Center: {x: -0.0037419498, y: 0.37249324, z: -0.0026400462}
+--- !u!114 &5718446284336507406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3385439625878996250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb029871efb25e4287ab17db25f2a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerSpaceLayer: 11
+  towerModelLayer: 10
+  buildingLayer: 9
+  spaceTakenSprite: {fileID: 21300000, guid: 6c011aee9474d2c41b3e9e685b6c91f5, type: 3}
+  spaceMat: {fileID: 2100000, guid: 20cd4e89dc7c9b64996552e37c32bfc4, type: 2}
+  spaceOverlapMat: {fileID: 2100000, guid: 2eb7d487f1c9e904da8c91cbf00b2762, type: 2}
+  spaceLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  rangeMaterial: {fileID: 2100000, guid: 0a1e7da76cde82541be34407110c5c9a, type: 2}
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 0

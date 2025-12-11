@@ -12,8 +12,6 @@ public class BurstShotAS : BaseAttackStrategy
 
     public override void Execute(AttackInput attackInput)
     {
-        base.Execute(attackInput);
-
         CoroutineExecutor.Instance.StartCoroutineExec(FireBurst(attackInput));
     }
 
@@ -26,6 +24,7 @@ public class BurstShotAS : BaseAttackStrategy
 
             if (BulletPrefab)
             {
+                base.Execute(attackInput);
                 Instantiate(BulletPrefab).Initialize(attackInput.AttackOrigin.position, attackInput.Targets[0], Damage);
             }
 

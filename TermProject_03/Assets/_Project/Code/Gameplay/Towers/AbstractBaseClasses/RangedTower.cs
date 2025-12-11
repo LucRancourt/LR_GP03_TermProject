@@ -53,6 +53,8 @@ public abstract class RangedTower : Tower
     {
         _triggerDetector.OnTriggerEnterDetected += TriggerEnterDetected;
         _triggerDetector.OnTriggerExitDetected += TriggerExitDetected;
+
+        InitialRaycastOnEnable();
     }
 
     protected override void OnDisabled()
@@ -63,8 +65,11 @@ public abstract class RangedTower : Tower
         AdjustRangeSphereSize();
     }
 
-    protected virtual void TriggerEnterDetected(Collider other) { }
-    protected virtual void TriggerExitDetected(Collider other) { }
+    protected abstract void InitialRaycastOnEnable();
+    protected Collider[] CheckAnyInRange() { return Physics.OverlapBox(transform.position, _rangeSphere.GetComponent<Collider>().bounds.extents); }
+
+    protected abstract void TriggerEnterDetected(Collider other);
+    protected abstract void TriggerExitDetected(Collider other); 
 
     protected override void UpdateDataOnUpgrade()
     {

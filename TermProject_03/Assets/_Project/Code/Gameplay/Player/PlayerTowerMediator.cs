@@ -72,9 +72,10 @@ public class PlayerTowerMediator : MonoBehaviour
 
         ClearSelectedTower();
 
+        ClearInBuildTower();
+
         if (_newTowerData == towerData)
         {
-            ClearInBuildTower();
             _newTowerData = null;
             return;
         }

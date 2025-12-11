@@ -113,8 +113,6 @@ MonoBehaviour:
   detectionLayer:
     serializedVersion: 2
     m_Bits: 0
-  attackStrategies:
-  - {fileID: 11400000, guid: 5929dd65f01d0cd4cb6577858f872f02, type: 2}
 --- !u!136 &6912300331473879066
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -134,7 +132,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.21364804
+  m_Radius: 0.4
   m_Height: 0.4244876
   m_Direction: 1
   m_Center: {x: 0.003187567, y: 0.2122438, z: 0.0006984994}

@@ -13,19 +13,26 @@ public class WaveState : LevelState
     private WaveCounter _waveCounter;
     private WaveSkipper _waveSkipper;
 
+    private bool _WasWaveManagerInitialized = false;
+
 
     public WaveState(LevelStateManager levelStateManager, WaveManager waveManager, WaveCounter waveCounter, WaveSkipper waveSkipper) : base(levelStateManager)
     {
         _waveManager = waveManager;
         _waveCounter = waveCounter;
         _waveSkipper = waveSkipper;
-
-        _waveManager.Initialize();
-        _waveCounter.UpdateDisplay(_waveManager.CurrentWaveIndex, _waveManager.TotalNumberOfWaves());
     }
 
     public override void Enter()
     {
+        if (!_WasWaveManagerInitialized)
+        {
+            _waveManager.Initialize();
+            _waveCounter.UpdateDisplay(_waveManager.CurrentWaveIndex, _waveManager.TotalNumberOfWaves());
+
+            _WasWaveManagerInitialized = true;
+        }
+
         _levelStateManager.Notifier.UpdateDisplay("Wave Starting!");
 
         CoroutineExecutor.Instance.StartCoroutineExec(StartWaveDelay());

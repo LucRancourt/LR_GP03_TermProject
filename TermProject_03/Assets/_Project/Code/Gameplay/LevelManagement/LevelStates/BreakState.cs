@@ -5,7 +5,7 @@ using UnityEngine;
 public class BreakState : LevelState
 {
     private float timeUntilAutoExit = 10.0f;
-    private int waveClearedReward = 300;
+    private int waveClearedReward = 500;
 
     public BreakState(LevelStateManager levelStateManager) : base(levelStateManager) { }
 

@@ -46,6 +46,4 @@ namespace _Project.Code.Core.General
             }
         }
     }
-
-    
 }

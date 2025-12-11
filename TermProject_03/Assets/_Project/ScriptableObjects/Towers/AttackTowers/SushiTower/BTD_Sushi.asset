@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4e16ea8b127a1148b480cd1b00b0120, type: 3}
+  m_Name: BTD_Sushi
+  m_EditorClassIdentifier: 
+  Name: Sushi
+  UnitLimit: 3
+  SpaceTaken: 2
+  Type: 0
+  TowerTiers:
+  - {fileID: 11400000, guid: bf59f78154b934144bcaf8cb39082978, type: 2}
+  - {fileID: 11400000, guid: ca003f5e5c4420143b520e8f13da7022, type: 2}

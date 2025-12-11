@@ -52,6 +52,21 @@ public class AttackTower : RangedTower
         }
     }
 
+    protected override void InitialRaycastOnEnable()
+    {
+        Collider[] hits = CheckAnyInRange();
+
+        if (hits.Length > 0)
+        {
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].TryGetComponent(out Enemy newEnemy))
+                    if (!_enemiesInRange.Contains(newEnemy))
+                        _enemiesInRange.Add(newEnemy);
+            }
+        }
+    }
+
     protected override void TriggerEnterDetected(Collider other)
     {
         if (other.TryGetComponent(out Enemy newEnemy))
