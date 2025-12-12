@@ -6193,9 +6193,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4125084401683667695, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
+      propertyPath: towers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4125084401683667695, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
       propertyPath: playerInventoryHUD
       value: 
       objectReference: {fileID: 529760945}
+    - target: {fileID: 4125084401683667695, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
+      propertyPath: 'towers.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0341a6b2e4ca7f84ba497c655cfa41ea, type: 2}
+    - target: {fileID: 4125084401683667695, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
+      propertyPath: 'towers.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0341a6b2e4ca7f84ba497c655cfa41ea, type: 2}
+    - target: {fileID: 4125084401683667695, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
+      propertyPath: 'towers.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0341a6b2e4ca7f84ba497c655cfa41ea, type: 2}
+    - target: {fileID: 4125084401683667695, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
+      propertyPath: 'towers.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0341a6b2e4ca7f84ba497c655cfa41ea, type: 2}
     - target: {fileID: 4280542173540770859, guid: b3c0c1d0c0b3ca147bbb097cf4a58fc2, type: 3}
       propertyPath: m_Name
       value: Player
