@@ -26,7 +26,10 @@ public class PlayerHotbarView : MonoBehaviour
 
     public void UpdateDisplay(BaseTowerData[] towerDatas, bool bResetCurrentUnitLimit = false)
     {
-        for (int i = 0; i < (towerDatas.Length > inventorySpaces.Length ? inventorySpaces.Length : towerDatas.Length); i++)
+        int amountOfValidTowers = towerDatas.Length > inventorySpaces.Length ? inventorySpaces.Length : towerDatas.Length;
+        int amountOfInvalidTowers = inventorySpaces.Length - amountOfValidTowers;
+
+        for (int i = 0; i < amountOfValidTowers; i++)
         {
             if (bResetCurrentUnitLimit)
             {
@@ -45,6 +48,12 @@ public class PlayerHotbarView : MonoBehaviour
                 _buttons[i].interactable = false;
             else
                 _buttons[i].interactable = true;
+        }
+
+        for (int i = 0; i < amountOfInvalidTowers; i++)
+        {
+            inventorySpaces[inventorySpaces.Length - 1 - i].SetStatRow(null, "", "");
+            _buttons[inventorySpaces.Length - 1 - i].interactable = false;
         }
     }
 

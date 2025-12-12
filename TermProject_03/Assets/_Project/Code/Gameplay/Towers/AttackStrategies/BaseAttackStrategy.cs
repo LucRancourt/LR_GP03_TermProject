@@ -20,12 +20,10 @@ public class AttackInput
 {
     public Transform AttackOrigin;
     public List<Enemy> Targets;
-    //public BaseProjectile Projectile;
 
-    public AttackInput(Transform attackOrigin, List<Enemy> targets)//, BaseProjectile projectile)
+    public AttackInput(Transform attackOrigin, List<Enemy> targets)
     {
         AttackOrigin = attackOrigin;
         Targets = targets;
-        //Projectile = projectile;
     }
 }

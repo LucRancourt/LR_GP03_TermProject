@@ -11,6 +11,12 @@ public class StatRow : MonoBehaviour
 
     public void SetStatRow(Sprite icon, string stat1, string stat2 = "")
     {
+        if (icon == null)
+        {
+            Hide();
+            return;
+        }
+            
         Show();
 
         image.sprite = icon;
