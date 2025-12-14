@@ -1,4 +1,5 @@
 using _Project.Code.Core.Audio;
+using _Project.Code.Core.ServiceLocator;
 using _Project.Code.Core.Strategy;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public abstract class BaseAttackStrategy : ScriptableStrategy<AttackInput>
     public override void Execute(AttackInput attackInput) 
     {
         if (ShootSFX)
-            AudioManager.Instance.PlaySound(ShootSFX);
+            ServiceLocator.Get<AudioManager>().PlaySound(ShootSFX);
     }
 }
 

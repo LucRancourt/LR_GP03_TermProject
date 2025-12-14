@@ -1,7 +1,10 @@
 using UnityEngine;
 
+
 namespace _Project.Code.Core.Audio
 {
+    using _Project.Code.Core.ServiceLocator;
+
     public class AudioSceneDefaultMusic : MonoBehaviour
     {
         [SerializeField] private AudioCue music;
@@ -10,7 +13,7 @@ namespace _Project.Code.Core.Audio
         private void Start()
         {
             if (music)
-                AudioManager.Instance.PlayMusic(music);
+                ServiceLocator.Get<AudioManager>().PlayMusic(music);
             else
                 Debug.Log("Missing Music!");
         }

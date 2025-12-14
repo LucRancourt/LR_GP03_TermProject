@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 using _Project.Code.Core.Audio;
-using _Project.Code.Core.General;
+using _Project.Code.Core.ServiceLocator;
 
 
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : MonoBehaviourService
 {
     // Variables
     [SerializeField] private AudioMixer audioMixer;

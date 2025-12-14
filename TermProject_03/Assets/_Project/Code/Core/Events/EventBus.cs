@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-using _Project.Code.Core.General;
+using _Project.Code.Core.ServiceLocator;
 
 
 namespace _Project.Code.Core.Events
 {
-    public class EventBus : Singleton<EventBus>
+    public class EventBus : MonoBehaviourService
     
     {
         private readonly Dictionary<Type, List<EventSubscription>> _subscriptions = new();

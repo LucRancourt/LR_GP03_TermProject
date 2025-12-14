@@ -4,6 +4,8 @@ using _Project.Code.Core.Events;
 
 namespace _Project.Code.Core.GameManagement
 {
+    using _Project.Code.Core.ServiceLocator;
+
     public class MenuState : BaseState
     {
         private readonly GameManagementService _gameManagement;
@@ -16,14 +18,14 @@ namespace _Project.Code.Core.GameManagement
 
         public override void Enter()
         {
-            _inputService = ServiceLocator.ServiceLocator.Get<InputController>();
+            _inputService = ServiceLocator.Get<InputController>();
             Time.timeScale = 1f;
             _inputService?.EnableUIActions();
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
-            EventBus.Instance.Publish(new GameStateChangedEvent { StateName = "Menu" });
+            ServiceLocator.Get<EventBus>().Publish(new GameStateChangedEvent { StateName = "Menu" });
         }
     }
 }

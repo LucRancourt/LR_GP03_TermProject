@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 namespace _Project.Code.Core.Events
 {
+    using _Project.Code.Core.ServiceLocator;
+
     public interface IEventSubscriber
     {
         public void ClearEventSubscriberOnDisables();
@@ -16,14 +18,14 @@ namespace _Project.Code.Core.Events
 
         public static void Subscribe<T>(this IEventSubscriber subscriber, Action<T> callback) where T : IEvent
         {
-            if (EventBus.Instance)
+            if (ServiceLocator.TryGet(out EventBus eventBus))
             {
-                EventBus.Instance.Subscribe(subscriber, callback);
+                eventBus.Subscribe(subscriber, callback);
 
                 if (!_unsubscribeActions.ContainsKey(subscriber))
                     _unsubscribeActions[subscriber] = new List<Action>();
 
-                _unsubscribeActions[subscriber].Add(() => EventBus.Instance?.Unsubscribe<T>(subscriber));
+                _unsubscribeActions[subscriber].Add(() => eventBus?.Unsubscribe<T>(subscriber));
             }
         }
 

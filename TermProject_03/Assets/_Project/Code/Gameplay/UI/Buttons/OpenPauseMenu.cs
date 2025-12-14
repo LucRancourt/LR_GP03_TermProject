@@ -1,4 +1,5 @@
 using _Project.Code.Core.Events;
+using _Project.Code.Core.ServiceLocator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,11 @@ public class OpenPauseMenu : MonoBehaviour
 {
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(() => { if (EventBus.Instance) EventBus.Instance.Publish(new PauseInputEvent()); });
+        GetComponent<Button>().onClick.AddListener(() => 
+        { 
+            if (ServiceLocator.TryGet(out EventBus bus))
+                bus.Publish(new PauseInputEvent()); 
+        });
     }
 
     private void OnDestroy()

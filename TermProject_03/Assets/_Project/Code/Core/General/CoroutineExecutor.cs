@@ -1,14 +1,28 @@
+using _Project.Code.Core.ServiceLocator;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace _Project.Code.Core.General
 {
-    public class CoroutineExecutor : Singleton<CoroutineExecutor>
+    public class CoroutineExecutor : MonoBehaviourService
     {
         private List<Coroutine> _activeCoroutines = new();
+
+
+        private void Start()
+        {
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
+        }
+
+        private void OnSceneUnloaded(Scene scene)
+        {
+            StopAllCoroutines();
+            _activeCoroutines.Clear();
+        }
 
         public Coroutine StartCoroutineExec(IEnumerator routine)
         {

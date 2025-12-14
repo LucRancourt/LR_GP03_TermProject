@@ -1,3 +1,4 @@
+using _Project.Code.Core.ServiceLocator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,13 @@ public class OpenSettingsMenu : MonoBehaviour
 {
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(() => { if (SettingsMenu.Instance) SettingsMenu.Instance.OpenMenu(); });
+        GetComponent<Button>().onClick.AddListener(() => 
+       { 
+           if (ServiceLocator.TryGet(out SettingsMenu settings))
+           {
+               settings.OpenMenu();
+           }
+       });
     }
 
     private void OnDestroy()

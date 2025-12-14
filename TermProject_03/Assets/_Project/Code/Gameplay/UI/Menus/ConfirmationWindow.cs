@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ConfirmationWindow : Menu<ConfirmationWindow>
+public class ConfirmationWindow : Menu
 {
     [Header("General")]
     [SerializeField] private GameObject panel;

@@ -6,8 +6,6 @@ using _Project.Code.Core.ServiceLocator;
 
 public class SceneService : MonoBehaviourService
 {
-    [SerializeField] private string startScreen = "MainMenu";
-    private LoadingScreen _loadingScreen;
     public string CurrentSceneName { get; private set; }
 
 
@@ -16,12 +14,6 @@ public class SceneService : MonoBehaviourService
         CurrentSceneName = SceneManager.GetActiveScene().name;
 
         SceneManager.sceneLoaded += SetActiveScene;
-    }
-
-    public void Start()
-    {
-        _loadingScreen = FindFirstObjectByType<LoadingScreen>();
-        LoadScene(startScreen);
     }
 
     public void LoadScene(string sceneName)
@@ -36,21 +28,21 @@ public class SceneService : MonoBehaviourService
 
     public async void LoadSceneAsync(string sceneName)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
 
-        if (_loadingScreen != null)
+        if (ServiceLocator.TryGet(out LoadingScreen loadingScreen))
         {
-            _loadingScreen.Activate();
+            loadingScreen.Activate();
 
             while (!operation.isDone)
             {
                 float progress = Mathf.Clamp01(operation.progress / 0.9f);
-                _loadingScreen.SetLoadValue(progress);
+                loadingScreen.SetLoadValue(progress);
 
                 await System.Threading.Tasks.Task.Yield();
             }
 
-            _loadingScreen.Deactivate();
+            loadingScreen.Deactivate();
         }
         else
         {

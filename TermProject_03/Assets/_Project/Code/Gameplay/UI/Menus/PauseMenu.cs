@@ -5,13 +5,11 @@ using _Project.Code.Core.ServiceLocator;
 using _Project.Code.Core.Events;
 using System.Collections;
 
-public class PauseMenu : Menu<PauseMenu>
+public class PauseMenu : MenuPopUp
 {
-    // Variables
     [Header("Pause Settings")]
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Image pauseBackground;
-    [SerializeField] private ConfirmationWindow confirmationWindow;
 
     private Color _blackTransparent = new Color(0.0f, 0.0f, 0.0f, 0.4f);
     private Color _fullTransparent = new Color(0.0f, 0.0f, 0.0f, 0.0f);
@@ -30,7 +28,6 @@ public class PauseMenu : Menu<PauseMenu>
     private Coroutine currentMoveCoroutine;
 
 
-    // Functions
     protected override void Awake()
     {
         base.Awake();
@@ -45,8 +42,12 @@ public class PauseMenu : Menu<PauseMenu>
 
     private void Start()
     {
-        EventBus.Instance.Subscribe<PauseInputEvent>(this, OnPauseInputEvent);
+        ServiceLocator.Get<EventBus>().Subscribe<PauseInputEvent>(this, OnPauseInputEvent);
+    }
 
+    public void FireOnPauseInputEvent()
+    {
+        ServiceLocator.Get<EventBus>().Publish(new PauseInputEvent());
     }
 
     private void OnPauseInputEvent(PauseInputEvent evt)
@@ -73,7 +74,7 @@ public class PauseMenu : Menu<PauseMenu>
 
     private void ResumeClicked()
     {
-        EventBus.Instance.Publish(new PauseInputEvent());
+        ServiceLocator.Get<EventBus>().Publish(new PauseInputEvent());
     }
 
     public override void OpenMenu()
@@ -110,20 +111,26 @@ public class PauseMenu : Menu<PauseMenu>
 
     private void OpenSettingsMenu()
     {
-        SettingsMenu.Instance.OpenMenu();
+        ServiceLocator.Get<SettingsMenu>().OpenMenu();
     }
 
     private void ReturnToMainMenu()
     {
-        confirmationWindow.OnConfirmed += SendToMainMenu;
-        confirmationWindow.OnDeclined += ClearConfirmationWindowSubscriptions;
-        confirmationWindow.OpenMenu();
+        if (ServiceLocator.TryGet(out ConfirmationWindow window))
+        {
+            window.OnConfirmed += SendToMainMenu;
+            window.OnDeclined += ClearConfirmationWindowSubscriptions;
+            window.OpenMenu();
+        }
     }
 
     private void ClearConfirmationWindowSubscriptions()
     {
-        confirmationWindow.OnConfirmed -= SendToMainMenu;
-        confirmationWindow.OnDeclined -= ClearConfirmationWindowSubscriptions;
+        if (ServiceLocator.TryGet(out ConfirmationWindow window))
+        {
+            window.OnConfirmed -= SendToMainMenu;
+            window.OnDeclined -= ClearConfirmationWindowSubscriptions;
+        }
     }
 
     private void SendToMainMenu()

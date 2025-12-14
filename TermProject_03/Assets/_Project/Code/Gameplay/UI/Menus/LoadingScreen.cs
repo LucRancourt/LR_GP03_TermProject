@@ -1,8 +1,9 @@
+using _Project.Code.Core.ServiceLocator;
 using UnityEngine;
 using UnityEngine.UI;
 
 
-public class LoadingScreen : MonoBehaviour
+public class LoadingScreen : MonoBehaviourService
 {
     private GameObject _loadingScreen;
     private Slider _loadingBar;

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 using _Project.Code.Core.General;
-
+using _Project.Code.Core.ServiceLocator;
 
 public class WaveManager : MonoBehaviour
 {
@@ -94,7 +94,7 @@ public class WaveManager : MonoBehaviour
 
     private void StartEndWaveCheck()
     {
-        _waveCompletedCoroutine = CoroutineExecutor.Instance.CallbackOnConditionMet(
+        _waveCompletedCoroutine = ServiceLocator.Get<CoroutineExecutor>().CallbackOnConditionMet(
             () => _activeEnemyManager.ActiveEnemyCount == 0,
             OnWaveCompleted);
     }
@@ -102,6 +102,6 @@ public class WaveManager : MonoBehaviour
     public void CancelEndWaveCheck()
     {
         if (_waveCompletedCoroutine != null)
-            CoroutineExecutor.Instance.CancelCoroutine(_waveCompletedCoroutine);
+            ServiceLocator.Get<CoroutineExecutor>().CancelCoroutine(_waveCompletedCoroutine);
     }
 }

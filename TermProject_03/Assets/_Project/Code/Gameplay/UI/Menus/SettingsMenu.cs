@@ -1,11 +1,11 @@
+using _Project.Code.Core.ServiceLocator;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingsMenu : Menu<SettingsMenu>
+public class SettingsMenu : MenuPopUp
 {
-    // Variables
     [Header("Settings UI")]
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private Button closeSettingsMenu;
@@ -97,7 +97,7 @@ public class SettingsMenu : Menu<SettingsMenu>
         currentValue = value;
         text.text = keyName + ": " + (int)(currentValue * 100.0f);
 
-        AudioManager.Instance.SetMixerVolume(keyName, currentValue);
+        ServiceLocator.Get<AudioManager>().SetMixerVolume(keyName, currentValue);
     }
 
 

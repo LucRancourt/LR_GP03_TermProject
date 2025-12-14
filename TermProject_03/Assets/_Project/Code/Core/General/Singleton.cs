@@ -15,6 +15,7 @@ namespace _Project.Code.Core.General
             {
                 if (_isApplicationQuitting) return null;
 
+                /*
                 if (_instance == null)
                 {
                     _instance = FindFirstObjectByType<T>();
@@ -25,6 +26,7 @@ namespace _Project.Code.Core.General
                         singletonObject.name = typeof(T) + " (Singleton)";
                     }
                 }
+                */
 
                 return _instance;
             }

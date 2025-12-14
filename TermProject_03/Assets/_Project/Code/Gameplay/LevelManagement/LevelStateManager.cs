@@ -3,6 +3,7 @@ using UnityEngine;
 using _Project.Code.Core.StateMachine;
 using _Project.Code.Core.General;
 using System.Collections;
+using _Project.Code.Core.ServiceLocator;
 
 public class LevelStateManager
 {
@@ -42,14 +43,14 @@ public class LevelStateManager
     {
         if (_activeCoroutine != null) { CallCoroutineEnd(); };
 
-        _activeCoroutine = CoroutineExecutor.Instance.StartCoroutineExec(toCall);
+        _activeCoroutine = ServiceLocator.Get<CoroutineExecutor>().StartCoroutineExec(toCall);
     }
 
     public void CallCoroutineEnd()
     {
         if (_activeCoroutine == null) { return; };
 
-        if (CoroutineExecutor.Instance != null) 
-            CoroutineExecutor.Instance.CancelCoroutine(_activeCoroutine);
+        if (ServiceLocator.TryGet(out CoroutineExecutor executor))
+            executor.CancelCoroutine(_activeCoroutine);
     }
 }

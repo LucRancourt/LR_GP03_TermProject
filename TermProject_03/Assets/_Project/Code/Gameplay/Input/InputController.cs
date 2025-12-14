@@ -107,7 +107,7 @@ public class InputController : MonoBehaviourService
 
     private void HandlePausePerformed(InputAction.CallbackContext context)
     {
-        EventBus.Instance.Publish(new PauseInputEvent());
+        ServiceLocator.Get<EventBus>().Publish(new PauseInputEvent());
     }
     #endregion
 

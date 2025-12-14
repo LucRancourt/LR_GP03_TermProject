@@ -1,4 +1,5 @@
 using _Project.Code.Core.General;
+using _Project.Code.Core.ServiceLocator;
 using System.Collections;
 using UnityEngine;
 
@@ -35,7 +36,7 @@ public class WaveState : LevelState
 
         _levelStateManager.Notifier.UpdateDisplay("Wave Starting!");
 
-        CoroutineExecutor.Instance.StartCoroutineExec(StartWaveDelay());
+        ServiceLocator.Get<CoroutineExecutor>().StartCoroutineExec(StartWaveDelay());
     }
 
     public override void Update()
@@ -75,7 +76,7 @@ public class WaveState : LevelState
 
         _levelStateManager.Notifier.UpdateDisplay($"Wave {_waveManager.CurrentWaveIndex} Cleared!");
 
-        CoroutineExecutor.Instance.StartCoroutineExec(WaveCompleteDelay());
+        ServiceLocator.Get<CoroutineExecutor>().StartCoroutineExec(WaveCompleteDelay());
     }
 
     IEnumerator WaveCompleteDelay()

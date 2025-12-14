@@ -107,14 +107,14 @@ public class CinCamMov : Singleton<CinCamMov>
         FadeTo.Instance.OnFadeComplete += ServiceLocator.Get<SceneService>().ReloadCurrentScene;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
-        if (FadeTo.Instance)
+        if (FadeTo.Instance != null)
             FadeTo.Instance.OnFadeComplete -= ServiceLocator.Get<SceneService>().ReloadCurrentScene;
 
         ClearListenersOnMenus();
 
-        if (LevelSelectMenu.Instance)
+        if (LevelSelectMenu.Instance != null)
             LevelSelectMenu.Instance.OnBackedOut -= ReturnToMainMenu;
     }
 }

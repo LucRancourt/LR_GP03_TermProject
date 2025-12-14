@@ -128,7 +128,7 @@ public class PlayerTowerMediator : MonoBehaviour
     {
         if (_selectedTower != null)
         {
-            if (TowerUIWindow.Instance)
+            if (TowerUIWindow.Instance != null)
                 TowerUIWindow.Instance.Hide();
 
             _selectedTower.HideVisuals();
@@ -144,7 +144,7 @@ public class PlayerTowerMediator : MonoBehaviour
         {
             if (_builderManager.TryBuildTower())
             {
-                AudioManager.Instance.PlaySound(interactSFX);
+                ServiceLocator.Get<AudioManager>().PlaySound(interactSFX);
                 PlayerWallet.Instance.MakeTransaction(_newTowerData.GetPlacementCost());
                 _playerInventory.UpdateView(_newTowerData, _towerManager.GetCurrentUnitLimit(_newTowerData));
                 _newTowerData = null;
@@ -167,7 +167,7 @@ public class PlayerTowerMediator : MonoBehaviour
             ServiceLocator.Get<InputController>().ClickEvent -= ClickCallback;
         }
 
-        if (TowerUIWindow.Instance)
+        if (TowerUIWindow.Instance != null)
         {
             TowerUIWindow.Instance.OnUpgrade -= UpgradeSelectedTower;
             TowerUIWindow.Instance.OnSell -= SellSelectedTower;

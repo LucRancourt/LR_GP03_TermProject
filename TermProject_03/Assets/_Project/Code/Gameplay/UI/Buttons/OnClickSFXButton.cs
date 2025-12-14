@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using _Project.Code.Core.Audio;
-
+using _Project.Code.Core.ServiceLocator;
 
 [RequireComponent(typeof(Button))]
 public class OnClickSFXButton : MonoBehaviour
@@ -12,6 +12,6 @@ public class OnClickSFXButton : MonoBehaviour
 
     private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(() => AudioManager.Instance.PlaySound(sfx));
+        GetComponent<Button>().onClick.AddListener(() => ServiceLocator.Get<AudioManager>().PlaySound(sfx));
     }
 }

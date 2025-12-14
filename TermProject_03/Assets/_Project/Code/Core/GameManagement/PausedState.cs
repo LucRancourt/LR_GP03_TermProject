@@ -1,11 +1,13 @@
 using UnityEngine;
 
-using _Project.Code.Core.StateMachine;
 using _Project.Code.Core.Events;
+using _Project.Code.Core.StateMachine;
 
 
 namespace _Project.Code.Core.GameManagement
 {
+    using _Project.Code.Core.ServiceLocator;
+
     public class PausedState : BaseState
     {
         private readonly GameManagementService _gameManagement;
@@ -19,19 +21,19 @@ namespace _Project.Code.Core.GameManagement
 
         public override void Enter()
         {
-            _inputService = ServiceLocator.ServiceLocator.Get<InputController>();
+            _inputService = ServiceLocator.Get<InputController>();
             _previousTimeScale = Time.timeScale;
             Time.timeScale = 0f;
             _inputService?.EnableUIActions();
 
-            EventBus.Instance.Publish(new GameStateChangedEvent { StateName = "Paused" });
-            EventBus.Instance.Publish(new GamePausedEvent());
+            ServiceLocator.Get<EventBus>().Publish(new GameStateChangedEvent { StateName = "Paused" });
+            ServiceLocator.Get<EventBus>().Publish(new GamePausedEvent());
         }
 
         public override void Exit()
         {
             Time.timeScale = _previousTimeScale;
-            EventBus.Instance.Publish(new GameResumedEvent());
+            ServiceLocator.Get<EventBus>().Publish(new GameResumedEvent());
         }
     }
 }

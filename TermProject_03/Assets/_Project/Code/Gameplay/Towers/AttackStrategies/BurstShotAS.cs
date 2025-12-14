@@ -1,4 +1,5 @@
 using _Project.Code.Core.General;
+using _Project.Code.Core.ServiceLocator;
 using System.Collections;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class BurstShotAS : BaseAttackStrategy
 
     public override void Execute(AttackInput attackInput)
     {
-        CoroutineExecutor.Instance.StartCoroutineExec(FireBurst(attackInput));
+        ServiceLocator.Get<CoroutineExecutor>().StartCoroutineExec(FireBurst(attackInput));
     }
 
     private IEnumerator FireBurst(AttackInput attackInput)

@@ -1,3 +1,4 @@
+using _Project.Code.Core.ServiceLocator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +30,7 @@ public class MainMenu : Menu<MainMenu>
 
     private void OpenSettings()
     {
-        SettingsMenu.Instance.OpenMenu();
+        ServiceLocator.Get<SettingsMenu>().OpenMenu();
     }
 
     private void QuitGame()
