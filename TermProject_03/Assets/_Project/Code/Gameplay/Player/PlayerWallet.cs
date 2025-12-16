@@ -11,6 +11,7 @@ public class PlayerWallet : Singleton<PlayerWallet>
     private int _wallet;
 
     public event Action<int> OnDataChanged;
+    public event Action<int, int, bool> OnNewDataChanged;
 
 
     private void Start() { Initialize(); }
@@ -21,6 +22,8 @@ public class PlayerWallet : Singleton<PlayerWallet>
     {
         _wallet = amount;
         OnDataChanged?.Invoke(_wallet);
+
+        OnNewDataChanged?.Invoke(_wallet, amount, true);
     }
 
     public void AddToWallet(int amount, bool applyDifficultyModifier = true)
@@ -31,6 +34,8 @@ public class PlayerWallet : Singleton<PlayerWallet>
         _wallet += amount;
 
         OnDataChanged?.Invoke(_wallet);
+
+        OnNewDataChanged?.Invoke(_wallet, amount, true);
     }
 
     public bool SufficientFunds(int amount)
@@ -47,6 +52,8 @@ public class PlayerWallet : Singleton<PlayerWallet>
 
         _wallet -= amount;
         OnDataChanged?.Invoke(_wallet);
+
+        OnNewDataChanged?.Invoke(_wallet, amount, false);
 
         return true;
     }
