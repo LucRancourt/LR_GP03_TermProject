@@ -8,10 +8,12 @@ public class SettingsMenu : MenuPopUp
 {
     [Header("Settings UI")]
     [SerializeField] private GameObject settingsMenu;
-    [SerializeField] private Button closeSettingsMenu;
+    [SerializeField] private GameObject[] panels;
+    [SerializeField] private Button[] backButtons;
+    private GameObject _activePanel = null;
 
     #region Volume Vars
-    [Header("Volume")]
+    [Header("Volume Settings")]
     [SerializeField] private TextMeshProUGUI masterVolumeText;
     [SerializeField] private Slider masterVolumeSlider;
 
@@ -24,6 +26,9 @@ public class SettingsMenu : MenuPopUp
     private float _currentMasterVolume;
     private float _currentMusicVolume;
     private float _currentSFXVolume;
+    #endregion
+
+    #region Controls Vars
     #endregion
 
     [Header("Tween Details")]
@@ -39,10 +44,19 @@ public class SettingsMenu : MenuPopUp
     {
         base.Awake();
 
+        foreach (Button button in backButtons)
+        {
+            button.onClick.AddListener(SaveSettings);
+            button.onClick.AddListener(CloseMenu);
+        }
+
+        foreach (GameObject panel in panels)
+        {
+            panel.SetActive(false);
+        }
+
         rectTransform = settingsMenu.GetComponent<RectTransform>();
         startPosition = rectTransform.anchoredPosition;
-
-        closeSettingsMenu.onClick.AddListener(SaveSettings);
 
         masterVolumeSlider.onValueChanged.AddListener((value) => UpdateVolume(value, AudioMixerKeys.MasterVolumeKey, ref _currentMasterVolume, ref masterVolumeText));
         musicVolumeSlider.onValueChanged.AddListener((value) => UpdateVolume(value, AudioMixerKeys.MusicVolumeKey, ref _currentMusicVolume, ref musicVolumeText));
@@ -84,10 +98,30 @@ public class SettingsMenu : MenuPopUp
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(startPosition, targetPosition.anchoredPosition));
     }
 
+    public void OpenPanel(int index)
+    {
+        Debug.Log(_activePanel + " B4");
+        if (_activePanel != null) return;
+
+        if (index >= 0 && index < panels.Length)
+        {
+            panels[index].SetActive(true);
+            _activePanel = panels[index];
+        }
+        Debug.Log(_activePanel + " AF");
+    }
+
     public override void CloseMenu()
     {
         if (currentMoveCoroutine != null)
             StopCoroutine(currentMoveCoroutine);
+
+        if (_activePanel != null)
+        {
+            _activePanel.SetActive(false);
+            _activePanel = null;
+            return;
+        }
 
         currentMoveCoroutine = StartCoroutine(MoveCoroutine(targetPosition.anchoredPosition, startPosition));
     }

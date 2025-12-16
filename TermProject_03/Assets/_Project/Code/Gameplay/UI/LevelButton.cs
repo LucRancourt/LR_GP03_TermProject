@@ -17,6 +17,12 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
+        if (levelInfo == null)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         icon.sprite = levelInfo.Icon;
         nameText.text = levelInfo.Name;
 
