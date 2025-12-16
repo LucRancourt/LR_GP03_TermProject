@@ -14,6 +14,8 @@ public class BreakState : LevelState
     {
         _levelStateManager.CallCoroutineStart(AutoExit());
         PlayerWallet.Instance.AddToWallet(waveClearedReward);
+
+        Countdown.Instance.StartCountdown((int)timeUntilAutoExit);
     }
 
     public override void Update()

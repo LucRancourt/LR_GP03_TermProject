@@ -23,6 +23,8 @@ public class PreparationState : LevelState
 
         _difficultySelection.Show();
 
+        Countdown.Instance.StartCountdown((int)timeUntilAutoExit);
+
         _levelStateManager.CallCoroutineStart(AutoExit());
     }
 
