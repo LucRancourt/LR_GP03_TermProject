@@ -132,6 +132,9 @@ MonoBehaviour:
   spaceLayer:
     serializedVersion: 2
     m_Bits: 2048
+  towerModelMask:
+    serializedVersion: 2
+    m_Bits: 1024
   rangeMaterial: {fileID: 2100000, guid: 0a1e7da76cde82541be34407110c5c9a, type: 2}
   detectionLayer:
     serializedVersion: 2

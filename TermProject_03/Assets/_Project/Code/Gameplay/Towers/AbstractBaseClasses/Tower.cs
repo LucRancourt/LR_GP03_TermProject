@@ -32,6 +32,9 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     private MeshRenderer _meshRenderer;
 
     [SerializeField] private LayerMask spaceLayer;
+    [SerializeField] private LayerMask towerModelMask;
+
+    private Outline _hoverOutline = null;
 
 
     public void OnClick() { }
@@ -44,6 +47,7 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     public void ShowSpaceTaken()
     {
         _spaceTakenCircle.enabled = true;
+        OnHoverExit();
     }
 
     public virtual void HideVisuals()
@@ -84,6 +88,8 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
         _spaceTakenCircle = _spaceTakenObject.AddComponent<SpriteRenderer>();
         _spaceTakenCircle.drawMode = SpriteDrawMode.Sliced;
         _spaceTakenCircle.sprite = spaceTakenSprite;
+
+        SetupOutline();
     }
 
     protected abstract void Initialize();
@@ -120,7 +126,11 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     {
         TowerTier = 0;
         SetMesh();
+
+        SetupOutline();
     }
+
+    private static Tower _currentHoveredTower;
 
     protected virtual void Update()
     {
@@ -128,6 +138,26 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
 
         RotateSpaceTakenCircle();
         CheckSpaceOverlap();
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 100000000.0f, towerModelMask))
+        {
+            Tower towerHit = hit.collider.GetComponent<Tower>();
+
+            if (towerHit != _currentHoveredTower)
+            {
+                _currentHoveredTower?.OnHoverExit();
+                _currentHoveredTower = towerHit;
+                _currentHoveredTower?.OnHoverEnter();
+            }
+        }
+        else if (_currentHoveredTower != null)
+        {
+            _currentHoveredTower.OnHoverExit();
+            _currentHoveredTower = null;
+        }
     }
 
     private void RotateSpaceTakenCircle()
@@ -188,11 +218,34 @@ public abstract class Tower : MonoBehaviour, IPoolable, ITower
     {
         TowerTier++;
         SetMesh();
+
+        SetupOutline();
     }
 
     private void SetMesh()
     {
         _meshFilter.sharedMesh = TowerData.TowerTiers[TowerTier].Model.GetComponent<MeshFilter>().sharedMesh;
         _meshRenderer.sharedMaterials = TowerData.TowerTiers[TowerTier].Model.GetComponent<MeshRenderer>().sharedMaterials;
+    }
+
+
+    private void OnHoverEnter() { if (_spaceTakenCircle.enabled == true) return; _hoverOutline.enabled = true; }
+    private void OnHoverExit() { _hoverOutline.enabled = false; }
+
+    private void SetupOutline()
+    {
+        if (_hoverOutline != null)
+        {
+            Destroy(_hoverOutline);
+            _hoverOutline = null;
+            Invoke("SetupOutline", 0.1f);
+            return;
+        }
+
+        _hoverOutline = gameObject.AddComponent<Outline>();
+        _hoverOutline.OutlineMode = Outline.Mode.OutlineAll;
+        _hoverOutline.OutlineColor = Color.white;
+        _hoverOutline.OutlineWidth = 5f;
+        _hoverOutline.enabled = false;
     }
 }
