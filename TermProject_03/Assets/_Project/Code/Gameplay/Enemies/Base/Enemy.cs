@@ -27,7 +27,6 @@ public class Enemy : BaseDamageable, IPoolable
 
     public void OnSpawnFromPool()
     {
-        HideVisuals();
     }
 
     public void Initialize(EnemyData data, NavPath path)
@@ -77,21 +76,6 @@ public class Enemy : BaseDamageable, IPoolable
 
         _pathNavigator.StopPath();
     }
-
-    public void ShowVisuals()
-    {
-        SetUIDisplay(true);
-    }
-
-    public void HideVisuals()
-    {
-        SetUIDisplay(false);
-    }
-
-
-    private void OnMouseOver() { ShowVisuals(); }
-    private void OnMouseExit() { HideVisuals(); }
-
 
     public void UpdateSpeed(float speedAdjustment) { _pathNavigator.SetSpeed(Speed * speedAdjustment);  }
 }

@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 
 using _Project.Code.Core.MVC;
-
+using _Project.Code.Core.ServiceLocator;
+using _Project.Code.Core.General;
+using System.Collections;
 
 public class HealthController : BaseController<HealthModel, HealthView>
 {
@@ -14,6 +16,9 @@ public class HealthController : BaseController<HealthModel, HealthView>
     private bool _displayUI = false;
 
     public event Action OnDiedEvent;
+
+    private float _timeUntilInactive = 3.0f;
+    private Coroutine inactivityRoutine;
 
 
     public void SetMaxHealth(float value)
@@ -60,8 +65,34 @@ public class HealthController : BaseController<HealthModel, HealthView>
                 CurrentHealth = Model.Data;
 
             View?.UpdateDisplay(CurrentHealth, _maxHealth);
+
+
+            StartInactivityRoutine();
         }
     }
+
+    private void StartInactivityRoutine()
+    {
+        if (View.transform.gameObject.name == "Base") return;
+
+
+        if (inactivityRoutine != null)
+        {
+            ServiceLocator.Get<CoroutineExecutor>().CancelCoroutine(inactivityRoutine);
+        }
+
+        inactivityRoutine = ServiceLocator.Get<CoroutineExecutor>().StartCoroutineExec(TimeUntilInactive());
+    }
+
+    private IEnumerator TimeUntilInactive()
+    {
+        SetUIDisplay(true);
+
+        yield return new WaitForSeconds(_timeUntilInactive);
+
+        SetUIDisplay(false);
+    }
+
 
     protected override void OnEnabled()
     {
@@ -70,6 +101,8 @@ public class HealthController : BaseController<HealthModel, HealthView>
             Model.SetMaxHealth(_maxHealth);
             Model.OnDataChanged += OnModelDataChanged;
             Model.OnDied += OnDied;
+
+            StartInactivityRoutine();
         }
     }
 
