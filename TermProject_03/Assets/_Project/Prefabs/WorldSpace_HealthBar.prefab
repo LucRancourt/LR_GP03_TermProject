@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 4886352432079246561}
   - component: {fileID: 8352579087216550736}
   m_Layer: 5
-  m_Name: Canvas_WorldSpace_HealthBar
+  m_Name: WorldSpace_HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!1 &2058153071302320593
 GameObject:
   m_ObjectHideFlags: 0

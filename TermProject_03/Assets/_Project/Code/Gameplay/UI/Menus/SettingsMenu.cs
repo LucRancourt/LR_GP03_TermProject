@@ -100,7 +100,6 @@ public class SettingsMenu : MenuPopUp
 
     public void OpenPanel(int index)
     {
-        Debug.Log(_activePanel + " B4");
         if (_activePanel != null) return;
 
         if (index >= 0 && index < panels.Length)
@@ -108,7 +107,6 @@ public class SettingsMenu : MenuPopUp
             panels[index].SetActive(true);
             _activePanel = panels[index];
         }
-        Debug.Log(_activePanel + " AF");
     }
 
     public override void CloseMenu()
